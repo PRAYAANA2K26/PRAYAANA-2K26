@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>PRAYAANA 2K26 | Staff Portal</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      color: #f7f3ff;
+      font-family: Arial, sans-serif;
+      background:
+        radial-gradient(ellipse at top, #35205e 0%, transparent 55%),
+        linear-gradient(145deg, #080812, #111025 60%, #090911);
+    }
+
+    .panel {
+      width: 100%;
+      max-width: 480px;
+      padding: 40px 28px;
+      text-align: center;
+      background: rgba(24, 21, 43, 0.88);
+      border: 1px solid #554078;
+      border-radius: 20px;
+      box-shadow: 0 20px 70px #0008;
+    }
+
+    .logo {
+      color: #c7a5ff;
+      font-size: 13px;
+      letter-spacing: 5px;
+    }
+
+    h1 {
+      margin: 20px 0 8px;
+      font-size: clamp(28px, 7vw, 40px);
+      letter-spacing: 2px;
+    }
+
+    p {
+      color: #c6bfd8;
+      line-height: 1.7;
+    }
+
+    .status {
+      display: inline-block;
+      margin-top: 16px;
+      padding: 9px 14px;
+      color: #e1d0ff;
+      background: #34234c;
+      border: 1px solid #654b88;
+      border-radius: 30px;
+      font-size: 13px;
+    }
+
+    .note {
+      margin-top: 28px;
+      font-size: 12px;
+      color: #938aa9;
+    }
+  </style>
+</head>
+<body>
+  <main class="panel">
+    <div class="logo">PRAYAANA 2K26</div>
+    <h1>STAFF PORTAL</h1>
+    <p>
+      The official event management portal is being prepared
+      for authorized organizers.
+    </p>
+    <div class="status">Setup in progress</div>
+    <p class="note">
+      Staff access is not enabled yet.<br>
+      Please wait for instructions from the event administration team.
+    </p>
+  </main>
+</body>
+</html>
