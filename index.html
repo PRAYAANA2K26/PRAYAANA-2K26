@@ -322,7 +322,7 @@
     const dashboardSection = document.getElementById("dashboardSection");
     const signInButton = document.getElementById("googleSignInButton");
     const signOutButton = document.getElementById("signOutButton");
-    const statusMessage = document.getElementById("statusMessage");
+    const statusmessage = document.getElementById("statusMessage");
 
     document.querySelectorAll(".nav-button").forEach((button) => {
   button.addEventListener("click", () => {
@@ -345,7 +345,11 @@
     let checkingAccount = false;
 
     function showStatus(message) {
-      statusMessage.textContent = message;
+     if (statusMessage) {
+       statusMessage.textContent = message;
+    }else{
+       console.error("Status message element not found:",message);
+     }
     }
 
     function showLogin() {
