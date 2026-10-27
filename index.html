@@ -140,6 +140,11 @@
         <div class="panel" style="margin-top:16px">
           <h3>Student registrations</h3>
           <p>Compare each student with the official university list. Only the Head Admin can record eligibility. Fee Collectors can record manually verified payments. Tickets can be issued only after eligibility and payment are confirmed.</p>
+          <div class="field" style="margin:14px 0 10px;max-width:520px">
+            <label for="studentSearch">Search registered students</label>
+            <input id="studentSearch" type="search" autocomplete="off" placeholder="Search by student name, email, phone or registration ID…" aria-describedby="searchHelp">
+            <span id="searchHelp" class="hint">Searches the registrations currently loaded in the table (up to the latest 500).</span>
+          </div>
           <div id="listStatus" class="status" role="status" aria-live="polite">Loading registrations…</div>
           <div class="table-wrap">
             <table>
@@ -148,7 +153,20 @@
             </table>
           </div>
         </div>
-        <div id="ticketPanel" class="panel hidden" style="margin-top:16px"><h3>Issued ticket QR</h3><p class="small">This ticket token is shown only once. Save or securely share the QR with the student now; do not share it publicly.</p><div id="ticketQr" style="background:white;display:inline-block;padding:12px;border-radius:10px"></div><p id="ticketDetails" class="small"></p><button id="closeTicketButton" type="button" class="btn secondary">Close ticket</button></div>
+        <div id="ticketPanel" class="panel hidden" style="margin-top:16px">
+          <h3>Issued ticket QR</h3>
+          <p class="small">Share this ticket privately with the student. WhatsApp and email open a prepared message; for the actual QR image, download it and attach it to the message.</p>
+          <div id="ticketQr" style="background:white;display:inline-block;padding:12px;border-radius:10px"></div>
+          <p id="ticketDetails" class="small"></p>
+          <div class="inline-actions" style="margin-top:12px">
+            <button id="shareTicketFileButton" type="button" class="btn">Share QR image & details…</button>
+            <button id="shareTicketWhatsAppButton" type="button" class="btn secondary">WhatsApp message</button>
+            <button id="shareTicketEmailButton" type="button" class="btn secondary">Email message</button>
+            <button id="downloadTicketQrButton" type="button" class="btn secondary">Download QR PNG</button>
+            <button id="closeTicketButton" type="button" class="btn secondary">Close ticket</button>
+          </div>
+          <p class="small">Note: browsers cannot automatically attach an image to WhatsApp or a mailto email. Download the QR PNG first, then attach it in the app if you want to send the image itself.</p>
+        </div>
       </div>
     </section>
   </main>
@@ -179,6 +197,7 @@ let db = null;
 let currentStaffRole = "";
 let authStateVersion = 0;
 let qrScanner = null;
+let currentTicketShare = null;
 
 function setStatus(el, message, type = "") {
   if (!el) return;
@@ -385,9 +404,12 @@ async function issueTicket(registrationId) {
       tx.set(ticketRef, { registrationId, used: false, issuedAt: firebase.firestore.FieldValue.serverTimestamp(), issuedBy: auth.currentUser.uid });
       tx.update(regRef, { ticketStatus: "issued", ticketId: token, ticketIssuedAt: firebase.firestore.FieldValue.serverTimestamp() });
     });
+    const issuedRegistration = await regRef.get();
+    const student = issuedRegistration.exists ? issuedRegistration.data() : {};
+    currentTicketShare = { token, registrationId, name: student.fullName || "Student", email: student.email || "" };
     $("ticketQr").replaceChildren(); new QRCode($("ticketQr"), { text: token, width: 220, height: 220, correctLevel: QRCode.CorrectLevel.M });
-    $("ticketDetails").textContent = "Registration reference: " + registrationId + " · Save/share this QR securely.";
-    $("ticketPanel").classList.remove("hidden"); setStatus($("listStatus"), "Ticket issued. QR displayed below the registration table.", "success"); await loadRegistrations();
+    $("ticketDetails").textContent = "Student: " + currentTicketShare.name + " · Registration reference: " + registrationId;
+    $("ticketPanel").classList.remove("hidden"); setStatus($("listStatus"), "Ticket issued. You can share the QR image using the system share sheet, or download it.", "success"); await loadRegistrations();
   } catch (error) { setStatus($("listStatus"), "Ticket could not be issued (" + (error.code || "error") + "): " + (error.message || "Check eligibility and payment."), "error"); }
 }
 async function validateTicketToken(token) {
@@ -422,6 +444,63 @@ $("startScannerButton").addEventListener("click", startCameraScanner);
 $("stopScannerButton").addEventListener("click", stopCameraScanner);
 $("validateManualTicketButton").addEventListener("click", () => validateTicketToken($("manualTicketToken").value));
 $("manualTicketToken").addEventListener("keydown", (e) => { if (e.key === "Enter") validateTicketToken($("manualTicketToken").value); });
+function ticketShareMessage() {
+  if (!currentTicketShare) return "";
+  return "PRAYAANA 2K26 entry ticket\nStudent: " + currentTicketShare.name +
+    "\nRegistration reference: " + currentTicketShare.registrationId +
+    "\nTicket token: " + currentTicketShare.token +
+    "\nKeep this ticket private. It can be used for entry only once.";
+}
+function getTicketQrDataUrl() {
+  const canvas = $("ticketQr").querySelector("canvas");
+  if (canvas) return canvas.toDataURL("image/png");
+  const img = $("ticketQr").querySelector("img");
+  return img && img.src ? img.src : null;
+}
+function downloadTicketQr() {
+  const dataUrl = getTicketQrDataUrl();
+  if (!dataUrl || !currentTicketShare) { alert("The QR image is not ready yet. Please try again."); return; }
+  const link = document.createElement("a");
+  link.href = dataUrl; link.download = "PRAYAANA-2K26-ticket-" + currentTicketShare.registrationId + ".png";
+  document.body.appendChild(link); link.click(); link.remove();
+}
+async function shareTicketQrFile() {
+  if (!currentTicketShare) return;
+  const dataUrl = getTicketQrDataUrl();
+  if (!dataUrl) { alert("The QR image is not ready yet. Please try again."); return; }
+  try {
+    const response = await fetch(dataUrl);
+    const blob = await response.blob();
+    const file = new File([blob], "PRAYAANA-2K26-ticket-" + currentTicketShare.registrationId + ".png", { type: "image/png" });
+    const shareData = { title: "PRAYAANA 2K26 entry ticket", text: ticketShareMessage(), files: [file] };
+    if (navigator.share && (!navigator.canShare || navigator.canShare({ files: [file] }))) {
+      await navigator.share(shareData);
+    } else {
+      downloadTicketQr();
+      alert("Direct image sharing is not supported in this browser. The QR PNG has been downloaded; attach it in WhatsApp or Email.");
+    }
+  } catch (error) {
+    if (error && error.name === "AbortError") return;
+    console.error("QR sharing failed:", error);
+    downloadTicketQr();
+    alert("Could not open direct sharing. The QR PNG has been downloaded so you can attach it manually.");
+  }
+}
+$("shareTicketFileButton").addEventListener("click", shareTicketQrFile);
+
+$("shareTicketWhatsAppButton").addEventListener("click", () => {
+  if (!currentTicketShare) return;
+  const url = "https://wa.me/?text=" + encodeURIComponent(ticketShareMessage() + "\n\nThe QR image can be attached from the downloaded PNG.");
+  window.open(url, "_blank", "noopener,noreferrer");
+});
+$("shareTicketEmailButton").addEventListener("click", () => {
+  if (!currentTicketShare) return;
+  const subject = "PRAYAANA 2K26 entry ticket - " + currentTicketShare.registrationId;
+  const body = ticketShareMessage() + "\n\nPlease attach the downloaded PRAYAANA ticket QR PNG to this email before sending.";
+  const recipient = currentTicketShare.email || "";
+  window.location.href = "mailto:" + encodeURIComponent(recipient) + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+});
+$("downloadTicketQrButton").addEventListener("click", downloadTicketQr);
 $("closeTicketButton").addEventListener("click", () => { $("ticketPanel").classList.add("hidden"); $("ticketQr").replaceChildren(); });
 
 function addBadgeCell(row, value) {
@@ -437,6 +516,23 @@ function addTextCell(row, value) {
   td.textContent = value;
   row.appendChild(td);
 }
+function filterStudentRows() {
+  const query = String($("studentSearch")?.value || "").trim().toLocaleLowerCase();
+  const rows = Array.from($("registrationRows").querySelectorAll("tr"));
+  let visible = 0;
+  for (const row of rows) {
+    // Do not hide the empty/error-state message rows.
+    if (row.querySelectorAll("td").length === 1 && row.querySelectorAll("td")[0].colSpan > 1) continue;
+    const searchableText = (row.textContent + " " + (row.dataset.registrationId || "")).toLocaleLowerCase();
+    const match = !query || searchableText.includes(query);
+    row.classList.toggle("hidden", !match);
+    if (match) visible++;
+  }
+  const old = $("searchResultCount");
+  if (old) old.textContent = query ? (visible + " matching row(s)") : "";
+}
+$("studentSearch").addEventListener("input", filterStudentRows);
+
 async function loadRegistrations() {
   if (!db || !auth || !auth.currentUser) return;
   setStatus($("listStatus"), "Loading registrations…");
@@ -461,6 +557,7 @@ async function loadRegistrations() {
         if ((r.paymentStatus || "unpaid") === "paid") paid++;
 
         const tr = document.createElement("tr");
+        tr.dataset.registrationId = doc.id;
         addTextCell(tr, r.fullName || "—");
         addTextCell(tr, [r.course, r.year].filter(Boolean).join(" / ") || "—");
         addTextCell(tr, [r.phone, r.email].filter(Boolean).join("\n") || "—");
@@ -514,6 +611,7 @@ async function loadRegistrations() {
         $("registrationRows").appendChild(tr);
       });
     }
+    filterStudentRows();
     $("totalCount").textContent = String(snap.size);
     $("pendingCount").textContent = String(pending);
     $("paidCount").textContent = String(paid);
