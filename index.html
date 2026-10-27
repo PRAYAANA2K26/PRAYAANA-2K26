@@ -112,13 +112,9 @@
       fee collection, ticket approval and event entry.
     </p>
 
-    <button
-      class="google-button"
-      type="button"
-      onclick="alert('Google sign-in is not connected yet. Please wait for the secure setup to be completed.')"
-    >
-      G&nbsp; Continue with Google
-    </button>
+   <button class="google-button" id="googleSignInButton" type="button">
+  G&nbsp; Continue with Google
+</button>
 
     <div class="status">
       Secure access setup in progress
@@ -129,5 +125,34 @@
       PRAYAANA 2K26 · Saribekyan Medical University Armenia
     </div>
   </main>
+  
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+
+<script>
+  const firebaseConfig = {
+    apiKey: "PASTE_YOUR_API_KEY",
+    authDomain: "PASTE_YOUR_AUTH_DOMAIN",
+    projectId: "PASTE_YOUR_PROJECT_ID",
+    appId: "PASTE_YOUR_APP_ID"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+
+  const auth = firebase.auth();
+  const googleProvider = new firebase.auth.GoogleAuthProvider();
+
+  document.getElementById("googleSignInButton")
+    .addEventListener("click", async () => {
+      try {
+        const result = await auth.signInWithPopup(googleProvider);
+        alert("Signed in successfully as " + result.user.email);
+      } catch (error) {
+        console.error(error);
+        alert("Sign-in failed: " + error.message);
+      }
+    });
+</script>
+  
 </body>
 </html>
