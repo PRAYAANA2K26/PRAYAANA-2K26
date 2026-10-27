@@ -1,70 +1,156 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#09070f">
-<title>PRAYAANA 2K26 | Registration & Staff Portal</title>
-<style>
-:root{--bg:#09070f;--panel:#15111f;--panel2:#21182e;--line:#3a2b4c;--text:#f7f1ff;--muted:#b8abc9;--gold:#e5c27b;--purple:#a984e8;--red:#ff9aa6;--green:#a4e5b8}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#25163a 0%,var(--bg) 57%);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,sans-serif;min-height:100vh}button,input,select{font:inherit}button{cursor:pointer}.shell{max-width:1180px;margin:auto;padding:25px 16px 55px}header{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;padding-bottom:20px;border-bottom:1px solid var(--line);margin-bottom:24px}.brand{display:flex;align-items:center;gap:13px}.mark{width:47px;height:47px;border:1px solid var(--gold);border-radius:50%;display:grid;place-items:center;color:var(--gold);font:24px Georgia,serif}.eyebrow{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}h1{font-size:clamp(20px,4vw,29px);letter-spacing:.08em;margin:5px 0 0}h2{margin:0 0 10px;font-size:25px}h3{margin:0 0 10px}.muted,p{color:var(--muted);line-height:1.6}.pill{border:1px solid var(--line);border-radius:999px;padding:8px 12px;color:var(--muted);font-size:12px}.tabs{display:flex;gap:9px;flex-wrap:wrap;margin:20px 0}.tab,.btn{border-radius:10px;padding:11px 15px;border:1px solid var(--line);font-weight:650}.tab{background:#171121;color:var(--muted)}.tab.active,.tab:hover{border-color:var(--gold);color:var(--text);background:#2a2038}.btn{background:var(--gold);color:#17101e;border-color:var(--gold)}.btn.secondary{background:transparent;color:var(--text);border-color:var(--line)}.btn:disabled{opacity:.55;cursor:not-allowed}.card,.panel{background:linear-gradient(145deg,rgba(29,22,42,.97),rgba(16,12,24,.98));border:1px solid var(--line);border-radius:17px;padding:23px;box-shadow:0 15px 45px #0002}.narrow{max-width:740px;margin:0 auto}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}.field{display:flex;flex-direction:column;gap:7px}.field.full{grid-column:1/-1}label{font-size:13px;color:#e9def7}input,select{width:100%;background:#0d0a14;color:var(--text);border:1px solid #49375e;border-radius:9px;padding:12px;outline:none}input:focus,select:focus{border-color:var(--gold)}.hint{font-size:12px;color:var(--muted)}.status{border:1px solid var(--line);background:#0e0a16;border-radius:10px;padding:12px 14px;color:var(--muted);margin:15px 0;line-height:1.5;overflow-wrap:anywhere}.status.error{color:var(--red);border-color:#6a3543}.status.success{color:var(--green);border-color:#315c42}.hidden{display:none!important}.staff-top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap}.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:18px 0}.stat{border:1px solid var(--line);border-radius:12px;background:#120e1b;padding:16px}.stat strong{display:block;color:var(--gold);font-size:24px}.stat span{font-size:12px;color:var(--muted)}.table-wrap{overflow-x:auto;margin-top:16px}table{width:100%;border-collapse:collapse;min-width:700px}th,td{text-align:left;padding:12px 10px;border-bottom:1px solid var(--line);font-size:13px;vertical-align:top}th{color:var(--gold);font-weight:650}td{color:#e8dff2}.badge{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:4px 8px;font-size:11px;color:var(--muted)}.note{background:#21192b;border-left:3px solid var(--gold);padding:12px 14px;border-radius:0 8px 8px 0;color:var(--muted);font-size:13px;line-height:1.6}.inline-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.small{font-size:12px}footer{text-align:center;color:#857994;font-size:12px;margin-top:32px}@media(max-width:650px){.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.card,.panel{padding:18px}.stats{grid-template-columns:1fr 1fr}}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#09070f">
+  <meta name="description" content="PRAYAANA 2K26 student registration and staff portal">
+  <title>PRAYAANA 2K26 | Registration & Staff Portal</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #09070f; --panel: #15111f; --panel2: #21182e;
+      --line: #3a2b4c; --text: #f7f1ff; --muted: #b8abc9;
+      --gold: #e5c27b; --purple: #a984e8; --red: #ff9aa6;
+      --green: #a4e5b8;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; min-height: 100vh; color: var(--text);
+      background: radial-gradient(ellipse at top, #25163a 0%, var(--bg) 57%);
+      font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+    button, input, select { font: inherit; }
+    button { cursor: pointer; }
+    button:disabled { cursor: not-allowed; opacity: .55; }
+    .shell { max-width: 1180px; margin: auto; padding: 25px 16px 55px; }
+    header { display:flex; justify-content:space-between; align-items:center; gap:16px; flex-wrap:wrap; padding-bottom:20px; border-bottom:1px solid var(--line); margin-bottom:24px; }
+    .brand { display:flex; align-items:center; gap:13px; }
+    .mark { width:47px; height:47px; border:1px solid var(--gold); border-radius:50%; display:grid; place-items:center; color:var(--gold); font:24px Georgia,serif; }
+    .eyebrow { font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:var(--gold); }
+    h1 { font-size:clamp(20px,4vw,29px); letter-spacing:.08em; margin:5px 0 0; }
+    h2 { margin:0 0 10px; font-size:25px; } h3 { margin:0 0 10px; }
+    p { color:var(--muted); line-height:1.6; }
+    .muted { color:var(--muted); }
+    .pill { border:1px solid var(--line); border-radius:999px; padding:8px 12px; color:var(--muted); font-size:12px; }
+    .tabs { display:flex; gap:9px; flex-wrap:wrap; margin:20px 0; }
+    .tab, .btn { border-radius:10px; padding:11px 15px; border:1px solid var(--line); font-weight:650; }
+    .tab { background:#171121; color:var(--muted); }
+    .tab.active, .tab:hover { border-color:var(--gold); color:var(--text); background:#2a2038; }
+    .btn { background:var(--gold); color:#17101e; border-color:var(--gold); }
+    .btn.secondary { background:transparent; color:var(--text); border-color:var(--line); }
+    .card, .panel { background:linear-gradient(145deg,rgba(29,22,42,.97),rgba(16,12,24,.98)); border:1px solid var(--line); border-radius:17px; padding:23px; box-shadow:0 15px 45px #0002; }
+    .narrow { max-width:740px; margin:0 auto; }
+    .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:15px; }
+    .field { display:flex; flex-direction:column; gap:7px; min-width:0; }
+    .field.full { grid-column:1/-1; }
+    label { font-size:13px; color:#e9def7; }
+    input, select { width:100%; min-width:0; background:#0d0a14; color:var(--text); border:1px solid #49375e; border-radius:9px; padding:12px; outline:none; }
+    input:focus, select:focus { border-color:var(--gold); }
+    input[type="checkbox"] { width:auto; margin-top:4px; }
+    .hint, .small { font-size:12px; } .hint { color:var(--muted); }
+    .status { border:1px solid var(--line); background:#0e0a16; border-radius:10px; padding:12px 14px; color:var(--muted); margin:15px 0; line-height:1.5; overflow-wrap:anywhere; }
+    .status.error { color:var(--red); border-color:#6a3543; }
+    .status.success { color:var(--green); border-color:#315c42; }
+    .hidden { display:none !important; }
+    .staff-top { display:flex; justify-content:space-between; align-items:flex-start; gap:16px; flex-wrap:wrap; }
+    .stats { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; margin:18px 0; }
+    .stat { border:1px solid var(--line); border-radius:12px; background:#120e1b; padding:16px; }
+    .stat strong { display:block; color:var(--gold); font-size:24px; }
+    .stat span { font-size:12px; color:var(--muted); }
+    .table-wrap { overflow-x:auto; margin-top:16px; }
+    table { width:100%; border-collapse:collapse; min-width:760px; }
+    th, td { text-align:left; padding:12px 10px; border-bottom:1px solid var(--line); font-size:13px; vertical-align:top; }
+    th { color:var(--gold); font-weight:650; } td { color:#e8dff2; }
+    .badge { display:inline-block; border:1px solid var(--line); border-radius:999px; padding:4px 8px; font-size:11px; color:var(--muted); white-space:nowrap; }
+    .note { background:#21192b; border-left:3px solid var(--gold); padding:12px 14px; border-radius:0 8px 8px 0; color:var(--muted); font-size:13px; line-height:1.6; }
+    .inline-actions { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+    footer { text-align:center; color:#857994; font-size:12px; margin-top:32px; }
+    @media(max-width:650px) {
+      .form-grid { grid-template-columns:1fr; } .field.full { grid-column:auto; }
+      .card, .panel { padding:18px; } .stats { grid-template-columns:1fr 1fr; }
+    }
+  </style>
 </head>
 <body>
 <div class="shell">
-<header>
- <div class="brand"><div class="mark">P</div><div><div class="eyebrow">Saribekyan Medical University Armenia</div><h1>PRAYAANA <span style="color:var(--gold)">2K26</span></h1></div></div>
- <div class="pill">EVENT REGISTRATION & STAFF PORTAL</div>
-</header>
+  <header>
+    <div class="brand">
+      <div class="mark" aria-hidden="true">P</div>
+      <div><div class="eyebrow">Saribekyan Medical University Armenia</div><h1>PRAYAANA <span style="color:var(--gold)">2K26</span></h1></div>
+    </div>
+    <div class="pill">EVENT REGISTRATION & STAFF PORTAL</div>
+  </header>
 
-<nav class="tabs" aria-label="Main pages">
- <button class="tab active" id="publicTab" type="button">Student Registration</button>
- <button class="tab" id="staffTab" type="button">Staff Portal</button>
-</nav>
+  <nav class="tabs" aria-label="Main pages">
+    <button class="tab active" id="publicTab" type="button">Student Registration</button>
+    <button class="tab" id="staffTab" type="button">Staff Portal</button>
+  </nav>
 
-<main>
-<section id="registrationPage" class="card narrow">
- <div class="eyebrow">Your night. Your people.</div>
- <h2 style="margin-top:8px">Student Registration</h2>
- <p>Register your details for PRAYAANA 2K26. Your registration will be reviewed by the event team. Submitting this form does not confirm payment or guarantee entry.</p>
- <div class="note">Please enter your details accurately. Do not submit the form more than once. Your ticket will be issued only after eligibility and payment have been verified.</div>
- <form id="registrationForm" style="margin-top:20px">
-  <div class="form-grid">
-   <div class="field"><label for="fullName">Full name *</label><input id="fullName" name="fullName" autocomplete="name" maxlength="100" required></div>
-   <div class="field"><label for="course">Course *</label><input id="course" name="course" maxlength="100" placeholder="e.g. General Medicine" required></div>
-   <div class="field"><label for="year">Year of study *</label><select id="year" name="year" required><option value="">Choose year</option><option>1st year</option><option>2nd year</option><option>3rd year</option><option>4th year</option><option>5th year</option><option>6th year</option><option>Other</option></select></div>
-   <div class="field"><label for="phone">Phone number *</label><input id="phone" name="phone" type="tel" autocomplete="tel" maxlength="30" required></div>
-   <div class="field"><label for="email">Email address *</label><input id="email" name="email" type="email" autocomplete="email" maxlength="150" required></div>
-   <div class="field full"><label for="delivery">Preferred ticket delivery *</label><select id="delivery" name="delivery" required><option value="">Choose a method</option><option value="WhatsApp">WhatsApp</option><option value="Email">Email</option></select><div class="hint">The team may contact you to verify your student details and payment.</div></div>
-  </div>
-  <div class="field" style="margin-top:17px;display:block"><label style="display:flex;gap:10px;align-items:flex-start"><input id="consent" type="checkbox" required style="width:auto;margin-top:4px"><span>I confirm these details are accurate and agree that the event team may use them to verify my eligibility and manage my registration.</span></label></div>
-  <button class="btn" id="submitRegistration" type="submit" style="margin-top:18px">Submit registration</button>
-  <div id="registrationStatus" class="status" role="status" aria-live="polite">Registration is ready. Complete all required fields.</div>
- </form>
-</section>
+  <main>
+    <section id="registrationPage" class="card narrow">
+      <div class="eyebrow">Your night. Your people.</div>
+      <h2 style="margin-top:8px">Student Registration</h2>
+      <p>Register your details for PRAYAANA 2K26. Your registration will be reviewed by the event team. Submitting this form does not confirm payment or guarantee entry.</p>
+      <div class="note">Enter your details accurately. Please avoid duplicate submissions. A registration is not a ticket; eligibility and payment must be verified separately.</div>
+      <form id="registrationForm" style="margin-top:20px">
+        <div class="form-grid">
+          <div class="field"><label for="fullName">Full name *</label><input id="fullName" name="fullName" autocomplete="name" maxlength="100" required></div>
+          <div class="field"><label for="course">Course *</label><input id="course" name="course" maxlength="100" placeholder="e.g. General Medicine" required></div>
+          <div class="field"><label for="year">Year of study *</label><select id="year" name="year" required><option value="">Choose year</option><option>1st year</option><option>2nd year</option><option>3rd year</option><option>4th year</option><option>5th year</option><option>6th year</option><option>Other</option></select></div>
+          <div class="field"><label for="phone">Phone number *</label><input id="phone" name="phone" type="tel" autocomplete="tel" maxlength="30" required></div>
+          <div class="field"><label for="email">Email address *</label><input id="email" name="email" type="email" autocomplete="email" maxlength="150" required></div>
+          <div class="field"><label for="delivery">Preferred ticket delivery *</label><select id="delivery" name="delivery" required><option value="">Choose a method</option><option value="WhatsApp">WhatsApp</option><option value="Email">Email</option></select><div class="hint">The team may contact you to verify student details and payment.</div></div>
+        </div>
+        <div class="field" style="margin-top:17px;display:block">
+          <label style="display:flex;gap:10px;align-items:flex-start"><input id="consent" type="checkbox" required><span>I confirm these details are accurate and agree that the event team may use them to verify my eligibility and manage my registration.</span></label>
+        </div>
+        <button class="btn" id="submitRegistration" type="submit" style="margin-top:18px">Submit registration</button>
+        <div id="registrationStatus" class="status" role="status" aria-live="polite">Checking registration service…</div>
+      </form>
+    </section>
 
-<section id="staffPage" class="hidden">
- <div id="loginCard" class="card narrow">
-  <div class="eyebrow">Restricted access</div><h2 style="margin-top:8px">Staff sign-in</h2>
-  <p>Sign in with the Google account authorised by a Head Admin.</p>
-  <button class="btn" id="signInButton" type="button">Continue with Google</button>
-  <div id="staffStatus" class="status" role="status" aria-live="polite">Checking Firebase setup…</div>
- </div>
- <div id="staffDashboard" class="hidden">
-  <div class="staff-top"><div><div class="eyebrow">Access verified</div><h2 id="welcomeHeading">Event Control Center</h2><p id="accountDetails"></p></div><div class="inline-actions"><button class="btn secondary" id="refreshButton" type="button">Refresh registrations</button><button class="btn secondary" id="signOutButton" type="button">Sign out</button></div></div>
-  <div class="stats"><div class="stat"><strong id="totalCount">—</strong><span>Total registrations</span></div><div class="stat"><strong id="pendingCount">—</strong><span>Pending review</span></div><div class="stat"><strong id="paidCount">—</strong><span>Marked paid</span></div></div>
-  <div class="panel"><h3>Student registrations</h3><p>Compare each student with the official university list. Only the Head Admin can record the eligibility decision here. Mark a student eligible only after confirming the match in the official list.</p><div id="listStatus" class="status">Loading registrations…</div><div class="table-wrap"><table><thead><tr><th>Student</th><th>Course / year</th><th>Contact</th><th>Delivery</th><th>Eligibility</th><th>Registration</th><th>Action</th></tr></thead><tbody id="registrationRows"><tr><td colspan="7">No data loaded.</td></tr></tbody></table></div></div>
-  <p class="small muted">Eligibility decisions are recorded by the Head Admin. Fee collection, ticket approval, QR generation, and one-time scanning are not implemented yet.</p>
- </div>
-</section>
-</main>
-<footer>PRAYAANA 2K26 · Keep student information confidential · Event date and venue to be announced</footer>
+    <section id="staffPage" class="hidden">
+      <div id="loginCard" class="card narrow">
+        <div class="eyebrow">Restricted access</div><h2 style="margin-top:8px">Staff sign-in</h2>
+        <p>Sign in with the Google account authorized by a Head Admin.</p>
+        <button class="btn" id="signInButton" type="button">Continue with Google</button>
+        <div id="staffStatus" class="status" role="status" aria-live="polite">Checking Firebase setup…</div>
+      </div>
+      <div id="staffDashboard" class="hidden">
+        <div class="staff-top">
+          <div><div class="eyebrow">Access verified</div><h2 id="welcomeHeading">Event Control Center</h2><p id="accountDetails"></p></div>
+          <div class="inline-actions"><button class="btn secondary" id="refreshButton" type="button">Refresh registrations</button><button class="btn secondary" id="signOutButton" type="button">Sign out</button></div>
+        </div>
+        <div class="stats">
+          <div class="stat"><strong id="totalCount">—</strong><span>Loaded registrations</span></div>
+          <div class="stat"><strong id="pendingCount">—</strong><span>Pending review</span></div>
+          <div class="stat"><strong id="paidCount">—</strong><span>Marked paid (loaded records)</span></div>
+        </div>
+        <div class="panel">
+          <h3>Student registrations</h3>
+          <p>Compare each student with the official university list. Only the Head Admin can record eligibility. Mark a student eligible only after confirming the match.</p>
+          <div id="listStatus" class="status" role="status" aria-live="polite">Loading registrations…</div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Student</th><th>Course / year</th><th>Contact</th><th>Delivery</th><th>Eligibility</th><th>Registration</th><th>Action</th></tr></thead>
+              <tbody id="registrationRows"><tr><td colspan="7">No data loaded.</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+        <p class="small muted">Payment recording, ticket approval, QR generation, and one-time scanning are not implemented in this version.</p>
+      </div>
+    </section>
+  </main>
+  <footer>PRAYAANA 2K26 · Keep student information confidential · Event date and venue to be announced</footer>
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
 <script>
+"use strict";
+
 const firebaseConfig = {
   apiKey: "AIzaSyA8Tt3Ttz3ASauROEwfGHtC23z0edjXLOg",
   authDomain: "prayaana-2k26.firebaseapp.com",
@@ -72,13 +158,16 @@ const firebaseConfig = {
   appId: "1:495679287568:web:99e90b86d65cb6beaa7595"
 };
 
-const $ = id => document.getElementById(id);
+const $ = (id) => document.getElementById(id);
 const registrationForm = $("registrationForm");
 const registrationStatus = $("registrationStatus");
 const staffStatus = $("staffStatus");
-let auth = null, db = null, currentStaffRole = "";
+let auth = null;
+let db = null;
+let currentStaffRole = "";
+let authStateVersion = 0;
 
-function setStatus(el, message, type="") {
+function setStatus(el, message, type = "") {
   if (!el) return;
   el.textContent = message;
   el.className = "status" + (type ? " " + type : "");
@@ -93,31 +182,58 @@ function switchPage(page) {
 $("publicTab").addEventListener("click", () => switchPage("public"));
 $("staffTab").addEventListener("click", () => switchPage("staff"));
 
-function clean(value) { return String(value || "").trim(); }
-registrationForm.addEventListener("submit", async event => {
+function clean(value) { return String(value ?? "").trim(); }
+function normalizeEmail(value) { return clean(value).toLowerCase(); }
+function validPhone(value) { return /^[+0-9() .-]{6,30}$/.test(value); }
+
+registrationForm.addEventListener("submit", async (event) => {
   event.preventDefault();
   if (!db) {
-    setStatus(registrationStatus, "Registration service is not connected yet. Please try again later.", "error");
+    setStatus(registrationStatus, "Registration service is not connected. Please try again later.", "error");
     return;
   }
+
   const submit = $("submitRegistration");
   const data = {
-    fullName: clean($("fullName").value),
-    course: clean($("course").value),
+    fullName: clean($("fullName").value).replace(/\s+/g, " "),
+    course: clean($("course").value).replace(/\s+/g, " "),
     year: clean($("year").value),
     phone: clean($("phone").value),
-    email: clean($("email").value).toLowerCase(),
+    email: normalizeEmail($("email").value),
     delivery: clean($("delivery").value)
   };
+
   if (!data.fullName || !data.course || !data.year || !data.phone || !data.email || !data.delivery || !$("consent").checked) {
     setStatus(registrationStatus, "Please complete all fields and confirm the consent checkbox.", "error");
     return;
   }
+  if (data.fullName.length > 100 || data.course.length > 100 || data.phone.length > 30 || data.email.length > 150) {
+    setStatus(registrationStatus, "One or more fields exceed the permitted length.", "error");
+    return;
+  }
+  if (!validPhone(data.phone)) {
+    setStatus(registrationStatus, "Please enter a valid phone number using digits and common phone symbols.", "error");
+    return;
+  }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
+    setStatus(registrationStatus, "Please enter a valid email address.", "error");
+    return;
+  }
+  if (!["1st year", "2nd year", "3rd year", "4th year", "5th year", "6th year", "Other"].includes(data.year)) {
+    setStatus(registrationStatus, "Please choose a valid year of study.", "error");
+    return;
+  }
+  if (!["WhatsApp", "Email"].includes(data.delivery)) {
+    setStatus(registrationStatus, "Please choose a valid ticket delivery method.", "error");
+    return;
+  }
+
   submit.disabled = true;
   setStatus(registrationStatus, "Submitting your registration securely…");
   try {
-    // No student records are read by the public form. Firestore rules allow only validated pending submissions.
-    await db.collection("REGISTRATIONS").add({
+    // A random document ID avoids exposing email/phone in the document path.
+    // This does not guarantee deduplication; see notes accompanying the rules.
+    const ref = await db.collection("REGISTRATIONS").add({
       ...data,
       status: "pending",
       paymentStatus: "unpaid",
@@ -125,10 +241,10 @@ registrationForm.addEventListener("submit", async event => {
       createdAt: firebase.firestore.FieldValue.serverTimestamp()
     });
     registrationForm.reset();
-    setStatus(registrationStatus, "Registration submitted successfully. Your details are pending verification; this is not an entry ticket.", "success");
+    setStatus(registrationStatus, "Registration submitted. Reference: " + ref.id + ". Keep this reference for your records. This is not an entry ticket.", "success");
   } catch (error) {
     console.error("Registration submit failed:", error);
-    setStatus(registrationStatus, "Could not submit registration: " + (error.message || "Unknown error") + ". The Firestore security rules may need to be updated using the companion rules file.", "error");
+    setStatus(registrationStatus, "Could not submit registration (" + (error.code || "error") + "). Please try again later or contact the event team.", "error");
   } finally {
     submit.disabled = false;
   }
@@ -136,24 +252,27 @@ registrationForm.addEventListener("submit", async event => {
 
 function normalizeStaff(data) {
   if (!data) return null;
-  const activeValue = data.active ?? data.ACTIVE;
-  const roleValue = data.role ?? data.ROLE;
-  const active = activeValue === true || String(activeValue).toLowerCase() === "true";
-  return {active, role: String(roleValue || "").toLowerCase()};
+  // Values must match the Firestore rules: active is Boolean true and role is lowercase.
+  return {
+    active: data.active === true,
+    role: String(data.role || "").toLowerCase()
+  };
 }
-function showStaffLogin(message, type="") {
+function showStaffLogin(message, type = "") {
   $("loginCard").classList.remove("hidden");
   $("staffDashboard").classList.add("hidden");
   setStatus(staffStatus, message, type);
 }
-async function verifyStaff(user) {
+async function verifyStaff(user, version) {
+  if (!db || !auth || !user) return;
   try {
     const snap = await db.collection("STAFF").doc(user.uid).get();
+    if (version !== authStateVersion || !auth.currentUser || auth.currentUser.uid !== user.uid) return;
     const staff = snap.exists ? normalizeStaff(snap.data()) : null;
     const roles = ["head_admin", "fee_collector", "entry_scanner"];
     if (!staff || !staff.active || !roles.includes(staff.role)) {
       await auth.signOut();
-      showStaffLogin("Access denied. Your account must be active in STAFF with an approved role.", "error");
+      showStaffLogin("Access denied. Your account must have an active STAFF record with an approved lowercase role.", "error");
       return;
     }
     currentStaffRole = staff.role;
@@ -164,14 +283,15 @@ async function verifyStaff(user) {
     await loadRegistrations();
   } catch (error) {
     console.error("Staff verification error:", error);
-    showStaffLogin("Could not verify staff access: " + (error.code ? error.code + " — " : "") + (error.message || "Unknown error"), "error");
+    showStaffLogin("Could not verify staff access (" + (error.code || "error") + "). Check the staff record and published Firestore rules.", "error");
   }
 }
 async function setEligibility(registrationId, decision) {
-  if (currentStaffRole !== "head_admin") {
-    setStatus($("listStatus"), "Only a Head Admin can change eligibility.", "error");
+  if (currentStaffRole !== "head_admin" || !auth || !auth.currentUser) {
+    setStatus($("listStatus"), "Only a signed-in Head Admin can change eligibility.", "error");
     return;
   }
+  if (!["eligible", "ineligible"].includes(decision)) return;
   const confirmText = decision === "eligible"
     ? "Confirm you checked this student against the official university list and want to mark them ELIGIBLE?"
     : "Confirm you checked the official university list and want to mark this student NOT ELIGIBLE?";
@@ -187,10 +307,9 @@ async function setEligibility(registrationId, decision) {
     await loadRegistrations();
   } catch (error) {
     console.error("Eligibility update failed:", error);
-    setStatus($("listStatus"), "Could not save eligibility: " + (error.code ? error.code + " — " : "") + (error.message || "Unknown error") + ". Check that the updated Firestore rules were published.", "error");
+    setStatus($("listStatus"), "Could not save eligibility (" + (error.code || "error") + "). Confirm that the updated Firestore rules are published.", "error");
   }
 }
-
 function addBadgeCell(row, value) {
   const td = document.createElement("td");
   const badge = document.createElement("span");
@@ -199,38 +318,39 @@ function addBadgeCell(row, value) {
   td.appendChild(badge);
   row.appendChild(td);
 }
-
+function addTextCell(row, value) {
+  const td = document.createElement("td");
+  td.textContent = value;
+  row.appendChild(td);
+}
 async function loadRegistrations() {
+  if (!db || !auth || !auth.currentUser) return;
   setStatus($("listStatus"), "Loading registrations…");
   $("registrationRows").replaceChildren();
+  $("refreshButton").disabled = true;
   try {
+    // Limit is explicit; these counts describe the most recent 500 records only.
     const snap = await db.collection("REGISTRATIONS").orderBy("createdAt", "desc").limit(500).get();
-    let pending = 0, paid = 0;
+    let pending = 0;
+    let paid = 0;
     if (snap.empty) {
-      $("registrationRows").innerHTML = '<tr><td colspan="7">No registrations have been submitted yet.</td></tr>';
+      const tr = document.createElement("tr");
+      const td = document.createElement("td");
+      td.colSpan = 7;
+      td.textContent = "No registrations have been submitted yet.";
+      tr.appendChild(td);
+      $("registrationRows").appendChild(tr);
     } else {
-      snap.forEach(doc => {
+      snap.forEach((doc) => {
         const r = doc.data();
         if ((r.status || "pending") === "pending") pending++;
         if ((r.paymentStatus || "unpaid") === "paid") paid++;
 
         const tr = document.createElement("tr");
-        const student = document.createElement("td");
-        student.textContent = r.fullName || "—";
-        tr.appendChild(student);
-
-        const course = document.createElement("td");
-        course.textContent = [r.course, r.year].filter(Boolean).join(" / ") || "—";
-        tr.appendChild(course);
-
-        const contact = document.createElement("td");
-        contact.textContent = [r.phone, r.email].filter(Boolean).join("\n") || "—";
-        tr.appendChild(contact);
-
-        const delivery = document.createElement("td");
-        delivery.textContent = r.delivery || "—";
-        tr.appendChild(delivery);
-
+        addTextCell(tr, r.fullName || "—");
+        addTextCell(tr, [r.course, r.year].filter(Boolean).join(" / ") || "—");
+        addTextCell(tr, [r.phone, r.email].filter(Boolean).join("\n") || "—");
+        addTextCell(tr, r.delivery || "—");
         addBadgeCell(tr, r.eligibilityStatus || "not_checked");
         addBadgeCell(tr, r.status || "pending");
 
@@ -242,16 +362,15 @@ async function loadRegistrations() {
           eligibleButton.type = "button";
           eligibleButton.className = "btn";
           eligibleButton.textContent = "Mark eligible";
-          eligibleButton.disabled = (r.eligibilityStatus === "eligible");
+          eligibleButton.disabled = r.eligibilityStatus === "eligible";
           eligibleButton.addEventListener("click", () => setEligibility(doc.id, "eligible"));
 
           const notEligibleButton = document.createElement("button");
           notEligibleButton.type = "button";
           notEligibleButton.className = "btn secondary";
           notEligibleButton.textContent = "Not eligible";
-          notEligibleButton.disabled = (r.eligibilityStatus === "ineligible");
+          notEligibleButton.disabled = r.eligibilityStatus === "ineligible";
           notEligibleButton.addEventListener("click", () => setEligibility(doc.id, "ineligible"));
-
           actions.append(eligibleButton, notEligibleButton);
           action.appendChild(actions);
         } else {
@@ -265,27 +384,43 @@ async function loadRegistrations() {
     $("totalCount").textContent = String(snap.size);
     $("pendingCount").textContent = String(pending);
     $("paidCount").textContent = String(paid);
-    setStatus($("listStatus"), "Loaded " + snap.size + " registration(s). Confirm each student's name and course against the official university list before recording eligibility.", "success");
+    setStatus($("listStatus"), "Loaded " + snap.size + " registration(s) from the most recent 500. Confirm each student's details against the official university list before recording eligibility.", "success");
   } catch (error) {
     console.error("Load registrations failed:", error);
-    setStatus($("listStatus"), "Could not load registrations: " + (error.code ? error.code + " — " : "") + (error.message || "Unknown error") + ". Check Firestore rules and the REGISTRATIONS collection.", "error");
-    $("registrationRows").innerHTML = '<tr><td colspan="7">Registration list unavailable.</td></tr>';
+    setStatus($("listStatus"), "Could not load registrations (" + (error.code || "error") + "). Check Firestore rules and the REGISTRATIONS collection.", "error");
+    const tr = document.createElement("tr");
+    const td = document.createElement("td");
+    td.colSpan = 7;
+    td.textContent = "Registration list unavailable.";
+    tr.appendChild(td);
+    $("registrationRows").appendChild(tr);
+  } finally {
+    $("refreshButton").disabled = false;
   }
 }
 $("signInButton").addEventListener("click", async () => {
-  if (!auth) return setStatus(staffStatus, "Firebase is not ready. Reload the page and try again.", "error");
+  if (!auth) {
+    setStatus(staffStatus, "Firebase is not ready. Reload the page and try again.", "error");
+    return;
+  }
   $("signInButton").disabled = true;
   setStatus(staffStatus, "Opening Google sign-in…");
   try {
     await auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
   } catch (error) {
-    setStatus(staffStatus, "Sign-in failed: " + (error.message || "Unknown error"), "error");
+    setStatus(staffStatus, "Sign-in failed (" + (error.code || "error") + "). Check Google provider settings and authorized domains in Firebase.", "error");
+  } finally {
     $("signInButton").disabled = false;
   }
 });
 $("signOutButton").addEventListener("click", async () => {
-  try { await auth.signOut(); currentStaffRole = ""; showStaffLogin("You have signed out."); }
-  catch (error) { setStatus($("listStatus"), "Sign-out failed: " + (error.message || "Unknown error"), "error"); }
+  try {
+    await auth.signOut();
+    currentStaffRole = "";
+    showStaffLogin("You have signed out.");
+  } catch (error) {
+    setStatus($("listStatus"), "Sign-out failed: " + (error.message || "Unknown error"), "error");
+  }
 });
 $("refreshButton").addEventListener("click", loadRegistrations);
 
@@ -294,19 +429,22 @@ try {
   auth = firebase.auth();
   db = firebase.firestore();
   setStatus(registrationStatus, "Registration service connected. Complete the form to register.");
-  setStatus(staffStatus, "Sign in with your authorised staff Google account.");
-  auth.onAuthStateChanged(user => {
+  setStatus(staffStatus, "Sign in with your authorized staff Google account.");
+  auth.onAuthStateChanged((user) => {
+    authStateVersion++;
+    const version = authStateVersion;
     if (!user) {
+      currentStaffRole = "";
       $("loginCard").classList.remove("hidden");
       $("staffDashboard").classList.add("hidden");
       return;
     }
-    verifyStaff(user);
+    verifyStaff(user, version);
   });
 } catch (error) {
   console.error("Firebase initialization failed:", error);
-  setStatus(registrationStatus, "Firebase setup error: " + (error.message || "Unknown error"), "error");
-  setStatus(staffStatus, "Firebase setup error: " + (error.message || "Unknown error"), "error");
+  setStatus(registrationStatus, "Firebase setup error. Please contact the event team.", "error");
+  setStatus(staffStatus, "Firebase setup error. Please contact the event team.", "error");
 }
 </script>
 </body>
