@@ -213,10 +213,13 @@
         const staffSnapshot = await staffRef.get();
 
         if (!staffSnapshot.exists) {
-          await auth.signOut();
-          denyAccess("Access denied: this Google account is not registered as staff.");
-          return;
-        }
+  denyAccess(
+    "Staff record not found.\n" +
+    "Project: " + firebase.app().options.projectId + "\n" +
+    "Lookup path: staff/" + user.uid
+  );
+  return;
+}
 
         const staff = staffSnapshot.data();
 
