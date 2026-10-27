@@ -5,8 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
   <title>PRAYAANA 2K26 | Staff Portal</title>
+
   <style>
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     body {
       margin: 0;
@@ -16,7 +19,7 @@
       justify-content: center;
       padding: 24px;
       font-family: Arial, sans-serif;
-      color: #fff;
+      color: #ffffff;
       background:
         radial-gradient(ellipse at top, #302052 0%, transparent 55%),
         linear-gradient(145deg, #090811, #151020 60%, #08070d);
@@ -69,7 +72,7 @@
       padding: 14px 16px;
       border: 1px solid #66517e;
       border-radius: 10px;
-      color: #fff;
+      color: #ffffff;
       background: #302342;
       font-size: 15px;
       font-weight: bold;
@@ -94,24 +97,32 @@
     }
   </style>
 </head>
+
 <body>
   <main class="portal">
     <div class="symbol">✦</div>
+
     <h1>PRAYAANA 2K26</h1>
     <div class="subtitle">STAFF PORTAL</div>
 
     <h2>Welcome, Organizer</h2>
+
     <p class="description">
       Authorized staff access for registration verification,
       fee collection, ticket approval and event entry.
     </p>
 
-    <button class="google-button" type="button"
-      onclick="alert('Google sign-in is not connected yet. Please wait for the secure setup to be completed.')">
+    <button
+      class="google-button"
+      type="button"
+      onclick="alert('Google sign-in is not connected yet. Please wait for the secure setup to be completed.')"
+    >
       G&nbsp; Continue with Google
     </button>
 
-    <div class="status">Secure access setup in progress</div>
+    <div class="status">
+      Secure access setup in progress
+    </div>
 
     <div class="footer">
       Authorized staff only<br>
