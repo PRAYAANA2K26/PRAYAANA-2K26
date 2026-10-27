@@ -420,15 +420,18 @@
               : "Entry Scanner access verified.";
 
         showStatus("Staff authorization verified.");
-      } catch (error) {
-        console.error("Staff authorization check failed:", error);
+} catch (error) {
+  console.error("Staff authorization check failed:", error);
 
-        // Fail closed: never show the dashboard if verification fails.
-        await auth.signOut().catch(() => {});
-        denyAccess(
-          "Unable to verify staff access. Check your Firestore rules and connection, then try again."
-        );
-      } finally {
+  await auth.signOut().catch(() => {});
+
+  denyAccess(
+    "Authorization error: " +
+    (error.code || "unknown") +
+    " — " +
+    error.message
+  );
+} finally {
         checkingAccount = false;
         signInButton.disabled = false;
       }
