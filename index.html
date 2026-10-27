@@ -53,8 +53,8 @@
  <div id="staffDashboard" class="hidden">
   <div class="staff-top"><div><div class="eyebrow">Access verified</div><h2 id="welcomeHeading">Event Control Center</h2><p id="accountDetails"></p></div><div class="inline-actions"><button class="btn secondary" id="refreshButton" type="button">Refresh registrations</button><button class="btn secondary" id="signOutButton" type="button">Sign out</button></div></div>
   <div class="stats"><div class="stat"><strong id="totalCount">—</strong><span>Total registrations</span></div><div class="stat"><strong id="pendingCount">—</strong><span>Pending review</span></div><div class="stat"><strong id="paidCount">—</strong><span>Marked paid</span></div></div>
-  <div class="panel"><h3>Student registrations</h3><p>Authorised staff can view submitted registrations here. Verify each student against the official university list before payment collection and approval.</p><div id="listStatus" class="status">Loading registrations…</div><div class="table-wrap"><table><thead><tr><th>Student</th><th>Course / year</th><th>Contact</th><th>Delivery</th><th>Status</th></tr></thead><tbody id="registrationRows"><tr><td colspan="5">No data loaded.</td></tr></tbody></table></div></div>
-  <p class="small muted">This first version supports public registration submission and staff viewing. Payment recording, approval controls, QR generation, and one-time scanning are not implemented yet.</p>
+  <div class="panel"><h3>Student registrations</h3><p>Compare each student with the official university list. Only the Head Admin can record the eligibility decision here. Mark a student eligible only after confirming the match in the official list.</p><div id="listStatus" class="status">Loading registrations…</div><div class="table-wrap"><table><thead><tr><th>Student</th><th>Course / year</th><th>Contact</th><th>Delivery</th><th>Eligibility</th><th>Registration</th><th>Action</th></tr></thead><tbody id="registrationRows"><tr><td colspan="7">No data loaded.</td></tr></tbody></table></div></div>
+  <p class="small muted">Eligibility decisions are recorded by the Head Admin. Fee collection, ticket approval, QR generation, and one-time scanning are not implemented yet.</p>
  </div>
 </section>
 </main>
@@ -167,6 +167,39 @@ async function verifyStaff(user) {
     showStaffLogin("Could not verify staff access: " + (error.code ? error.code + " — " : "") + (error.message || "Unknown error"), "error");
   }
 }
+async function setEligibility(registrationId, decision) {
+  if (currentStaffRole !== "head_admin") {
+    setStatus($("listStatus"), "Only a Head Admin can change eligibility.", "error");
+    return;
+  }
+  const confirmText = decision === "eligible"
+    ? "Confirm you checked this student against the official university list and want to mark them ELIGIBLE?"
+    : "Confirm you checked the official university list and want to mark this student NOT ELIGIBLE?";
+  if (!window.confirm(confirmText)) return;
+
+  try {
+    await db.collection("REGISTRATIONS").doc(registrationId).update({
+      eligibilityStatus: decision,
+      eligibilityCheckedAt: firebase.firestore.FieldValue.serverTimestamp(),
+      eligibilityCheckedBy: auth.currentUser.uid
+    });
+    setStatus($("listStatus"), "Eligibility updated successfully.", "success");
+    await loadRegistrations();
+  } catch (error) {
+    console.error("Eligibility update failed:", error);
+    setStatus($("listStatus"), "Could not save eligibility: " + (error.code ? error.code + " — " : "") + (error.message || "Unknown error") + ". Check that the updated Firestore rules were published.", "error");
+  }
+}
+
+function addBadgeCell(row, value) {
+  const td = document.createElement("td");
+  const badge = document.createElement("span");
+  badge.className = "badge";
+  badge.textContent = value;
+  td.appendChild(badge);
+  row.appendChild(td);
+}
+
 async function loadRegistrations() {
   setStatus($("listStatus"), "Loading registrations…");
   $("registrationRows").replaceChildren();
@@ -174,42 +207,69 @@ async function loadRegistrations() {
     const snap = await db.collection("REGISTRATIONS").orderBy("createdAt", "desc").limit(500).get();
     let pending = 0, paid = 0;
     if (snap.empty) {
-      $("registrationRows").innerHTML = '<tr><td colspan="6">No registrations have been submitted yet.</td></tr>';
+      $("registrationRows").innerHTML = '<tr><td colspan="7">No registrations have been submitted yet.</td></tr>';
     } else {
       snap.forEach(doc => {
         const r = doc.data();
         if ((r.status || "pending") === "pending") pending++;
         if ((r.paymentStatus || "unpaid") === "paid") paid++;
+
         const tr = document.createElement("tr");
-        const values = [
-          r.fullName || "—",
-          [r.course, r.year].filter(Boolean).join(" / ") || "—",
-          [r.phone, r.email].filter(Boolean).join("\n") || "—",
-          r.delivery || "—",
-          r.status || "pending"
-        ];
-        values.forEach((value, index) => {
-          const td = document.createElement("td");
-          td.textContent = value;
-          if (index === 5) {
-            const badge = document.createElement("span");
-            badge.className = "badge";
-            badge.textContent = value;
-            td.replaceChildren(badge);
-          }
-          tr.appendChild(td);
-        });
+        const student = document.createElement("td");
+        student.textContent = r.fullName || "—";
+        tr.appendChild(student);
+
+        const course = document.createElement("td");
+        course.textContent = [r.course, r.year].filter(Boolean).join(" / ") || "—";
+        tr.appendChild(course);
+
+        const contact = document.createElement("td");
+        contact.textContent = [r.phone, r.email].filter(Boolean).join("\n") || "—";
+        tr.appendChild(contact);
+
+        const delivery = document.createElement("td");
+        delivery.textContent = r.delivery || "—";
+        tr.appendChild(delivery);
+
+        addBadgeCell(tr, r.eligibilityStatus || "not_checked");
+        addBadgeCell(tr, r.status || "pending");
+
+        const action = document.createElement("td");
+        if (currentStaffRole === "head_admin") {
+          const actions = document.createElement("div");
+          actions.className = "inline-actions";
+          const eligibleButton = document.createElement("button");
+          eligibleButton.type = "button";
+          eligibleButton.className = "btn";
+          eligibleButton.textContent = "Mark eligible";
+          eligibleButton.disabled = (r.eligibilityStatus === "eligible");
+          eligibleButton.addEventListener("click", () => setEligibility(doc.id, "eligible"));
+
+          const notEligibleButton = document.createElement("button");
+          notEligibleButton.type = "button";
+          notEligibleButton.className = "btn secondary";
+          notEligibleButton.textContent = "Not eligible";
+          notEligibleButton.disabled = (r.eligibilityStatus === "ineligible");
+          notEligibleButton.addEventListener("click", () => setEligibility(doc.id, "ineligible"));
+
+          actions.append(eligibleButton, notEligibleButton);
+          action.appendChild(actions);
+        } else {
+          action.textContent = "Head Admin only";
+          action.className = "muted small";
+        }
+        tr.appendChild(action);
         $("registrationRows").appendChild(tr);
       });
     }
     $("totalCount").textContent = String(snap.size);
     $("pendingCount").textContent = String(pending);
     $("paidCount").textContent = String(paid);
-    setStatus($("listStatus"), "Loaded " + snap.size + " registration(s). Verify student eligibility before proceeding.", "success");
+    setStatus($("listStatus"), "Loaded " + snap.size + " registration(s). Confirm each student's name and course against the official university list before recording eligibility.", "success");
   } catch (error) {
     console.error("Load registrations failed:", error);
     setStatus($("listStatus"), "Could not load registrations: " + (error.code ? error.code + " — " : "") + (error.message || "Unknown error") + ". Check Firestore rules and the REGISTRATIONS collection.", "error");
-    $("registrationRows").innerHTML = '<tr><td colspan="6">Registration list unavailable.</td></tr>';
+    $("registrationRows").innerHTML = '<tr><td colspan="7">Registration list unavailable.</td></tr>';
   }
 }
 $("signInButton").addEventListener("click", async () => {
