@@ -7,9 +7,7 @@
   <title>PRAYAANA 2K26 | Staff Portal</title>
 
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -19,7 +17,7 @@
       justify-content: center;
       padding: 24px;
       font-family: Arial, sans-serif;
-      color: #ffffff;
+      color: #fff;
       background:
         radial-gradient(ellipse at top, #302052 0%, transparent 55%),
         linear-gradient(145deg, #090811, #151020 60%, #08070d);
@@ -27,13 +25,13 @@
 
     .portal {
       width: 100%;
-      max-width: 420px;
+      max-width: 460px;
       padding: 40px 28px;
       text-align: center;
-      background: rgba(22, 18, 35, 0.92);
+      background: rgba(22, 18, 35, 0.95);
       border: 1px solid #493361;
       border-radius: 22px;
-      box-shadow: 0 20px 70px rgba(0, 0, 0, 0.45);
+      box-shadow: 0 20px 70px rgba(0,0,0,.45);
     }
 
     .symbol {
@@ -44,7 +42,7 @@
 
     h1 {
       margin: 0;
-      font-size: 30px;
+      font-size: 28px;
       letter-spacing: 3px;
     }
 
@@ -55,10 +53,7 @@
       letter-spacing: 4px;
     }
 
-    h2 {
-      font-size: 20px;
-      margin-bottom: 10px;
-    }
+    h2 { font-size: 20px; margin-bottom: 10px; }
 
     .description {
       color: #c3bdcf;
@@ -67,26 +62,33 @@
       margin-bottom: 26px;
     }
 
-    .google-button {
+    .google-button, .secondary-button {
       width: 100%;
       padding: 14px 16px;
       border: 1px solid #66517e;
       border-radius: 10px;
-      color: #ffffff;
+      color: #fff;
       background: #302342;
       font-size: 15px;
       font-weight: bold;
       cursor: pointer;
     }
 
-    .google-button:hover {
+    .google-button:hover, .secondary-button:hover {
       background: #403052;
+    }
+
+    button:disabled {
+      opacity: .6;
+      cursor: wait;
     }
 
     .status {
       margin-top: 18px;
-      font-size: 12px;
+      font-size: 13px;
       color: #c6a0ff;
+      line-height: 1.6;
+      overflow-wrap: anywhere;
     }
 
     .footer {
@@ -95,28 +97,59 @@
       font-size: 11px;
       line-height: 1.6;
     }
+
+    .panel {
+      margin-top: 22px;
+      padding: 18px;
+      text-align: left;
+      background: #171221;
+      border: 1px solid #493361;
+      border-radius: 12px;
+    }
+
+    .panel p {
+      color: #c3bdcf;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .hidden { display: none; }
   </style>
 </head>
 
 <body>
   <main class="portal">
     <div class="symbol">✦</div>
-
     <h1>PRAYAANA 2K26</h1>
     <div class="subtitle">STAFF PORTAL</div>
 
-    <h2>Welcome, Organizer</h2>
+    <section id="loginSection">
+      <h2>Welcome, Organizer</h2>
+      <p class="description">
+        Secure access for authorized event staff.
+        Sign in with your approved Google account.
+      </p>
+      <button class="google-button" id="googleSignInButton" type="button">
+        G&nbsp; Continue with Google
+      </button>
+    </section>
 
-    <p class="description">
-      Authorized staff access for registration verification,
-      fee collection, ticket approval and event entry.
-    </p>
+    <section id="dashboardSection" class="hidden">
+      <h2 id="welcomeHeading">Welcome</h2>
+      <p class="description" id="accountDetails"></p>
 
-   <button class="google-button" id="googleSignInButton" type="button">
-  G&nbsp; Continue with Google
-</button>
+      <div class="panel">
+        <strong id="roleLabel">Staff role</strong>
+        <p id="roleDescription"></p>
+        <p>Registration, fee collection and entry tools will be added after authorization testing.</p>
+      </div>
 
-    <div class="status">
+      <button class="secondary-button" id="signOutButton" type="button">
+        Sign out
+      </button>
+    </section>
+
+    <div class="status" id="statusMessage" role="status" aria-live="polite">
       Secure access setup in progress
     </div>
 
@@ -125,34 +158,153 @@
       PRAYAANA 2K26 · Saribekyan Medical University Armenia
     </div>
   </main>
-  
+
   <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
 
-<script>
-  const firebaseConfig = {
-    apiKey: "AIzaSyA8Tt3Ttz3ASauROEwfGHtC23z0edjXLOg",
-    authDomain: "prayaana-2k26.firebaseapp.com",
-    projectId: "prayaana-2k26",
-    appId: "1:495679287568:web:99e90b86d65cb6beaa7595"
-  };
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyA8Tt3Ttz3ASauROEwfGHtC23z0edjXLOg",
+      authDomain: "prayaana-2k26.firebaseapp.com",
+      projectId: "prayaana-2k26",
+      appId: "1:495679287568:web:99e90b86d65cb6beaa7595"
+    };
 
-  firebase.initializeApp(firebaseConfig);
+    firebase.initializeApp(firebaseConfig);
 
-  const auth = firebase.auth();
-  const googleProvider = new firebase.auth.GoogleAuthProvider();
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+    const googleProvider = new firebase.auth.GoogleAuthProvider();
 
-  document.getElementById("googleSignInButton")
-    .addEventListener("click", async () => {
+    const loginSection = document.getElementById("loginSection");
+    const dashboardSection = document.getElementById("dashboardSection");
+    const signInButton = document.getElementById("googleSignInButton");
+    const signOutButton = document.getElementById("signOutButton");
+    const statusMessage = document.getElementById("statusMessage");
+
+    let checkingAccount = false;
+
+    function showStatus(message) {
+      statusMessage.textContent = message;
+    }
+
+    function showLogin() {
+      loginSection.classList.remove("hidden");
+      dashboardSection.classList.add("hidden");
+    }
+
+    function denyAccess(message) {
+      showLogin();
+      showStatus(message);
+    }
+
+    async function checkStaffAccess(user) {
+      if (!user || checkingAccount) return;
+
+      checkingAccount = true;
+      signInButton.disabled = true;
+      showLogin();
+      showStatus("Checking your staff authorization...");
+
       try {
-        const result = await auth.signInWithPopup(googleProvider);
-        alert("Signed in successfully as " + result.user.email);
+        // The document ID must be the signed-in user's Firebase UID.
+        const staffRef = db.collection("staff").doc(user.uid);
+        const staffSnapshot = await staffRef.get();
+
+        if (!staffSnapshot.exists) {
+          await auth.signOut();
+          denyAccess("Access denied: this Google account is not registered as staff.");
+          return;
+        }
+
+        const staff = staffSnapshot.data();
+
+        if (staff.active !== true) {
+          await auth.signOut();
+          denyAccess("Access denied: this staff account is inactive.");
+          return;
+        }
+
+        const allowedRoles = [
+          "head_admin",
+          "fee_collector",
+          "entry_scanner"
+        ];
+
+        if (!allowedRoles.includes(staff.role)) {
+          await auth.signOut();
+          denyAccess("Access denied: your staff role is not recognized.");
+          return;
+        }
+
+        loginSection.classList.add("hidden");
+        dashboardSection.classList.remove("hidden");
+
+        document.getElementById("welcomeHeading").textContent =
+          staff.role === "head_admin" ? "Welcome, Head Admin" : "Welcome, Organizer";
+
+        document.getElementById("accountDetails").textContent =
+          "Signed in as " + (user.email || "Google account");
+
+        document.getElementById("roleLabel").textContent =
+          "Your role: " + staff.role.replaceAll("_", " ");
+
+        document.getElementById("roleDescription").textContent =
+          staff.role === "head_admin"
+            ? "Head Admin access verified."
+            : staff.role === "fee_collector"
+              ? "Fee Collector access verified."
+              : "Entry Scanner access verified.";
+
+        showStatus("Staff authorization verified.");
       } catch (error) {
-        console.error(error);
-        alert("Sign-in failed: " + error.message);
+        console.error("Staff authorization check failed:", error);
+
+        // Fail closed: never show the dashboard if verification fails.
+        await auth.signOut().catch(() => {});
+        denyAccess(
+          "Unable to verify staff access. Check your Firestore rules and connection, then try again."
+        );
+      } finally {
+        checkingAccount = false;
+        signInButton.disabled = false;
+      }
+    }
+
+    signInButton.addEventListener("click", async () => {
+      signInButton.disabled = true;
+      showStatus("Opening Google sign-in...");
+
+      try {
+        await auth.signInWithPopup(googleProvider);
+        // onAuthStateChanged performs the staff authorization check.
+      } catch (error) {
+        console.error("Google sign-in failed:", error);
+        showStatus("Sign-in failed: " + error.message);
+        signInButton.disabled = false;
       }
     });
-</script>
-  
+
+    signOutButton.addEventListener("click", async () => {
+      try {
+        await auth.signOut();
+        showLogin();
+        showStatus("You have signed out.");
+      } catch (error) {
+        console.error(error);
+        showStatus("Sign-out failed. Please try again.");
+      }
+    });
+
+    auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        await checkStaffAccess(user);
+      } else {
+        showLogin();
+        showStatus("Sign in with your approved staff account.");
+      }
+    });
+  </script>
 </body>
 </html>
