@@ -113,6 +113,80 @@
       line-height: 1.6;
     }
 
+    .dashboard-nav {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin: 22px 0;
+}
+
+.nav-button {
+  padding: 13px 8px;
+  border: 1px solid #493361;
+  border-radius: 10px;
+  background: #171221;
+  color: #e7dcf8;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.nav-button.active {
+  background: #493361;
+  border-color: #c6a0ff;
+}
+
+.dashboard-panel {
+  padding: 18px;
+  margin-top: 14px;
+  text-align: left;
+  border: 1px solid #493361;
+  border-radius: 12px;
+  background: #171221;
+}
+
+.dashboard-panel h3 {
+  margin-top: 0;
+  color: #c6a0ff;
+}
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin: 18px 0;
+}
+
+.stat-card {
+  padding: 15px 10px;
+  border: 1px solid #493361;
+  border-radius: 12px;
+  background: #21182e;
+  text-align: left;
+}
+
+.stat-number {
+  display: block;
+  font-size: 23px;
+  font-weight: bold;
+  color: #c6a0ff;
+  margin-bottom: 7px;
+}
+
+.stat-label {
+  color: #c3bdcf;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.setup-note {
+  padding: 12px;
+  border-radius: 8px;
+  background: #21182e;
+  color: #c3bdcf;
+  font-size: 13px;
+  line-height: 1.6;
+}
+    
     .hidden { display: none; }
   </style>
 </head>
@@ -134,20 +208,87 @@
       </button>
     </section>
 
-    <section id="dashboardSection" class="hidden">
-      <h2 id="welcomeHeading">Welcome</h2>
-      <p class="description" id="accountDetails"></p>
+<section id="dashboardSection" class="hidden">
+  <h2 id="welcomeHeading">Welcome, Head Admin</h2>
+  <p class="description" id="accountDetails"></p>
 
-      <div class="panel">
-        <strong id="roleLabel">Staff role</strong>
-        <p id="roleDescription"></p>
-        <p>Registration, fee collection and entry tools will be added after authorization testing.</p>
-      </div>
+  <div class="dashboard-panel">
+    <h3>Event Control Center</h3>
+    <p id="roleDescription">Head Admin access verified.</p>
+    <div class="setup-note">
+      Dashboard preview. Live event data will appear after the
+      database and workflows are connected.
+    </div>
+  </div>
 
-      <button class="secondary-button" id="signOutButton" type="button">
-        Sign out
-      </button>
-    </section>
+  <div class="stat-grid">
+    <div class="stat-card">
+      <span class="stat-number">—</span>
+      <span class="stat-label">Student registrations</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-number">—</span>
+      <span class="stat-label">Fees collected</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-number">—</span>
+      <span class="stat-label">Tickets awaiting approval</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-number">—</span>
+      <span class="stat-label">Entries scanned</span>
+    </div>
+  </div>
+
+  <nav class="dashboard-nav" aria-label="Dashboard sections">
+    <button class="nav-button active" data-panel="overviewPanel" type="button">Overview</button>
+    <button class="nav-button" data-panel="registrationsPanel" type="button">Registrations</button>
+    <button class="nav-button" data-panel="feesPanel" type="button">Fee Collection</button>
+    <button class="nav-button" data-panel="approvalsPanel" type="button">Ticket Approval</button>
+    <button class="nav-button" data-panel="entryPanel" type="button">QR Entry</button>
+    <button class="nav-button" data-panel="staffPanel" type="button">Staff Management</button>
+  </nav>
+
+  <div id="overviewPanel" class="dashboard-panel">
+    <h3>Dashboard Overview</h3>
+    <p>Manage the event from one place.</p>
+    <p class="setup-note">Next: connect student registrations and live event statistics.</p>
+  </div>
+
+  <div id="registrationsPanel" class="dashboard-panel hidden">
+    <h3>Student Registrations</h3>
+    <p>Review student details and eligibility.</p>
+    <p class="setup-note">Not connected yet — no student records are being displayed.</p>
+  </div>
+
+  <div id="feesPanel" class="dashboard-panel hidden">
+    <h3>Fee Collection</h3>
+    <p>Track payment status, amount, collector and collection time.</p>
+    <p class="setup-note">Not connected yet — no payments are being recorded.</p>
+  </div>
+
+  <div id="approvalsPanel" class="dashboard-panel hidden">
+    <h3>Ticket Approval</h3>
+    <p>Review eligible students after their fee is confirmed.</p>
+    <p class="setup-note">Not connected yet — no tickets are being approved.</p>
+  </div>
+
+  <div id="entryPanel" class="dashboard-panel hidden">
+    <h3>QR Entry</h3>
+    <p>Prepare for ticket validation and duplicate-scan prevention.</p>
+    <p class="setup-note">Not connected yet — scanning will not grant event entry.</p>
+  </div>
+
+  <div id="staffPanel" class="dashboard-panel hidden">
+    <h3>Staff Management</h3>
+    <p>Plan access for Head Admins, fee collectors and entry scanners.</p>
+    <p class="setup-note">Not connected yet — staff permissions cannot be changed here.</p>
+  </div>
+
+  <button class="secondary-button" id="signOutButton" type="button">
+    Sign out
+  </button>
+</section>
 
     <div class="status" id="statusMessage" role="status" aria-live="polite">
       Secure access setup in progress
@@ -182,6 +323,24 @@
     const signInButton = document.getElementById("googleSignInButton");
     const signOutButton = document.getElementById("signOutButton");
     const statusMessage = document.getElementById("statusMessage");
+
+    document.querySelectorAll(".nav-button").forEach((button) => {
+  button.addEventListener("click", () => {
+    const targetId = button.dataset.panel;
+
+    document.querySelectorAll(".dashboard-panel").forEach((panel) => {
+      panel.classList.add("hidden");
+    });
+
+    document.getElementById(targetId).classList.remove("hidden");
+
+    document.querySelectorAll(".nav-button").forEach((item) => {
+      item.classList.remove("active");
+    });
+
+    button.classList.add("active");
+  });
+});
 
     let checkingAccount = false;
 
