@@ -31,7 +31,6 @@
  <form id="registrationForm" style="margin-top:20px">
   <div class="form-grid">
    <div class="field"><label for="fullName">Full name *</label><input id="fullName" name="fullName" autocomplete="name" maxlength="100" required></div>
-   <div class="field"><label for="studentId">University student ID *</label><input id="studentId" name="studentId" maxlength="50" required></div>
    <div class="field"><label for="course">Course *</label><input id="course" name="course" maxlength="100" placeholder="e.g. General Medicine" required></div>
    <div class="field"><label for="year">Year of study *</label><select id="year" name="year" required><option value="">Choose year</option><option>1st year</option><option>2nd year</option><option>3rd year</option><option>4th year</option><option>5th year</option><option>6th year</option><option>Other</option></select></div>
    <div class="field"><label for="phone">Phone number *</label><input id="phone" name="phone" type="tel" autocomplete="tel" maxlength="30" required></div>
@@ -54,7 +53,7 @@
  <div id="staffDashboard" class="hidden">
   <div class="staff-top"><div><div class="eyebrow">Access verified</div><h2 id="welcomeHeading">Event Control Center</h2><p id="accountDetails"></p></div><div class="inline-actions"><button class="btn secondary" id="refreshButton" type="button">Refresh registrations</button><button class="btn secondary" id="signOutButton" type="button">Sign out</button></div></div>
   <div class="stats"><div class="stat"><strong id="totalCount">—</strong><span>Total registrations</span></div><div class="stat"><strong id="pendingCount">—</strong><span>Pending review</span></div><div class="stat"><strong id="paidCount">—</strong><span>Marked paid</span></div></div>
-  <div class="panel"><h3>Student registrations</h3><p>Authorised staff can view submitted registrations here. Verify each student against the official university list before payment collection and approval.</p><div id="listStatus" class="status">Loading registrations…</div><div class="table-wrap"><table><thead><tr><th>Student</th><th>Student ID</th><th>Course / year</th><th>Contact</th><th>Delivery</th><th>Status</th></tr></thead><tbody id="registrationRows"><tr><td colspan="6">No data loaded.</td></tr></tbody></table></div></div>
+  <div class="panel"><h3>Student registrations</h3><p>Authorised staff can view submitted registrations here. Verify each student against the official university list before payment collection and approval.</p><div id="listStatus" class="status">Loading registrations…</div><div class="table-wrap"><table><thead><tr><th>Student</th><th>Course / year</th><th>Contact</th><th>Delivery</th><th>Status</th></tr></thead><tbody id="registrationRows"><tr><td colspan="5">No data loaded.</td></tr></tbody></table></div></div>
   <p class="small muted">This first version supports public registration submission and staff viewing. Payment recording, approval controls, QR generation, and one-time scanning are not implemented yet.</p>
  </div>
 </section>
@@ -104,14 +103,13 @@ registrationForm.addEventListener("submit", async event => {
   const submit = $("submitRegistration");
   const data = {
     fullName: clean($("fullName").value),
-    studentId: clean($("studentId").value),
     course: clean($("course").value),
     year: clean($("year").value),
     phone: clean($("phone").value),
     email: clean($("email").value).toLowerCase(),
     delivery: clean($("delivery").value)
   };
-  if (!data.fullName || !data.studentId || !data.course || !data.year || !data.phone || !data.email || !data.delivery || !$("consent").checked) {
+  if (!data.fullName || !data.course || !data.year || !data.phone || !data.email || !data.delivery || !$("consent").checked) {
     setStatus(registrationStatus, "Please complete all fields and confirm the consent checkbox.", "error");
     return;
   }
@@ -185,7 +183,6 @@ async function loadRegistrations() {
         const tr = document.createElement("tr");
         const values = [
           r.fullName || "—",
-          r.studentId || "—",
           [r.course, r.year].filter(Boolean).join(" / ") || "—",
           [r.phone, r.email].filter(Boolean).join("\n") || "—",
           r.delivery || "—",
