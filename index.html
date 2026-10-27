@@ -209,7 +209,7 @@
 
       try {
         // The document ID must be the signed-in user's Firebase UID.
-        const staffRef = db.collection("staff").doc(user.uid);
+        const staffRef = db.collection("STAFF").doc(user.uid);
         const staffSnapshot = await staffRef.get();
 
         if (!staffSnapshot.exists) {
