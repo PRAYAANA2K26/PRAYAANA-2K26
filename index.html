@@ -39,6 +39,7 @@
     .tab.active, .tab:hover { border-color:var(--gold); color:var(--text); background:#2a2038; }
     .btn { background:var(--gold); color:#17101e; border-color:var(--gold); }
     .btn.secondary { background:transparent; color:var(--text); border-color:var(--line); }
+    .btn.danger { background:#5b202b; color:#fff; border-color:#a34a5b; }
     .card, .panel { background:linear-gradient(145deg,rgba(29,22,42,.97),rgba(16,12,24,.98)); border:1px solid var(--line); border-radius:17px; padding:23px; box-shadow:0 15px 45px #0002; }
     .narrow { max-width:740px; margin:0 auto; }
     .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:15px; }
@@ -127,18 +128,27 @@
           <div class="stat"><strong id="pendingCount">—</strong><span>Pending review</span></div>
           <div class="stat"><strong id="paidCount">—</strong><span>Marked paid (loaded records)</span></div>
         </div>
-        <div class="panel">
+        <div class="panel" id="scannerPanel">
+          <h3>Entry scanning</h3>
+          <p>Entry Scanner or Head Admin: scan a student's ticket QR code. Each valid ticket can be used only once.</p>
+          <div class="inline-actions"><button class="btn secondary" id="startScannerButton" type="button">Start camera scanner</button><button class="btn secondary" id="stopScannerButton" type="button" disabled>Stop scanner</button></div>
+          <div id="qrReader" style="max-width:460px;margin-top:12px"></div>
+          <div class="field" style="margin-top:12px"><label for="manualTicketToken">Manual ticket token (fallback)</label><input id="manualTicketToken" autocomplete="off" placeholder="Paste token only if camera scanning is unavailable"></div>
+          <button class="btn" id="validateManualTicketButton" type="button" style="margin-top:10px">Validate ticket</button>
+          <div id="scanStatus" class="status" role="status" aria-live="polite">Scanner ready.</div>
+        </div>
+        <div class="panel" style="margin-top:16px">
           <h3>Student registrations</h3>
-          <p>Compare each student with the official university list. Only the Head Admin can record eligibility. Mark a student eligible only after confirming the match.</p>
+          <p>Compare each student with the official university list. Only the Head Admin can record eligibility. Fee Collectors can record manually verified payments. Tickets can be issued only after eligibility and payment are confirmed.</p>
           <div id="listStatus" class="status" role="status" aria-live="polite">Loading registrations…</div>
           <div class="table-wrap">
             <table>
-              <thead><tr><th>Student</th><th>Course / year</th><th>Contact</th><th>Delivery</th><th>Eligibility</th><th>Registration</th><th>Action</th></tr></thead>
-              <tbody id="registrationRows"><tr><td colspan="7">No data loaded.</td></tr></tbody>
+              <thead><tr><th>Student</th><th>Course / year</th><th>Contact</th><th>Delivery</th><th>Eligibility</th><th>Payment</th><th>Ticket</th><th>Action</th></tr></thead>
+              <tbody id="registrationRows"><tr><td colspan="8">No data loaded.</td></tr></tbody>
             </table>
           </div>
         </div>
-        <p class="small muted">Payment recording, ticket approval, QR generation, and one-time scanning are not implemented in this version.</p>
+        <div id="ticketPanel" class="panel hidden" style="margin-top:16px"><h3>Issued ticket QR</h3><p class="small">This ticket token is shown only once. Save or securely share the QR with the student now; do not share it publicly.</p><div id="ticketQr" style="background:white;display:inline-block;padding:12px;border-radius:10px"></div><p id="ticketDetails" class="small"></p><button id="closeTicketButton" type="button" class="btn secondary">Close ticket</button></div>
       </div>
     </section>
   </main>
@@ -148,6 +158,8 @@
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 <script>
 "use strict";
 
@@ -166,6 +178,7 @@ let auth = null;
 let db = null;
 let currentStaffRole = "";
 let authStateVersion = 0;
+let qrScanner = null;
 
 function setStatus(el, message, type = "") {
   if (!el) return;
@@ -198,7 +211,7 @@ registrationForm.addEventListener("submit", async (event) => {
     fullName: clean($("fullName").value).replace(/\s+/g, " "),
     course: clean($("course").value).replace(/\s+/g, " "),
     year: clean($("year").value),
-    phone: clean($("phone").value),
+    phone: clean($("phone").value).replace(/\D/g, ""),
     email: normalizeEmail($("email").value),
     delivery: clean($("delivery").value)
   };
@@ -231,20 +244,31 @@ registrationForm.addEventListener("submit", async (event) => {
   submit.disabled = true;
   setStatus(registrationStatus, "Submitting your registration securely…");
   try {
-    // A random document ID avoids exposing email/phone in the document path.
-    // This does not guarantee deduplication; see notes accompanying the rules.
-    const ref = await db.collection("REGISTRATIONS").add({
-      ...data,
-      status: "pending",
-      paymentStatus: "unpaid",
-      eligibilityStatus: "not_checked",
-      createdAt: firebase.firestore.FieldValue.serverTimestamp()
-    });
+    const phoneDigits = data.phone;
+    if (phoneDigits.length < 6 || phoneDigits.length > 20) throw new Error("Enter a phone number with 6–20 digits.");
+    data.phoneDigits = phoneDigits;
+    data.email = normalizeEmail(data.email);
+    data.eligibilityStatus = "not_checked";
+    data.paymentStatus = "unpaid";
+    data.paymentReference = "";
+    data.ticketStatus = "not_issued";
+    data.ticketId = "";
+    data.createdAt = firebase.firestore.FieldValue.serverTimestamp();
+    const regRef = db.collection("REGISTRATIONS").doc();
+    const emailIndex = db.collection("REGISTRATION_INDEX").doc("email_" + data.email);
+    const phoneIndex = db.collection("REGISTRATION_INDEX").doc("phone_" + phoneDigits);
+    const batch = db.batch();
+    batch.set(regRef, data);
+    batch.set(emailIndex, { registrationId: regRef.id, type: "email", value: data.email });
+    batch.set(phoneIndex, { registrationId: regRef.id, type: "phone", value: phoneDigits });
+    await batch.commit();
     registrationForm.reset();
-    setStatus(registrationStatus, "Registration submitted. Reference: " + ref.id + ". Keep this reference for your records. This is not an entry ticket.", "success");
+    setStatus(registrationStatus, "Registration submitted. Reference: " + regRef.id + ". Keep this reference. This is not an entry ticket. Duplicate email and phone numbers are blocked.", "success");
   } catch (error) {
     console.error("Registration submit failed:", error);
-    setStatus(registrationStatus, "Could not submit registration (" + (error.code || "error") + "). Please try again later or contact the event team.", "error");
+    const duplicate = error.code === "permission-denied" || error.code === "already-exists";
+    const message = duplicate ? "This email address or phone number may already be registered. If you believe this is a mistake, contact the event team." : "Could not submit registration (" + (error.code || error.message || "error") + "). Please try again later.";
+    setStatus(registrationStatus, message, "error");
   } finally {
     submit.disabled = false;
   }
@@ -276,6 +300,7 @@ async function verifyStaff(user, version) {
       return;
     }
     currentStaffRole = staff.role;
+    $("scannerPanel").classList.toggle("hidden", !["entry_scanner", "head_admin"].includes(staff.role));
     $("loginCard").classList.add("hidden");
     $("staffDashboard").classList.remove("hidden");
     $("welcomeHeading").textContent = "Welcome, " + (user.displayName || "Staff member");
@@ -286,6 +311,35 @@ async function verifyStaff(user, version) {
     showStaffLogin("Could not verify staff access (" + (error.code || "error") + "). Check the staff record and published Firestore rules.", "error");
   }
 }
+async function deleteIneligibleRegistration(registrationId, studentName) {
+  if (currentStaffRole !== "head_admin" || !auth || !auth.currentUser) {
+    setStatus($("listStatus"), "Only a signed-in Head Admin can delete registrations.", "error");
+    return;
+  }
+  const confirmed = window.confirm(
+    "PERMANENTLY DELETE this registration for " + studentName + "?\n\n" +
+    "This action cannot be undone. Only registrations already marked NOT ELIGIBLE can be deleted."
+  );
+  if (!confirmed) return;
+
+  try {
+    const ref = db.collection("REGISTRATIONS").doc(registrationId);
+    const snap = await ref.get();
+    if (!snap.exists || snap.data().eligibilityStatus !== "ineligible") throw new Error("Only an ineligible registration can be deleted.");
+    const r = snap.data();
+    const batch = db.batch();
+    batch.delete(db.collection("REGISTRATION_INDEX").doc("email_" + normalizeEmail(r.email)));
+    batch.delete(db.collection("REGISTRATION_INDEX").doc("phone_" + String(r.phoneDigits || r.phone.replace(/\D/g, ""))));
+    batch.delete(ref);
+    await batch.commit();
+    setStatus($("listStatus"), "The ineligible registration was permanently deleted.", "success");
+    await loadRegistrations();
+  } catch (error) {
+    console.error("Delete registration failed:", error);
+    setStatus($("listStatus"), "Could not delete registration (" + (error.code || "error") + "). Confirm it is marked not eligible and that the updated Firestore rules are published.", "error");
+  }
+}
+
 async function setEligibility(registrationId, decision) {
   if (currentStaffRole !== "head_admin" || !auth || !auth.currentUser) {
     setStatus($("listStatus"), "Only a signed-in Head Admin can change eligibility.", "error");
@@ -298,11 +352,7 @@ async function setEligibility(registrationId, decision) {
   if (!window.confirm(confirmText)) return;
 
   try {
-    await db.collection("REGISTRATIONS").doc(registrationId).update({
-      eligibilityStatus: decision,
-      eligibilityCheckedAt: firebase.firestore.FieldValue.serverTimestamp(),
-      eligibilityCheckedBy: auth.currentUser.uid
-    });
+    await db.collection("REGISTRATIONS").doc(registrationId).update({ eligibilityStatus: decision, eligibilityUpdatedAt: firebase.firestore.FieldValue.serverTimestamp(), eligibilityUpdatedBy: auth.currentUser.uid });
     setStatus($("listStatus"), "Eligibility updated successfully.", "success");
     await loadRegistrations();
   } catch (error) {
@@ -310,6 +360,70 @@ async function setEligibility(registrationId, decision) {
     setStatus($("listStatus"), "Could not save eligibility (" + (error.code || "error") + "). Confirm that the updated Firestore rules are published.", "error");
   }
 }
+
+async function recordManualPayment(registrationId) {
+  if (!["head_admin", "fee_collector"].includes(currentStaffRole)) return;
+  const paymentReference = window.prompt("Enter the verified receipt number or payment reference. Do not mark payment received until you have checked it.");
+  if (!paymentReference || !paymentReference.trim()) return;
+  try {
+    await db.collection("REGISTRATIONS").doc(registrationId).update({ paymentStatus: "paid", paymentReference: paymentReference.trim().slice(0, 100), paymentRecordedAt: firebase.firestore.FieldValue.serverTimestamp(), paymentRecordedBy: auth.currentUser.uid });
+    setStatus($("listStatus"), "Manually verified payment recorded.", "success"); await loadRegistrations();
+  } catch (error) { setStatus($("listStatus"), "Payment was not recorded (" + (error.code || "error") + "): " + (error.message || "Check the registration and role."), "error"); }
+}
+async function issueTicket(registrationId) {
+  if (currentStaffRole !== "head_admin") return;
+  if (!window.confirm("Issue a one-time QR entry ticket? Confirm that eligibility and manual payment have both been verified.")) return;
+  try {
+    const regRef = db.collection("REGISTRATIONS").doc(registrationId);
+    const token = Array.from(crypto.getRandomValues(new Uint8Array(24)), b => b.toString(16).padStart(2, "0")).join("");
+    const ticketRef = db.collection("TICKETS").doc(token);
+    await db.runTransaction(async tx => {
+      const reg = await tx.get(regRef);
+      if (!reg.exists) throw new Error("Registration not found.");
+      const r = reg.data();
+      if (r.eligibilityStatus !== "eligible" || r.paymentStatus !== "paid" || r.ticketStatus === "issued" || r.ticketStatus === "used") throw new Error("Eligibility and payment must be confirmed, and no active ticket may exist.");
+      tx.set(ticketRef, { registrationId, used: false, issuedAt: firebase.firestore.FieldValue.serverTimestamp(), issuedBy: auth.currentUser.uid });
+      tx.update(regRef, { ticketStatus: "issued", ticketId: token, ticketIssuedAt: firebase.firestore.FieldValue.serverTimestamp() });
+    });
+    $("ticketQr").replaceChildren(); new QRCode($("ticketQr"), { text: token, width: 220, height: 220, correctLevel: QRCode.CorrectLevel.M });
+    $("ticketDetails").textContent = "Registration reference: " + registrationId + " · Save/share this QR securely.";
+    $("ticketPanel").classList.remove("hidden"); setStatus($("listStatus"), "Ticket issued. QR displayed below the registration table.", "success"); await loadRegistrations();
+  } catch (error) { setStatus($("listStatus"), "Ticket could not be issued (" + (error.code || "error") + "): " + (error.message || "Check eligibility and payment."), "error"); }
+}
+async function validateTicketToken(token) {
+  if (!["entry_scanner", "head_admin"].includes(currentStaffRole)) { setStatus($("scanStatus"), "Only Entry Scanners and Head Admins can validate tickets.", "error"); return; }
+  const cleanToken = String(token || "").trim();
+  if (!/^[a-f0-9]{48}$/.test(cleanToken)) { setStatus($("scanStatus"), "ENTRY NOT APPROVED — invalid QR token.", "error"); return; }
+  try {
+    let studentName = "", registrationId = "";
+    await db.runTransaction(async tx => {
+      const ticketRef = db.collection("TICKETS").doc(cleanToken);
+      const ticket = await tx.get(ticketRef);
+      if (!ticket.exists || ticket.data().used === true) throw new Error("Ticket is invalid or has already been used.");
+      registrationId = ticket.data().registrationId;
+      const regRef = db.collection("REGISTRATIONS").doc(registrationId);
+      const reg = await tx.get(regRef);
+      if (!reg.exists || reg.data().ticketStatus !== "issued" || reg.data().ticketId !== cleanToken || reg.data().eligibilityStatus !== "eligible" || reg.data().paymentStatus !== "paid") throw new Error("Ticket is not eligible for entry.");
+      studentName = reg.data().fullName || "Student";
+      tx.update(ticketRef, { used: true, usedAt: firebase.firestore.FieldValue.serverTimestamp(), usedBy: auth.currentUser.uid });
+      tx.update(regRef, { ticketStatus: "used", ticketUsedAt: firebase.firestore.FieldValue.serverTimestamp() });
+    });
+    setStatus($("scanStatus"), "ENTRY APPROVED — " + studentName + " · Reference: " + registrationId, "success"); $("manualTicketToken").value = ""; await loadRegistrations();
+  } catch (error) { setStatus($("scanStatus"), "ENTRY NOT APPROVED — " + (error.message || error.code || "Invalid ticket"), "error"); }
+}
+async function startCameraScanner() {
+  if (!["entry_scanner", "head_admin"].includes(currentStaffRole)) { setStatus($("scanStatus"), "Only Entry Scanners and Head Admins can scan tickets.", "error"); return; }
+  if (!window.Html5Qrcode) { setStatus($("scanStatus"), "Camera scanner library failed to load. Use the manual token field.", "error"); return; }
+  try { if (!qrScanner) qrScanner = new Html5Qrcode("qrReader"); await qrScanner.start({ facingMode: "environment" }, { fps: 10, qrbox: { width: 230, height: 230 } }, async (decodedText) => { await stopCameraScanner(); await validateTicketToken(decodedText); }, () => {}); $("startScannerButton").disabled = true; $("stopScannerButton").disabled = false; setStatus($("scanStatus"), "Camera active. Point it at a PRAYAANA ticket QR."); }
+  catch (error) { setStatus($("scanStatus"), "Could not start camera. Allow camera access and use HTTPS, or paste the token manually. " + (error.message || ""), "error"); }
+}
+async function stopCameraScanner() { if (qrScanner && qrScanner.isScanning) { try { await qrScanner.stop(); } catch (_) {} } $("startScannerButton").disabled = false; $("stopScannerButton").disabled = true; }
+$("startScannerButton").addEventListener("click", startCameraScanner);
+$("stopScannerButton").addEventListener("click", stopCameraScanner);
+$("validateManualTicketButton").addEventListener("click", () => validateTicketToken($("manualTicketToken").value));
+$("manualTicketToken").addEventListener("keydown", (e) => { if (e.key === "Enter") validateTicketToken($("manualTicketToken").value); });
+$("closeTicketButton").addEventListener("click", () => { $("ticketPanel").classList.add("hidden"); $("ticketQr").replaceChildren(); });
+
 function addBadgeCell(row, value) {
   const td = document.createElement("td");
   const badge = document.createElement("span");
@@ -336,7 +450,7 @@ async function loadRegistrations() {
     if (snap.empty) {
       const tr = document.createElement("tr");
       const td = document.createElement("td");
-      td.colSpan = 7;
+      td.colSpan = 8;
       td.textContent = "No registrations have been submitted yet.";
       tr.appendChild(td);
       $("registrationRows").appendChild(tr);
@@ -352,29 +466,48 @@ async function loadRegistrations() {
         addTextCell(tr, [r.phone, r.email].filter(Boolean).join("\n") || "—");
         addTextCell(tr, r.delivery || "—");
         addBadgeCell(tr, r.eligibilityStatus || "not_checked");
-        addBadgeCell(tr, r.status || "pending");
+        addBadgeCell(tr, r.paymentStatus || "unpaid");
+        addBadgeCell(tr, r.ticketStatus || "not_issued");
 
         const action = document.createElement("td");
-        if (currentStaffRole === "head_admin") {
+        if (["head_admin", "fee_collector"].includes(currentStaffRole)) {
           const actions = document.createElement("div");
           actions.className = "inline-actions";
-          const eligibleButton = document.createElement("button");
-          eligibleButton.type = "button";
-          eligibleButton.className = "btn";
-          eligibleButton.textContent = "Mark eligible";
-          eligibleButton.disabled = r.eligibilityStatus === "eligible";
-          eligibleButton.addEventListener("click", () => setEligibility(doc.id, "eligible"));
+          if (currentStaffRole === "head_admin") {
+            const eligibleButton = document.createElement("button");
+            eligibleButton.type = "button";
+            eligibleButton.className = "btn";
+            eligibleButton.textContent = "Mark eligible";
+            eligibleButton.disabled = r.eligibilityStatus === "eligible";
+            eligibleButton.addEventListener("click", () => setEligibility(doc.id, "eligible"));
 
-          const notEligibleButton = document.createElement("button");
-          notEligibleButton.type = "button";
-          notEligibleButton.className = "btn secondary";
-          notEligibleButton.textContent = "Not eligible";
-          notEligibleButton.disabled = r.eligibilityStatus === "ineligible";
-          notEligibleButton.addEventListener("click", () => setEligibility(doc.id, "ineligible"));
-          actions.append(eligibleButton, notEligibleButton);
+            const notEligibleButton = document.createElement("button");
+            notEligibleButton.type = "button";
+            notEligibleButton.className = "btn secondary";
+            notEligibleButton.textContent = "Not eligible";
+            notEligibleButton.disabled = r.eligibilityStatus === "ineligible";
+            notEligibleButton.addEventListener("click", () => setEligibility(doc.id, "ineligible"));
+            actions.append(eligibleButton, notEligibleButton);
+          }
+          if (r.eligibilityStatus === "eligible" && r.paymentStatus !== "paid") {
+            const payButton = document.createElement("button");
+            payButton.type = "button"; payButton.className = "btn secondary"; payButton.textContent = "Record manual payment";
+            payButton.addEventListener("click", () => recordManualPayment(doc.id)); actions.appendChild(payButton);
+          }
+          if (currentStaffRole === "head_admin" && r.eligibilityStatus === "eligible" && r.paymentStatus === "paid" && r.ticketStatus !== "issued" && r.ticketStatus !== "used") {
+            const ticketButton = document.createElement("button");
+            ticketButton.type = "button"; ticketButton.className = "btn"; ticketButton.textContent = "Issue ticket QR";
+            ticketButton.addEventListener("click", () => issueTicket(doc.id)); actions.appendChild(ticketButton);
+          }
+          if (currentStaffRole === "head_admin" && r.eligibilityStatus === "ineligible") {
+            const deleteButton = document.createElement("button");
+            deleteButton.type = "button"; deleteButton.className = "btn danger"; deleteButton.textContent = "Delete registration";
+            deleteButton.addEventListener("click", () => deleteIneligibleRegistration(doc.id, r.fullName || "this student"));
+            actions.appendChild(deleteButton);
+          }
           action.appendChild(actions);
         } else {
-          action.textContent = "Head Admin only";
+          action.textContent = currentStaffRole === "entry_scanner" ? "Use the scanner above" : "Staff only";
           action.className = "muted small";
         }
         tr.appendChild(action);
@@ -390,7 +523,7 @@ async function loadRegistrations() {
     setStatus($("listStatus"), "Could not load registrations (" + (error.code || "error") + "). Check Firestore rules and the REGISTRATIONS collection.", "error");
     const tr = document.createElement("tr");
     const td = document.createElement("td");
-    td.colSpan = 7;
+    td.colSpan = 8;
     td.textContent = "Registration list unavailable.";
     tr.appendChild(td);
     $("registrationRows").appendChild(tr);
@@ -428,7 +561,7 @@ try {
   if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
   auth = firebase.auth();
   db = firebase.firestore();
-  setStatus(registrationStatus, "Registration service connected. Complete the form to register.");
+  setStatus(registrationStatus, "Registration service connected. Duplicate checks are enforced by Firestore rules.");
   setStatus(staffStatus, "Sign in with your authorized staff Google account.");
   auth.onAuthStateChanged((user) => {
     authStateVersion++;
