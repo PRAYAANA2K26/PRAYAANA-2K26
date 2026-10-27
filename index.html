@@ -1,302 +1,256 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#09070f">
-  <title>PRAYAANA 2K26 | Staff Portal</title>
-  <style>
-    :root{--bg:#09070f;--panel:#15111f;--panel2:#1c1629;--line:#342844;--text:#f7f1ff;--muted:#b8abc9;--gold:#e5c27b;--purple:#9d75df;--danger:#ff8f9b;--ok:#9ee0b4}
-    *{box-sizing:border-box}
-    body{margin:0;background:radial-gradient(ellipse at top,#241638 0%,var(--bg) 55%);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;min-height:100vh}
-    button,input,select{font:inherit}
-    button{cursor:pointer}
-    .shell{max-width:1180px;margin:auto;padding:28px 18px 60px}
-    header{display:flex;justify-content:space-between;align-items:center;gap:16px;border-bottom:1px solid var(--line);padding-bottom:22px;margin-bottom:28px}
-    .brand{display:flex;align-items:center;gap:14px}
-    .mark{width:48px;height:48px;border:1px solid var(--gold);border-radius:50%;display:grid;place-items:center;color:var(--gold);font-size:21px;font-family:Georgia,serif}
-    .eyebrow{color:var(--gold);letter-spacing:.22em;font-size:11px;text-transform:uppercase}
-    h1{font-size:clamp(20px,4vw,29px);letter-spacing:.08em;margin:5px 0 0}
-    .muted,.description{color:var(--muted);line-height:1.6}
-    .pill{border:1px solid var(--line);border-radius:999px;padding:8px 12px;color:var(--muted);font-size:12px;white-space:nowrap}
-    .card{background:linear-gradient(145deg,rgba(29,22,42,.96),rgba(16,12,24,.97));border:1px solid var(--line);border-radius:18px;padding:24px;box-shadow:0 18px 55px #0003}
-    .login{max-width:520px;margin:7vh auto}
-    h2{font-size:24px;margin:0 0 10px}
-    h3{margin:0 0 10px}
-    .btn{border:1px solid var(--gold);border-radius:10px;background:var(--gold);color:#17101e;padding:12px 16px;font-weight:700}
-    .btn:hover{filter:brightness(1.06)}
-    .btn.secondary{background:transparent;color:var(--text);border-color:var(--line)}
-    .btn:disabled{opacity:.55;cursor:not-allowed}
-    .status{border:1px solid var(--line);background:#0e0a16;border-radius:10px;padding:12px 14px;color:var(--muted);margin:16px 0;line-height:1.5;overflow-wrap:anywhere}
-    .status.error{color:var(--danger);border-color:#6a3543}
-    .status.success{color:var(--ok);border-color:#315c42}
-    .hidden{display:none!important}
-    .dashboard-top{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;flex-wrap:wrap;margin-bottom:20px}
-    .stat-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:22px 0}
-    .stat-card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px}
-    .stat-number{font-size:24px;color:var(--gold);font-weight:750}
-    .stat-label{font-size:12px;color:var(--muted);margin-top:5px}
-    nav{display:flex;gap:8px;flex-wrap:wrap;margin:22px 0}
-    .nav-button{background:#171121;border:1px solid var(--line);border-radius:10px;padding:10px 13px;color:var(--muted)}
-    .nav-button.active,.nav-button:hover{color:var(--text);border-color:var(--gold);background:#2a2038}
-    .panel{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:22px;margin-top:14px}
-    .panel p{color:var(--muted);line-height:1.65}
-    .note{border-left:3px solid var(--gold);padding:12px 14px;background:#21192b;color:var(--muted);border-radius:0 8px 8px 0;line-height:1.6}
-    footer{margin-top:35px;color:#857994;font-size:12px;text-align:center}
-    @media(max-width:760px){.stat-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.shell{padding:20px 13px 40px}.card{padding:19px}header{align-items:flex-start}}
-    @media(max-width:420px){.stat-grid{grid-template-columns:1fr 1fr}.mark{width:40px;height:40px}}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#09070f">
+<title>PRAYAANA 2K26 | Registration & Staff Portal</title>
+<style>
+:root{--bg:#09070f;--panel:#15111f;--panel2:#21182e;--line:#3a2b4c;--text:#f7f1ff;--muted:#b8abc9;--gold:#e5c27b;--purple:#a984e8;--red:#ff9aa6;--green:#a4e5b8}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#25163a 0%,var(--bg) 57%);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,sans-serif;min-height:100vh}button,input,select{font:inherit}button{cursor:pointer}.shell{max-width:1180px;margin:auto;padding:25px 16px 55px}header{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;padding-bottom:20px;border-bottom:1px solid var(--line);margin-bottom:24px}.brand{display:flex;align-items:center;gap:13px}.mark{width:47px;height:47px;border:1px solid var(--gold);border-radius:50%;display:grid;place-items:center;color:var(--gold);font:24px Georgia,serif}.eyebrow{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}h1{font-size:clamp(20px,4vw,29px);letter-spacing:.08em;margin:5px 0 0}h2{margin:0 0 10px;font-size:25px}h3{margin:0 0 10px}.muted,p{color:var(--muted);line-height:1.6}.pill{border:1px solid var(--line);border-radius:999px;padding:8px 12px;color:var(--muted);font-size:12px}.tabs{display:flex;gap:9px;flex-wrap:wrap;margin:20px 0}.tab,.btn{border-radius:10px;padding:11px 15px;border:1px solid var(--line);font-weight:650}.tab{background:#171121;color:var(--muted)}.tab.active,.tab:hover{border-color:var(--gold);color:var(--text);background:#2a2038}.btn{background:var(--gold);color:#17101e;border-color:var(--gold)}.btn.secondary{background:transparent;color:var(--text);border-color:var(--line)}.btn:disabled{opacity:.55;cursor:not-allowed}.card,.panel{background:linear-gradient(145deg,rgba(29,22,42,.97),rgba(16,12,24,.98));border:1px solid var(--line);border-radius:17px;padding:23px;box-shadow:0 15px 45px #0002}.narrow{max-width:740px;margin:0 auto}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}.field{display:flex;flex-direction:column;gap:7px}.field.full{grid-column:1/-1}label{font-size:13px;color:#e9def7}input,select{width:100%;background:#0d0a14;color:var(--text);border:1px solid #49375e;border-radius:9px;padding:12px;outline:none}input:focus,select:focus{border-color:var(--gold)}.hint{font-size:12px;color:var(--muted)}.status{border:1px solid var(--line);background:#0e0a16;border-radius:10px;padding:12px 14px;color:var(--muted);margin:15px 0;line-height:1.5;overflow-wrap:anywhere}.status.error{color:var(--red);border-color:#6a3543}.status.success{color:var(--green);border-color:#315c42}.hidden{display:none!important}.staff-top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap}.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:18px 0}.stat{border:1px solid var(--line);border-radius:12px;background:#120e1b;padding:16px}.stat strong{display:block;color:var(--gold);font-size:24px}.stat span{font-size:12px;color:var(--muted)}.table-wrap{overflow-x:auto;margin-top:16px}table{width:100%;border-collapse:collapse;min-width:700px}th,td{text-align:left;padding:12px 10px;border-bottom:1px solid var(--line);font-size:13px;vertical-align:top}th{color:var(--gold);font-weight:650}td{color:#e8dff2}.badge{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:4px 8px;font-size:11px;color:var(--muted)}.note{background:#21192b;border-left:3px solid var(--gold);padding:12px 14px;border-radius:0 8px 8px 0;color:var(--muted);font-size:13px;line-height:1.6}.inline-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.small{font-size:12px}footer{text-align:center;color:#857994;font-size:12px;margin-top:32px}@media(max-width:650px){.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.card,.panel{padding:18px}.stats{grid-template-columns:1fr 1fr}}
+</style>
 </head>
 <body>
-  <div class="shell">
-    <header>
-      <div class="brand">
-        <div class="mark" aria-hidden="true">P</div>
-        <div>
-          <div class="eyebrow">Saribekyan Medical University Armenia</div>
-          <h1>PRAYAANA <span style="color:var(--gold)">2K26</span></h1>
-        </div>
-      </div>
-      <div class="pill">STAFF CONTROL CENTER</div>
-    </header>
+<div class="shell">
+<header>
+ <div class="brand"><div class="mark">P</div><div><div class="eyebrow">Saribekyan Medical University Armenia</div><h1>PRAYAANA <span style="color:var(--gold)">2K26</span></h1></div></div>
+ <div class="pill">EVENT REGISTRATION & STAFF PORTAL</div>
+</header>
 
-    <main>
-      <section id="loginSection" class="card login">
-        <div class="eyebrow">Restricted access</div>
-        <h2 style="margin-top:10px">Welcome to the staff portal</h2>
-        <p class="description">Sign in with the Google account that has been added to the authorised staff list by the Head Admin.</p>
-        <button class="btn" id="signInButton" type="button">Continue with Google</button>
-        <div id="statusMessage" class="status" role="status" aria-live="polite">Secure access setup in progress.</div>
-        <p class="muted" style="font-size:12px">Only accounts listed in the STAFF collection should be granted access.</p>
-      </section>
+<nav class="tabs" aria-label="Main pages">
+ <button class="tab active" id="publicTab" type="button">Student Registration</button>
+ <button class="tab" id="staffTab" type="button">Staff Portal</button>
+</nav>
 
-      <section id="dashboardSection" class="hidden">
-        <div class="dashboard-top">
-          <div>
-            <div class="eyebrow">Access verified</div>
-            <h2 id="welcomeHeading">Welcome to PRAYAANA 2K26</h2>
-            <p id="accountDetails" class="muted"></p>
-          </div>
-          <button class="btn secondary" id="signOutButton" type="button">Sign out</button>
-        </div>
-
-        <div class="panel">
-          <h3>Event Control Center</h3>
-          <p id="roleDescription">Your staff access has been verified.</p>
-          <div class="note">This is the portal interface. Registration, fee collection, approval, QR issuance and entry scanning must be connected to secure database workflows before the event.</div>
-        </div>
-
-        <div class="stat-grid">
-          <div class="stat-card"><div class="stat-number">—</div><div class="stat-label">Registrations</div></div>
-          <div class="stat-card"><div class="stat-number">—</div><div class="stat-label">Fees collected</div></div>
-          <div class="stat-card"><div class="stat-number">—</div><div class="stat-label">Awaiting approval</div></div>
-          <div class="stat-card"><div class="stat-number">—</div><div class="stat-label">Entries scanned</div></div>
-        </div>
-
-        <nav class="dashboard-nav" aria-label="Dashboard sections">
-          <button class="nav-button active" type="button" data-panel="overviewPanel">Overview</button>
-          <button class="nav-button" type="button" data-panel="registrationsPanel">Registrations</button>
-          <button class="nav-button" type="button" data-panel="feesPanel">Fee collection</button>
-          <button class="nav-button" type="button" data-panel="approvalsPanel">Approvals & tickets</button>
-          <button class="nav-button" type="button" data-panel="entryPanel">Entry scanning</button>
-          <button class="nav-button" type="button" data-panel="staffPanel">Staff access</button>
-        </nav>
-
-        <section id="overviewPanel" class="panel dashboard-panel">
-          <h3>Overview</h3>
-          <p>Use the navigation above to open a section. Counts remain blank until live data is connected.</p>
-        </section>
-        <section id="registrationsPanel" class="panel dashboard-panel hidden">
-          <h3>Student registrations</h3>
-          <p>Planned fields: full name, student ID, course and year, phone, email, and preferred ticket delivery method.</p>
-          <div class="note">Not connected yet: student records and eligibility checks against the official university list.</div>
-        </section>
-        <section id="feesPanel" class="panel dashboard-panel hidden">
-          <h3>Fee collection</h3>
-          <p>Planned actions: view all registrations, record fee category and amount, mark paid, and record collection time and collector.</p>
-          <div class="note">Not connected yet: payment records or collector updates.</div>
-        </section>
-        <section id="approvalsPanel" class="panel dashboard-panel hidden">
-          <h3>Approvals & tickets</h3>
-          <p>Planned actions: Head Admin reviews verified students and confirmed payments, approves tickets, and records ticket delivery preference.</p>
-          <div class="note">Not connected yet: approval controls, QR generation, or sending tickets.</div>
-        </section>
-        <section id="entryPanel" class="panel dashboard-panel hidden">
-          <h3>Entry scanning</h3>
-          <p>Planned actions: scan a ticket QR, validate the ticket, record entry, and reject repeat scans.</p>
-          <div class="note">Not connected yet: QR validation or one-time entry protection.</div>
-        </section>
-        <section id="staffPanel" class="panel dashboard-panel hidden">
-          <h3>Staff access</h3>
-          <p>Planned roles: Head Admin, fee collector, and entry scanner. Staff accounts should be added and managed securely in Firebase, not by public website visitors.</p>
-          <div class="note">Not connected yet: staff management controls.</div>
-        </section>
-      </section>
-    </main>
-    <footer>PRAYAANA 2K26 · Private staff access · Keep student information confidential</footer>
+<main>
+<section id="registrationPage" class="card narrow">
+ <div class="eyebrow">Your night. Your people.</div>
+ <h2 style="margin-top:8px">Student Registration</h2>
+ <p>Register your details for PRAYAANA 2K26. Your registration will be reviewed by the event team. Submitting this form does not confirm payment or guarantee entry.</p>
+ <div class="note">Please enter your details accurately. Do not submit the form more than once. Your ticket will be issued only after eligibility and payment have been verified.</div>
+ <form id="registrationForm" style="margin-top:20px">
+  <div class="form-grid">
+   <div class="field"><label for="fullName">Full name *</label><input id="fullName" name="fullName" autocomplete="name" maxlength="100" required></div>
+   <div class="field"><label for="studentId">University student ID *</label><input id="studentId" name="studentId" maxlength="50" required></div>
+   <div class="field"><label for="course">Course *</label><input id="course" name="course" maxlength="100" placeholder="e.g. General Medicine" required></div>
+   <div class="field"><label for="year">Year of study *</label><select id="year" name="year" required><option value="">Choose year</option><option>1st year</option><option>2nd year</option><option>3rd year</option><option>4th year</option><option>5th year</option><option>6th year</option><option>Other</option></select></div>
+   <div class="field"><label for="phone">Phone number *</label><input id="phone" name="phone" type="tel" autocomplete="tel" maxlength="30" required></div>
+   <div class="field"><label for="email">Email address *</label><input id="email" name="email" type="email" autocomplete="email" maxlength="150" required></div>
+   <div class="field full"><label for="delivery">Preferred ticket delivery *</label><select id="delivery" name="delivery" required><option value="">Choose a method</option><option value="WhatsApp">WhatsApp</option><option value="Email">Email</option></select><div class="hint">The team may contact you to verify your student details and payment.</div></div>
   </div>
+  <div class="field" style="margin-top:17px;display:block"><label style="display:flex;gap:10px;align-items:flex-start"><input id="consent" type="checkbox" required style="width:auto;margin-top:4px"><span>I confirm these details are accurate and agree that the event team may use them to verify my eligibility and manage my registration.</span></label></div>
+  <button class="btn" id="submitRegistration" type="submit" style="margin-top:18px">Submit registration</button>
+  <div id="registrationStatus" class="status" role="status" aria-live="polite">Registration is ready. Complete all required fields.</div>
+ </form>
+</section>
 
-  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
-  <script>
-    // Firebase web configuration. These are client-side identifiers, not server credentials.
-    const firebaseConfig = {
-      apiKey: "AIzaSyA8Tt3Ttz3ASauROEwfGHtC23z0edjXLOg",
-      authDomain: "prayaana-2k26.firebaseapp.com",
-      projectId: "prayaana-2k26",
-      appId: "1:495679287568:web:99e90b86d65cb6beaa7595"
-    };
+<section id="staffPage" class="hidden">
+ <div id="loginCard" class="card narrow">
+  <div class="eyebrow">Restricted access</div><h2 style="margin-top:8px">Staff sign-in</h2>
+  <p>Sign in with the Google account authorised by a Head Admin.</p>
+  <button class="btn" id="signInButton" type="button">Continue with Google</button>
+  <div id="staffStatus" class="status" role="status" aria-live="polite">Checking Firebase setup…</div>
+ </div>
+ <div id="staffDashboard" class="hidden">
+  <div class="staff-top"><div><div class="eyebrow">Access verified</div><h2 id="welcomeHeading">Event Control Center</h2><p id="accountDetails"></p></div><div class="inline-actions"><button class="btn secondary" id="refreshButton" type="button">Refresh registrations</button><button class="btn secondary" id="signOutButton" type="button">Sign out</button></div></div>
+  <div class="stats"><div class="stat"><strong id="totalCount">—</strong><span>Total registrations</span></div><div class="stat"><strong id="pendingCount">—</strong><span>Pending review</span></div><div class="stat"><strong id="paidCount">—</strong><span>Marked paid</span></div></div>
+  <div class="panel"><h3>Student registrations</h3><p>Authorised staff can view submitted registrations here. Verify each student against the official university list before payment collection and approval.</p><div id="listStatus" class="status">Loading registrations…</div><div class="table-wrap"><table><thead><tr><th>Student</th><th>Student ID</th><th>Course / year</th><th>Contact</th><th>Delivery</th><th>Status</th></tr></thead><tbody id="registrationRows"><tr><td colspan="6">No data loaded.</td></tr></tbody></table></div></div>
+  <p class="small muted">This first version supports public registration submission and staff viewing. Payment recording, approval controls, QR generation, and one-time scanning are not implemented yet.</p>
+ </div>
+</section>
+</main>
+<footer>PRAYAANA 2K26 · Keep student information confidential · Event date and venue to be announced</footer>
+</div>
 
-    const loginSection = document.getElementById("loginSection");
-    const dashboardSection = document.getElementById("dashboardSection");
-    const statusMessage = document.getElementById("statusMessage");
-    const signInButton = document.getElementById("signInButton");
-    const signOutButton = document.getElementById("signOutButton");
-    const welcomeHeading = document.getElementById("welcomeHeading");
-    const accountDetails = document.getElementById("accountDetails");
-    const roleDescription = document.getElementById("roleDescription");
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyA8Tt3Ttz3ASauROEwfGHtC23z0edjXLOg",
+  authDomain: "prayaana-2k26.firebaseapp.com",
+  projectId: "prayaana-2k26",
+  appId: "1:495679287568:web:99e90b86d65cb6beaa7595"
+};
 
-    let auth = null;
-    let db = null;
-    let authReady = false;
+const $ = id => document.getElementById(id);
+const registrationForm = $("registrationForm");
+const registrationStatus = $("registrationStatus");
+const staffStatus = $("staffStatus");
+let auth = null, db = null, currentStaffRole = "";
 
-    function showStatus(message, type = "") {
-      if (!statusMessage) {
-        console.error("Missing #statusMessage:", message);
-        return;
-      }
-      statusMessage.textContent = message;
-      statusMessage.className = "status" + (type ? " " + type : "");
+function setStatus(el, message, type="") {
+  if (!el) return;
+  el.textContent = message;
+  el.className = "status" + (type ? " " + type : "");
+}
+function switchPage(page) {
+  const isStaff = page === "staff";
+  $("registrationPage").classList.toggle("hidden", isStaff);
+  $("staffPage").classList.toggle("hidden", !isStaff);
+  $("publicTab").classList.toggle("active", !isStaff);
+  $("staffTab").classList.toggle("active", isStaff);
+}
+$("publicTab").addEventListener("click", () => switchPage("public"));
+$("staffTab").addEventListener("click", () => switchPage("staff"));
+
+function clean(value) { return String(value || "").trim(); }
+registrationForm.addEventListener("submit", async event => {
+  event.preventDefault();
+  if (!db) {
+    setStatus(registrationStatus, "Registration service is not connected yet. Please try again later.", "error");
+    return;
+  }
+  const submit = $("submitRegistration");
+  const data = {
+    fullName: clean($("fullName").value),
+    studentId: clean($("studentId").value),
+    course: clean($("course").value),
+    year: clean($("year").value),
+    phone: clean($("phone").value),
+    email: clean($("email").value).toLowerCase(),
+    delivery: clean($("delivery").value)
+  };
+  if (!data.fullName || !data.studentId || !data.course || !data.year || !data.phone || !data.email || !data.delivery || !$("consent").checked) {
+    setStatus(registrationStatus, "Please complete all fields and confirm the consent checkbox.", "error");
+    return;
+  }
+  submit.disabled = true;
+  setStatus(registrationStatus, "Submitting your registration securely…");
+  try {
+    // No student records are read by the public form. Firestore rules allow only validated pending submissions.
+    await db.collection("REGISTRATIONS").add({
+      ...data,
+      status: "pending",
+      paymentStatus: "unpaid",
+      eligibilityStatus: "not_checked",
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+    registrationForm.reset();
+    setStatus(registrationStatus, "Registration submitted successfully. Your details are pending verification; this is not an entry ticket.", "success");
+  } catch (error) {
+    console.error("Registration submit failed:", error);
+    setStatus(registrationStatus, "Could not submit registration: " + (error.message || "Unknown error") + ". The Firestore security rules may need to be updated using the companion rules file.", "error");
+  } finally {
+    submit.disabled = false;
+  }
+});
+
+function normalizeStaff(data) {
+  if (!data) return null;
+  const activeValue = data.active ?? data.ACTIVE;
+  const roleValue = data.role ?? data.ROLE;
+  const active = activeValue === true || String(activeValue).toLowerCase() === "true";
+  return {active, role: String(roleValue || "").toLowerCase()};
+}
+function showStaffLogin(message, type="") {
+  $("loginCard").classList.remove("hidden");
+  $("staffDashboard").classList.add("hidden");
+  setStatus(staffStatus, message, type);
+}
+async function verifyStaff(user) {
+  try {
+    const snap = await db.collection("STAFF").doc(user.uid).get();
+    const staff = snap.exists ? normalizeStaff(snap.data()) : null;
+    const roles = ["head_admin", "fee_collector", "entry_scanner"];
+    if (!staff || !staff.active || !roles.includes(staff.role)) {
+      await auth.signOut();
+      showStaffLogin("Access denied. Your account must be active in STAFF with an approved role.", "error");
+      return;
     }
-
-    function showLogin(message = "Sign in with your authorised staff Google account.", type = "") {
-      if (loginSection) loginSection.classList.remove("hidden");
-      if (dashboardSection) dashboardSection.classList.add("hidden");
-      showStatus(message, type);
-      if (signInButton) signInButton.disabled = false;
-    }
-
-    function showDashboard(user, staffData) {
-      if (loginSection) loginSection.classList.add("hidden");
-      if (dashboardSection) dashboardSection.classList.remove("hidden");
-
-      const name = user.displayName || user.email || "Staff member";
-      const role = String(staffData.role ?? staffData.ROLE ?? "").toLowerCase();
-      if (welcomeHeading) welcomeHeading.textContent = "Welcome, " + name;
-      if (accountDetails) accountDetails.textContent = (user.email || "") + " · Role: " + (role || "staff");
-      if (roleDescription) {
-        roleDescription.textContent = role === "head_admin"
-          ? "Head Admin access verified. You can oversee event operations."
-          : role === "fee_collector"
-          ? "Fee Collector access verified. Use the fee collection section when connected."
-          : role === "entry_scanner"
-          ? "Entry Scanner access verified. Use the entry scanning section when connected."
-          : "Staff access verified.";
-      }
-      if (signInButton) signInButton.disabled = false;
-    }
-
-    function normalizeStaffRecord(data) {
-      if (!data) return null;
-      const activeValue = data.active ?? data.ACTIVE;
-      const roleValue = data.role ?? data.ROLE;
-      const active = activeValue === true || String(activeValue).toLowerCase() === "true";
-      const role = String(roleValue ?? "").toLowerCase();
-      return { active, role };
-    }
-
-    async function verifyStaff(user) {
-      try {
-        const snapshot = await db.collection("STAFF").doc(user.uid).get();
-        if (!snapshot.exists) {
-          await auth.signOut();
-          showLogin("Access denied: your account is not listed in STAFF. Contact a Head Admin.", "error");
-          return;
-        }
-
-        const staff = normalizeStaffRecord(snapshot.data());
-        if (!staff || !staff.active) {
-          await auth.signOut();
-          showLogin("Access denied: this staff account is inactive or its ACTIVE field is not set to true.", "error");
-          return;
-        }
-
-        const allowedRoles = ["head_admin", "fee_collector", "entry_scanner"];
-        if (!allowedRoles.includes(staff.role)) {
-          await auth.signOut();
-          showLogin("Access denied: the staff ROLE field must be head_admin, fee_collector, or entry_scanner.", "error");
-          return;
-        }
-
-        showDashboard(user, { role: staff.role });
-      } catch (error) {
-        console.error("Staff authorization check failed:", error);
-        const detail = (error && error.code ? error.code + " — " : "") +
-          (error && error.message ? error.message : "Unknown error");
-        showLogin("Could not verify staff access: " + detail + ". Check the STAFF document fields and Firestore rules.", "error");
-      }
-    }
-
-    function initializeFirebase() {
-      try {
-        if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
-        auth = firebase.auth();
-        db = firebase.firestore();
-
-        const provider = new firebase.auth.GoogleAuthProvider();
-        signInButton.addEventListener("click", async () => {
-          signInButton.disabled = true;
-          showStatus("Opening Google sign-in…");
-          try {
-            await auth.signInWithPopup(provider);
-          } catch (error) {
-            console.error("Google sign-in failed:", error);
-            showStatus("Google sign-in failed: " + (error.message || "Unknown error"), "error");
-            signInButton.disabled = false;
-          }
-        });
-
-        signOutButton.addEventListener("click", async () => {
-          try {
-            await auth.signOut();
-            showLogin("You have signed out successfully.", "success");
-          } catch (error) {
-            showStatus("Could not sign out: " + (error.message || "Unknown error"), "error");
-          }
-        });
-
-        document.querySelectorAll(".nav-button").forEach(button => {
-          button.addEventListener("click", () => {
-            document.querySelectorAll(".nav-button").forEach(item => item.classList.remove("active"));
-            button.classList.add("active");
-            document.querySelectorAll(".dashboard-panel").forEach(panel => panel.classList.add("hidden"));
-            const target = document.getElementById(button.dataset.panel);
-            if (target) target.classList.remove("hidden");
-          });
-        });
-
-        auth.onAuthStateChanged(async user => {
-          if (!user) {
-            showLogin("Sign in with your authorised staff Google account.");
-            return;
-          }
-          showStatus("Checking your staff access…");
-          await verifyStaff(user);
-        });
-        authReady = true;
-      } catch (error) {
-        console.error("Firebase initialization failed:", error);
-        showLogin("Firebase setup failed: " + (error.message || "Unknown error") + ". Check your Firebase configuration and enabled services.", "error");
-      }
-    }
-
-    if (signInButton && signOutButton && statusMessage) {
-      initializeFirebase();
+    currentStaffRole = staff.role;
+    $("loginCard").classList.add("hidden");
+    $("staffDashboard").classList.remove("hidden");
+    $("welcomeHeading").textContent = "Welcome, " + (user.displayName || "Staff member");
+    $("accountDetails").textContent = (user.email || "") + " · Role: " + staff.role;
+    await loadRegistrations();
+  } catch (error) {
+    console.error("Staff verification error:", error);
+    showStaffLogin("Could not verify staff access: " + (error.code ? error.code + " — " : "") + (error.message || "Unknown error"), "error");
+  }
+}
+async function loadRegistrations() {
+  setStatus($("listStatus"), "Loading registrations…");
+  $("registrationRows").replaceChildren();
+  try {
+    const snap = await db.collection("REGISTRATIONS").orderBy("createdAt", "desc").limit(500).get();
+    let pending = 0, paid = 0;
+    if (snap.empty) {
+      $("registrationRows").innerHTML = '<tr><td colspan="6">No registrations have been submitted yet.</td></tr>';
     } else {
-      console.error("Portal setup error: required HTML elements are missing.");
-      if (statusMessage) showStatus("Portal setup error: required page elements are missing.", "error");
+      snap.forEach(doc => {
+        const r = doc.data();
+        if ((r.status || "pending") === "pending") pending++;
+        if ((r.paymentStatus || "unpaid") === "paid") paid++;
+        const tr = document.createElement("tr");
+        const values = [
+          r.fullName || "—",
+          r.studentId || "—",
+          [r.course, r.year].filter(Boolean).join(" / ") || "—",
+          [r.phone, r.email].filter(Boolean).join("\n") || "—",
+          r.delivery || "—",
+          r.status || "pending"
+        ];
+        values.forEach((value, index) => {
+          const td = document.createElement("td");
+          td.textContent = value;
+          if (index === 5) {
+            const badge = document.createElement("span");
+            badge.className = "badge";
+            badge.textContent = value;
+            td.replaceChildren(badge);
+          }
+          tr.appendChild(td);
+        });
+        $("registrationRows").appendChild(tr);
+      });
     }
-  </script>
+    $("totalCount").textContent = String(snap.size);
+    $("pendingCount").textContent = String(pending);
+    $("paidCount").textContent = String(paid);
+    setStatus($("listStatus"), "Loaded " + snap.size + " registration(s). Verify student eligibility before proceeding.", "success");
+  } catch (error) {
+    console.error("Load registrations failed:", error);
+    setStatus($("listStatus"), "Could not load registrations: " + (error.code ? error.code + " — " : "") + (error.message || "Unknown error") + ". Check Firestore rules and the REGISTRATIONS collection.", "error");
+    $("registrationRows").innerHTML = '<tr><td colspan="6">Registration list unavailable.</td></tr>';
+  }
+}
+$("signInButton").addEventListener("click", async () => {
+  if (!auth) return setStatus(staffStatus, "Firebase is not ready. Reload the page and try again.", "error");
+  $("signInButton").disabled = true;
+  setStatus(staffStatus, "Opening Google sign-in…");
+  try {
+    await auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+  } catch (error) {
+    setStatus(staffStatus, "Sign-in failed: " + (error.message || "Unknown error"), "error");
+    $("signInButton").disabled = false;
+  }
+});
+$("signOutButton").addEventListener("click", async () => {
+  try { await auth.signOut(); currentStaffRole = ""; showStaffLogin("You have signed out."); }
+  catch (error) { setStatus($("listStatus"), "Sign-out failed: " + (error.message || "Unknown error"), "error"); }
+});
+$("refreshButton").addEventListener("click", loadRegistrations);
+
+try {
+  if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+  auth = firebase.auth();
+  db = firebase.firestore();
+  setStatus(registrationStatus, "Registration service connected. Complete the form to register.");
+  setStatus(staffStatus, "Sign in with your authorised staff Google account.");
+  auth.onAuthStateChanged(user => {
+    if (!user) {
+      $("loginCard").classList.remove("hidden");
+      $("staffDashboard").classList.add("hidden");
+      return;
+    }
+    verifyStaff(user);
+  });
+} catch (error) {
+  console.error("Firebase initialization failed:", error);
+  setStatus(registrationStatus, "Firebase setup error: " + (error.message || "Unknown error"), "error");
+  setStatus(staffStatus, "Firebase setup error: " + (error.message || "Unknown error"), "error");
+}
+</script>
 </body>
 </html>
