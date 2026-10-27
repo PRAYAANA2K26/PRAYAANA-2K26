@@ -2,309 +2,145 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="robots" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#09070f">
   <title>PRAYAANA 2K26 | Staff Portal</title>
-
   <style>
-    * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-      font-family: Arial, sans-serif;
-      color: #fff;
-      background:
-        radial-gradient(ellipse at top, #302052 0%, transparent 55%),
-        linear-gradient(145deg, #090811, #151020 60%, #08070d);
-    }
-
-    .portal {
-      width: 100%;
-      max-width: 460px;
-      padding: 40px 28px;
-      text-align: center;
-      background: rgba(22, 18, 35, 0.95);
-      border: 1px solid #493361;
-      border-radius: 22px;
-      box-shadow: 0 20px 70px rgba(0,0,0,.45);
-    }
-
-    .symbol {
-      font-size: 38px;
-      color: #c6a0ff;
-      margin-bottom: 14px;
-    }
-
-    h1 {
-      margin: 0;
-      font-size: 28px;
-      letter-spacing: 3px;
-    }
-
-    .subtitle {
-      margin: 10px 0 30px;
-      color: #c6a0ff;
-      font-size: 12px;
-      letter-spacing: 4px;
-    }
-
-    h2 { font-size: 20px; margin-bottom: 10px; }
-
-    .description {
-      color: #c3bdcf;
-      font-size: 14px;
-      line-height: 1.6;
-      margin-bottom: 26px;
-    }
-
-    .google-button, .secondary-button {
-      width: 100%;
-      padding: 14px 16px;
-      border: 1px solid #66517e;
-      border-radius: 10px;
-      color: #fff;
-      background: #302342;
-      font-size: 15px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .google-button:hover, .secondary-button:hover {
-      background: #403052;
-    }
-
-    button:disabled {
-      opacity: .6;
-      cursor: wait;
-    }
-
-    .status {
-      margin-top: 18px;
-      font-size: 13px;
-      color: #c6a0ff;
-      line-height: 1.6;
-      overflow-wrap: anywhere;
-    }
-
-    .footer {
-      margin-top: 30px;
-      color: #827a91;
-      font-size: 11px;
-      line-height: 1.6;
-    }
-
-    .panel {
-      margin-top: 22px;
-      padding: 18px;
-      text-align: left;
-      background: #171221;
-      border: 1px solid #493361;
-      border-radius: 12px;
-    }
-
-    .panel p {
-      color: #c3bdcf;
-      font-size: 14px;
-      line-height: 1.6;
-    }
-
-    .dashboard-nav {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
-  margin: 22px 0;
-}
-
-.nav-button {
-  padding: 13px 8px;
-  border: 1px solid #493361;
-  border-radius: 10px;
-  background: #171221;
-  color: #e7dcf8;
-  cursor: pointer;
-  font-size: 13px;
-}
-
-.nav-button.active {
-  background: #493361;
-  border-color: #c6a0ff;
-}
-
-.dashboard-panel {
-  padding: 18px;
-  margin-top: 14px;
-  text-align: left;
-  border: 1px solid #493361;
-  border-radius: 12px;
-  background: #171221;
-}
-
-.dashboard-panel h3 {
-  margin-top: 0;
-  color: #c6a0ff;
-}
-
-.stat-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
-  margin: 18px 0;
-}
-
-.stat-card {
-  padding: 15px 10px;
-  border: 1px solid #493361;
-  border-radius: 12px;
-  background: #21182e;
-  text-align: left;
-}
-
-.stat-number {
-  display: block;
-  font-size: 23px;
-  font-weight: bold;
-  color: #c6a0ff;
-  margin-bottom: 7px;
-}
-
-.stat-label {
-  color: #c3bdcf;
-  font-size: 12px;
-  line-height: 1.5;
-}
-
-.setup-note {
-  padding: 12px;
-  border-radius: 8px;
-  background: #21182e;
-  color: #c3bdcf;
-  font-size: 13px;
-  line-height: 1.6;
-}
-    
-    .hidden { display: none; }
+    :root{--bg:#09070f;--panel:#15111f;--panel2:#1c1629;--line:#342844;--text:#f7f1ff;--muted:#b8abc9;--gold:#e5c27b;--purple:#9d75df;--danger:#ff8f9b;--ok:#9ee0b4}
+    *{box-sizing:border-box}
+    body{margin:0;background:radial-gradient(ellipse at top,#241638 0%,var(--bg) 55%);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;min-height:100vh}
+    button,input,select{font:inherit}
+    button{cursor:pointer}
+    .shell{max-width:1180px;margin:auto;padding:28px 18px 60px}
+    header{display:flex;justify-content:space-between;align-items:center;gap:16px;border-bottom:1px solid var(--line);padding-bottom:22px;margin-bottom:28px}
+    .brand{display:flex;align-items:center;gap:14px}
+    .mark{width:48px;height:48px;border:1px solid var(--gold);border-radius:50%;display:grid;place-items:center;color:var(--gold);font-size:21px;font-family:Georgia,serif}
+    .eyebrow{color:var(--gold);letter-spacing:.22em;font-size:11px;text-transform:uppercase}
+    h1{font-size:clamp(20px,4vw,29px);letter-spacing:.08em;margin:5px 0 0}
+    .muted,.description{color:var(--muted);line-height:1.6}
+    .pill{border:1px solid var(--line);border-radius:999px;padding:8px 12px;color:var(--muted);font-size:12px;white-space:nowrap}
+    .card{background:linear-gradient(145deg,rgba(29,22,42,.96),rgba(16,12,24,.97));border:1px solid var(--line);border-radius:18px;padding:24px;box-shadow:0 18px 55px #0003}
+    .login{max-width:520px;margin:7vh auto}
+    h2{font-size:24px;margin:0 0 10px}
+    h3{margin:0 0 10px}
+    .btn{border:1px solid var(--gold);border-radius:10px;background:var(--gold);color:#17101e;padding:12px 16px;font-weight:700}
+    .btn:hover{filter:brightness(1.06)}
+    .btn.secondary{background:transparent;color:var(--text);border-color:var(--line)}
+    .btn:disabled{opacity:.55;cursor:not-allowed}
+    .status{border:1px solid var(--line);background:#0e0a16;border-radius:10px;padding:12px 14px;color:var(--muted);margin:16px 0;line-height:1.5;overflow-wrap:anywhere}
+    .status.error{color:var(--danger);border-color:#6a3543}
+    .status.success{color:var(--ok);border-color:#315c42}
+    .hidden{display:none!important}
+    .dashboard-top{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;flex-wrap:wrap;margin-bottom:20px}
+    .stat-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:22px 0}
+    .stat-card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px}
+    .stat-number{font-size:24px;color:var(--gold);font-weight:750}
+    .stat-label{font-size:12px;color:var(--muted);margin-top:5px}
+    nav{display:flex;gap:8px;flex-wrap:wrap;margin:22px 0}
+    .nav-button{background:#171121;border:1px solid var(--line);border-radius:10px;padding:10px 13px;color:var(--muted)}
+    .nav-button.active,.nav-button:hover{color:var(--text);border-color:var(--gold);background:#2a2038}
+    .panel{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:22px;margin-top:14px}
+    .panel p{color:var(--muted);line-height:1.65}
+    .note{border-left:3px solid var(--gold);padding:12px 14px;background:#21192b;color:var(--muted);border-radius:0 8px 8px 0;line-height:1.6}
+    footer{margin-top:35px;color:#857994;font-size:12px;text-align:center}
+    @media(max-width:760px){.stat-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.shell{padding:20px 13px 40px}.card{padding:19px}header{align-items:flex-start}}
+    @media(max-width:420px){.stat-grid{grid-template-columns:1fr 1fr}.mark{width:40px;height:40px}}
   </style>
 </head>
-
 <body>
-  <main class="portal">
-    <div class="symbol">✦</div>
-    <h1>PRAYAANA 2K26</h1>
-    <div class="subtitle">STAFF PORTAL</div>
+  <div class="shell">
+    <header>
+      <div class="brand">
+        <div class="mark" aria-hidden="true">P</div>
+        <div>
+          <div class="eyebrow">Saribekyan Medical University Armenia</div>
+          <h1>PRAYAANA <span style="color:var(--gold)">2K26</span></h1>
+        </div>
+      </div>
+      <div class="pill">STAFF CONTROL CENTER</div>
+    </header>
 
-    <section id="loginSection">
-      <h2>Welcome, Organizer</h2>
-      <p class="description">
-        Secure access for authorized event staff.
-        Sign in with your approved Google account.
-      </p>
-      <button class="google-button" id="googleSignInButton" type="button">
-        G&nbsp; Continue with Google
-      </button>
-    </section>
+    <main>
+      <section id="loginSection" class="card login">
+        <div class="eyebrow">Restricted access</div>
+        <h2 style="margin-top:10px">Welcome to the staff portal</h2>
+        <p class="description">Sign in with the Google account that has been added to the authorised staff list by the Head Admin.</p>
+        <button class="btn" id="signInButton" type="button">Continue with Google</button>
+        <div id="statusMessage" class="status" role="status" aria-live="polite">Secure access setup in progress.</div>
+        <p class="muted" style="font-size:12px">Only accounts listed in the STAFF collection should be granted access.</p>
+      </section>
 
-<section id="dashboardSection" class="hidden">
-  <h2 id="welcomeHeading">Welcome, Head Admin</h2>
-  <p class="description" id="accountDetails"></p>
+      <section id="dashboardSection" class="hidden">
+        <div class="dashboard-top">
+          <div>
+            <div class="eyebrow">Access verified</div>
+            <h2 id="welcomeHeading">Welcome to PRAYAANA 2K26</h2>
+            <p id="accountDetails" class="muted"></p>
+          </div>
+          <button class="btn secondary" id="signOutButton" type="button">Sign out</button>
+        </div>
 
-  <div class="dashboard-panel">
-    <h3>Event Control Center</h3>
-    <p id="roleDescription">Head Admin access verified.</p>
-    <div class="setup-note">
-      Dashboard preview. Live event data will appear after the
-      database and workflows are connected.
-    </div>
+        <div class="panel">
+          <h3>Event Control Center</h3>
+          <p id="roleDescription">Your staff access has been verified.</p>
+          <div class="note">This is the portal interface. Registration, fee collection, approval, QR issuance and entry scanning must be connected to secure database workflows before the event.</div>
+        </div>
+
+        <div class="stat-grid">
+          <div class="stat-card"><div class="stat-number">—</div><div class="stat-label">Registrations</div></div>
+          <div class="stat-card"><div class="stat-number">—</div><div class="stat-label">Fees collected</div></div>
+          <div class="stat-card"><div class="stat-number">—</div><div class="stat-label">Awaiting approval</div></div>
+          <div class="stat-card"><div class="stat-number">—</div><div class="stat-label">Entries scanned</div></div>
+        </div>
+
+        <nav class="dashboard-nav" aria-label="Dashboard sections">
+          <button class="nav-button active" type="button" data-panel="overviewPanel">Overview</button>
+          <button class="nav-button" type="button" data-panel="registrationsPanel">Registrations</button>
+          <button class="nav-button" type="button" data-panel="feesPanel">Fee collection</button>
+          <button class="nav-button" type="button" data-panel="approvalsPanel">Approvals & tickets</button>
+          <button class="nav-button" type="button" data-panel="entryPanel">Entry scanning</button>
+          <button class="nav-button" type="button" data-panel="staffPanel">Staff access</button>
+        </nav>
+
+        <section id="overviewPanel" class="panel dashboard-panel">
+          <h3>Overview</h3>
+          <p>Use the navigation above to open a section. Counts remain blank until live data is connected.</p>
+        </section>
+        <section id="registrationsPanel" class="panel dashboard-panel hidden">
+          <h3>Student registrations</h3>
+          <p>Planned fields: full name, student ID, course and year, phone, email, and preferred ticket delivery method.</p>
+          <div class="note">Not connected yet: student records and eligibility checks against the official university list.</div>
+        </section>
+        <section id="feesPanel" class="panel dashboard-panel hidden">
+          <h3>Fee collection</h3>
+          <p>Planned actions: view all registrations, record fee category and amount, mark paid, and record collection time and collector.</p>
+          <div class="note">Not connected yet: payment records or collector updates.</div>
+        </section>
+        <section id="approvalsPanel" class="panel dashboard-panel hidden">
+          <h3>Approvals & tickets</h3>
+          <p>Planned actions: Head Admin reviews verified students and confirmed payments, approves tickets, and records ticket delivery preference.</p>
+          <div class="note">Not connected yet: approval controls, QR generation, or sending tickets.</div>
+        </section>
+        <section id="entryPanel" class="panel dashboard-panel hidden">
+          <h3>Entry scanning</h3>
+          <p>Planned actions: scan a ticket QR, validate the ticket, record entry, and reject repeat scans.</p>
+          <div class="note">Not connected yet: QR validation or one-time entry protection.</div>
+        </section>
+        <section id="staffPanel" class="panel dashboard-panel hidden">
+          <h3>Staff access</h3>
+          <p>Planned roles: Head Admin, fee collector, and entry scanner. Staff accounts should be added and managed securely in Firebase, not by public website visitors.</p>
+          <div class="note">Not connected yet: staff management controls.</div>
+        </section>
+      </section>
+    </main>
+    <footer>PRAYAANA 2K26 · Private staff access · Keep student information confidential</footer>
   </div>
-
-  <div class="stat-grid">
-    <div class="stat-card">
-      <span class="stat-number">—</span>
-      <span class="stat-label">Student registrations</span>
-    </div>
-    <div class="stat-card">
-      <span class="stat-number">—</span>
-      <span class="stat-label">Fees collected</span>
-    </div>
-    <div class="stat-card">
-      <span class="stat-number">—</span>
-      <span class="stat-label">Tickets awaiting approval</span>
-    </div>
-    <div class="stat-card">
-      <span class="stat-number">—</span>
-      <span class="stat-label">Entries scanned</span>
-    </div>
-  </div>
-
-  <nav class="dashboard-nav" aria-label="Dashboard sections">
-    <button class="nav-button active" data-panel="overviewPanel" type="button">Overview</button>
-    <button class="nav-button" data-panel="registrationsPanel" type="button">Registrations</button>
-    <button class="nav-button" data-panel="feesPanel" type="button">Fee Collection</button>
-    <button class="nav-button" data-panel="approvalsPanel" type="button">Ticket Approval</button>
-    <button class="nav-button" data-panel="entryPanel" type="button">QR Entry</button>
-    <button class="nav-button" data-panel="staffPanel" type="button">Staff Management</button>
-  </nav>
-
-  <div id="overviewPanel" class="dashboard-panel">
-    <h3>Dashboard Overview</h3>
-    <p>Manage the event from one place.</p>
-    <p class="setup-note">Next: connect student registrations and live event statistics.</p>
-  </div>
-
-  <div id="registrationsPanel" class="dashboard-panel hidden">
-    <h3>Student Registrations</h3>
-    <p>Review student details and eligibility.</p>
-    <p class="setup-note">Not connected yet — no student records are being displayed.</p>
-  </div>
-
-  <div id="feesPanel" class="dashboard-panel hidden">
-    <h3>Fee Collection</h3>
-    <p>Track payment status, amount, collector and collection time.</p>
-    <p class="setup-note">Not connected yet — no payments are being recorded.</p>
-  </div>
-
-  <div id="approvalsPanel" class="dashboard-panel hidden">
-    <h3>Ticket Approval</h3>
-    <p>Review eligible students after their fee is confirmed.</p>
-    <p class="setup-note">Not connected yet — no tickets are being approved.</p>
-  </div>
-
-  <div id="entryPanel" class="dashboard-panel hidden">
-    <h3>QR Entry</h3>
-    <p>Prepare for ticket validation and duplicate-scan prevention.</p>
-    <p class="setup-note">Not connected yet — scanning will not grant event entry.</p>
-  </div>
-
-  <div id="staffPanel" class="dashboard-panel hidden">
-    <h3>Staff Management</h3>
-    <p>Plan access for Head Admins, fee collectors and entry scanners.</p>
-    <p class="setup-note">Not connected yet — staff permissions cannot be changed here.</p>
-  </div>
-
-  <button class="secondary-button" id="signOutButton" type="button">
-    Sign out
-  </button>
-</section>
-
-    <div class="status" id="statusMessage" role="status" aria-live="polite">
-      Secure access setup in progress
-    </div>
-
-    <div class="footer">
-      Authorized staff only<br>
-      PRAYAANA 2K26 · Saribekyan Medical University Armenia
-    </div>
-  </main>
 
   <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
-
   <script>
+    // Firebase web configuration. These are client-side identifiers, not server credentials.
     const firebaseConfig = {
       apiKey: "AIzaSyA8Tt3Ttz3ASauROEwfGHtC23z0edjXLOg",
       authDomain: "prayaana-2k26.firebaseapp.com",
@@ -312,168 +148,155 @@
       appId: "1:495679287568:web:99e90b86d65cb6beaa7595"
     };
 
-    firebase.initializeApp(firebaseConfig);
-
-    const auth = firebase.auth();
-    const db = firebase.firestore();
-    const googleProvider = new firebase.auth.GoogleAuthProvider();
-
     const loginSection = document.getElementById("loginSection");
     const dashboardSection = document.getElementById("dashboardSection");
-    const signInButton = document.getElementById("googleSignInButton");
+    const statusMessage = document.getElementById("statusMessage");
+    const signInButton = document.getElementById("signInButton");
     const signOutButton = document.getElementById("signOutButton");
-    const statusmessage = document.getElementById("statusMessage");
+    const welcomeHeading = document.getElementById("welcomeHeading");
+    const accountDetails = document.getElementById("accountDetails");
+    const roleDescription = document.getElementById("roleDescription");
 
-    document.querySelectorAll(".nav-button").forEach((button) => {
-  button.addEventListener("click", () => {
-    const targetId = button.dataset.panel;
+    let auth = null;
+    let db = null;
+    let authReady = false;
 
-    document.querySelectorAll(".dashboard-panel").forEach((panel) => {
-      panel.classList.add("hidden");
-    });
-
-    document.getElementById(targetId).classList.remove("hidden");
-
-    document.querySelectorAll(".nav-button").forEach((item) => {
-      item.classList.remove("active");
-    });
-
-    button.classList.add("active");
-  });
-});
-
-    let checkingAccount = false;
-
-    function showStatus(message) {
-     if (statusMessage) {
-       statusMessage.textContent = message;
-    }else{
-       console.error("Status message element not found:",message);
-     }
+    function showStatus(message, type = "") {
+      if (!statusMessage) {
+        console.error("Missing #statusMessage:", message);
+        return;
+      }
+      statusMessage.textContent = message;
+      statusMessage.className = "status" + (type ? " " + type : "");
     }
 
-    function showLogin() {
-      loginSection.classList.remove("hidden");
-      dashboardSection.classList.add("hidden");
+    function showLogin(message = "Sign in with your authorised staff Google account.", type = "") {
+      if (loginSection) loginSection.classList.remove("hidden");
+      if (dashboardSection) dashboardSection.classList.add("hidden");
+      showStatus(message, type);
+      if (signInButton) signInButton.disabled = false;
     }
 
-    function denyAccess(message) {
-      showLogin();
-      showStatus(message);
+    function showDashboard(user, staffData) {
+      if (loginSection) loginSection.classList.add("hidden");
+      if (dashboardSection) dashboardSection.classList.remove("hidden");
+
+      const name = user.displayName || user.email || "Staff member";
+      const role = String(staffData.role ?? staffData.ROLE ?? "").toLowerCase();
+      if (welcomeHeading) welcomeHeading.textContent = "Welcome, " + name;
+      if (accountDetails) accountDetails.textContent = (user.email || "") + " · Role: " + (role || "staff");
+      if (roleDescription) {
+        roleDescription.textContent = role === "head_admin"
+          ? "Head Admin access verified. You can oversee event operations."
+          : role === "fee_collector"
+          ? "Fee Collector access verified. Use the fee collection section when connected."
+          : role === "entry_scanner"
+          ? "Entry Scanner access verified. Use the entry scanning section when connected."
+          : "Staff access verified.";
+      }
+      if (signInButton) signInButton.disabled = false;
     }
 
-    async function checkStaffAccess(user) {
-      if (!user || checkingAccount) return;
+    function normalizeStaffRecord(data) {
+      if (!data) return null;
+      const activeValue = data.active ?? data.ACTIVE;
+      const roleValue = data.role ?? data.ROLE;
+      const active = activeValue === true || String(activeValue).toLowerCase() === "true";
+      const role = String(roleValue ?? "").toLowerCase();
+      return { active, role };
+    }
 
-      checkingAccount = true;
-      signInButton.disabled = true;
-      showLogin();
-      showStatus("Checking your staff authorization...");
-
+    async function verifyStaff(user) {
       try {
-        // The document ID must be the signed-in user's Firebase UID.
-        const staffRef = db.collection("STAFF").doc(user.uid);
-        const staffSnapshot = await staffRef.get();
-
-        if (!staffSnapshot.exists) {
-  denyAccess(
-    "Staff record not found.\n" +
-    "Project: " + firebase.app().options.projectId + "\n" +
-    "Lookup path: staff/" + user.uid
-  );
-  return;
-}
-
-        const staff = staffSnapshot.data();
-
-        if (staff.active !== true) {
+        const snapshot = await db.collection("STAFF").doc(user.uid).get();
+        if (!snapshot.exists) {
           await auth.signOut();
-          denyAccess("Access denied: this staff account is inactive.");
+          showLogin("Access denied: your account is not listed in STAFF. Contact a Head Admin.", "error");
           return;
         }
 
-        const allowedRoles = [
-          "head_admin",
-          "fee_collector",
-          "entry_scanner"
-        ];
+        const staff = normalizeStaffRecord(snapshot.data());
+        if (!staff || !staff.active) {
+          await auth.signOut();
+          showLogin("Access denied: this staff account is inactive or its ACTIVE field is not set to true.", "error");
+          return;
+        }
 
+        const allowedRoles = ["head_admin", "fee_collector", "entry_scanner"];
         if (!allowedRoles.includes(staff.role)) {
           await auth.signOut();
-          denyAccess("Access denied: your staff role is not recognized.");
+          showLogin("Access denied: the staff ROLE field must be head_admin, fee_collector, or entry_scanner.", "error");
           return;
         }
 
-        loginSection.classList.add("hidden");
-        dashboardSection.classList.remove("hidden");
-
-        document.getElementById("welcomeHeading").textContent =
-          staff.role === "head_admin" ? "Welcome, Head Admin" : "Welcome, Organizer";
-
-        document.getElementById("accountDetails").textContent =
-          "Signed in as " + (user.email || "Google account");
-
-        document.getElementById("roleLabel").textContent =
-          "Your role: " + staff.role.replaceAll("_", " ");
-
-        document.getElementById("roleDescription").textContent =
-          staff.role === "head_admin"
-            ? "Head Admin access verified."
-            : staff.role === "fee_collector"
-              ? "Fee Collector access verified."
-              : "Entry Scanner access verified.";
-
-        showStatus("Staff authorization verified.");
-} catch (error) {
-  console.error("Staff authorization check failed:", error);
-
-  await auth.signOut().catch(() => {});
-
-  denyAccess(
-    "Authorization error: " +
-    (error.code || "unknown") +
-    " — " +
-    error.message
-  );
-} finally {
-        checkingAccount = false;
-        signInButton.disabled = false;
+        showDashboard(user, { role: staff.role });
+      } catch (error) {
+        console.error("Staff authorization check failed:", error);
+        const detail = (error && error.code ? error.code + " — " : "") +
+          (error && error.message ? error.message : "Unknown error");
+        showLogin("Could not verify staff access: " + detail + ". Check the STAFF document fields and Firestore rules.", "error");
       }
     }
 
-    signInButton.addEventListener("click", async () => {
-      signInButton.disabled = true;
-      showStatus("Opening Google sign-in...");
-
+    function initializeFirebase() {
       try {
-        await auth.signInWithPopup(googleProvider);
-        // onAuthStateChanged performs the staff authorization check.
-      } catch (error) {
-        console.error("Google sign-in failed:", error);
-        showStatus("Sign-in failed: " + error.message);
-        signInButton.disabled = false;
-      }
-    });
+        if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+        auth = firebase.auth();
+        db = firebase.firestore();
 
-    signOutButton.addEventListener("click", async () => {
-      try {
-        await auth.signOut();
-        showLogin();
-        showStatus("You have signed out.");
-      } catch (error) {
-        console.error(error);
-        showStatus("Sign-out failed. Please try again.");
-      }
-    });
+        const provider = new firebase.auth.GoogleAuthProvider();
+        signInButton.addEventListener("click", async () => {
+          signInButton.disabled = true;
+          showStatus("Opening Google sign-in…");
+          try {
+            await auth.signInWithPopup(provider);
+          } catch (error) {
+            console.error("Google sign-in failed:", error);
+            showStatus("Google sign-in failed: " + (error.message || "Unknown error"), "error");
+            signInButton.disabled = false;
+          }
+        });
 
-    auth.onAuthStateChanged(async (user) => {
-      if (user) {
-        await checkStaffAccess(user);
-      } else {
-        showLogin();
-        showStatus("Sign in with your approved staff account.");
+        signOutButton.addEventListener("click", async () => {
+          try {
+            await auth.signOut();
+            showLogin("You have signed out successfully.", "success");
+          } catch (error) {
+            showStatus("Could not sign out: " + (error.message || "Unknown error"), "error");
+          }
+        });
+
+        document.querySelectorAll(".nav-button").forEach(button => {
+          button.addEventListener("click", () => {
+            document.querySelectorAll(".nav-button").forEach(item => item.classList.remove("active"));
+            button.classList.add("active");
+            document.querySelectorAll(".dashboard-panel").forEach(panel => panel.classList.add("hidden"));
+            const target = document.getElementById(button.dataset.panel);
+            if (target) target.classList.remove("hidden");
+          });
+        });
+
+        auth.onAuthStateChanged(async user => {
+          if (!user) {
+            showLogin("Sign in with your authorised staff Google account.");
+            return;
+          }
+          showStatus("Checking your staff access…");
+          await verifyStaff(user);
+        });
+        authReady = true;
+      } catch (error) {
+        console.error("Firebase initialization failed:", error);
+        showLogin("Firebase setup failed: " + (error.message || "Unknown error") + ". Check your Firebase configuration and enabled services.", "error");
       }
-    });
+    }
+
+    if (signInButton && signOutButton && statusMessage) {
+      initializeFirebase();
+    } else {
+      console.error("Portal setup error: required HTML elements are missing.");
+      if (statusMessage) showStatus("Portal setup error: required page elements are missing.", "error");
+    }
   </script>
 </body>
 </html>
