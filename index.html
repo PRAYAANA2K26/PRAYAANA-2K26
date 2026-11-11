@@ -66,6 +66,12 @@
     .badge { display:inline-block; border:1px solid var(--line); border-radius:999px; padding:4px 8px; font-size:11px; color:var(--muted); white-space:nowrap; }
     .note { background:#21192b; border-left:3px solid var(--gold); padding:12px 14px; border-radius:0 8px 8px 0; color:var(--muted); font-size:13px; line-height:1.6; }
     .inline-actions { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+
+    .filters-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; margin:14px 0 8px; }
+    .filter-actions { display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-top:12px; }
+    .filter-count { color:var(--muted); font-size:12px; margin-top:8px; }
+    @media(max-width:650px) { .filters-grid { grid-template-columns:1fr; } }
+
     footer { text-align:center; color:#857994; font-size:12px; margin-top:32px; }
     @media(max-width:650px) {
       .form-grid { grid-template-columns:1fr; } .field.full { grid-column:auto; }
@@ -144,6 +150,43 @@
             <label for="studentSearch">Search registered students</label>
             <input id="studentSearch" type="search" autocomplete="off" placeholder="Search by student name, email, phone or registration ID…" aria-describedby="searchHelp">
             <span id="searchHelp" class="hint">Searches the registrations currently loaded in the table (up to the latest 500).</span>
+          </div>
+          <div class="panel" id="registrationFilters" style="margin:14px 0;padding:16px">
+            <h3>Filter Settings</h3>
+            <p class="small">Combine filters to show only registrations matching every selected condition.</p>
+            <div class="filters-grid">
+              <div class="field">
+                <label for="eligibilityFilter">Eligibility</label>
+                <select id="eligibilityFilter">
+                  <option value="all">All eligibility statuses</option>
+                  <option value="eligible">Eligible</option>
+                  <option value="ineligible">Not eligible</option>
+                  <option value="not_checked">Not checked</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="paymentFilter">Payment</label>
+                <select id="paymentFilter">
+                  <option value="all">All payment statuses</option>
+                  <option value="paid">Paid</option>
+                  <option value="unpaid">Not paid</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="ticketFilter">Ticket</label>
+                <select id="ticketFilter">
+                  <option value="all">All ticket statuses</option>
+                  <option value="issued">Ticket issued</option>
+                  <option value="not_issued">Ticket not issued</option>
+                  <option value="used">Ticket already used</option>
+                </select>
+              </div>
+            </div>
+            <div class="filter-actions">
+              <button class="btn" id="applyFiltersButton" type="button">Apply filters</button>
+              <button class="btn secondary" id="clearFiltersButton" type="button">Clear filters</button>
+            </div>
+            <div id="filterResultCount" class="filter-count" aria-live="polite">Showing all loaded registrations.</div>
           </div>
           <div id="listStatus" class="status" role="status" aria-live="polite">Loading registrations…</div>
           <div class="table-wrap">
@@ -518,20 +561,42 @@ function addTextCell(row, value) {
 }
 function filterStudentRows() {
   const query = String($("studentSearch")?.value || "").trim().toLocaleLowerCase();
+  const eligibility = $("eligibilityFilter")?.value || "all";
+  const payment = $("paymentFilter")?.value || "all";
+  const ticket = $("ticketFilter")?.value || "all";
   const rows = Array.from($("registrationRows").querySelectorAll("tr"));
   let visible = 0;
+  let dataRows = 0;
+
   for (const row of rows) {
-    // Do not hide the empty/error-state message rows.
+    // Keep the table's empty/error-state message visible.
     if (row.querySelectorAll("td").length === 1 && row.querySelectorAll("td")[0].colSpan > 1) continue;
+    dataRows++;
     const searchableText = (row.textContent + " " + (row.dataset.registrationId || "")).toLocaleLowerCase();
-    const match = !query || searchableText.includes(query);
+    const searchMatch = !query || searchableText.includes(query);
+    const eligibilityMatch = eligibility === "all" || row.dataset.eligibility === eligibility;
+    const paymentMatch = payment === "all" || row.dataset.payment === payment;
+    const ticketMatch = ticket === "all" || row.dataset.ticket === ticket;
+    const match = searchMatch && eligibilityMatch && paymentMatch && ticketMatch;
     row.classList.toggle("hidden", !match);
     if (match) visible++;
   }
-  const old = $("searchResultCount");
-  if (old) old.textContent = query ? (visible + " matching row(s)") : "";
+
+  const count = $("filterResultCount");
+  if (count) count.textContent = dataRows
+    ? ("Showing " + visible + " of " + dataRows + " loaded registration(s).")
+    : "No registrations loaded.";
 }
 $("studentSearch").addEventListener("input", filterStudentRows);
+$("applyFiltersButton").addEventListener("click", filterStudentRows);
+$("clearFiltersButton").addEventListener("click", () => {
+  $("eligibilityFilter").value = "all";
+  $("paymentFilter").value = "all";
+  $("ticketFilter").value = "all";
+  $("studentSearch").value = "";
+  filterStudentRows();
+});
+
 
 async function loadRegistrations() {
   if (!db || !auth || !auth.currentUser) return;
@@ -558,6 +623,9 @@ async function loadRegistrations() {
 
         const tr = document.createElement("tr");
         tr.dataset.registrationId = doc.id;
+        tr.dataset.eligibility = r.eligibilityStatus || "not_checked";
+        tr.dataset.payment = r.paymentStatus || "unpaid";
+        tr.dataset.ticket = r.ticketStatus || "not_issued";
         addTextCell(tr, r.fullName || "—");
         addTextCell(tr, [r.course, r.year].filter(Boolean).join(" / ") || "—");
         addTextCell(tr, [r.phone, r.email].filter(Boolean).join("\n") || "—");
