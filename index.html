@@ -6,85 +6,137 @@
   <meta name="theme-color" content="#09070f">
   <meta name="description" content="PRAYAANA 2K26 student registration and staff portal">
   <title>PRAYAANA 2K26 | Registration & Staff Portal</title>
+
   <style>
     :root {
       color-scheme: dark;
-      --bg: #09070f; --panel: #15111f; --panel2: #21182e;
-      --line: #3a2b4c; --text: #f7f1ff; --muted: #b8abc9;
-      --gold: #e5c27b; --purple: #a984e8; --red: #ff9aa6;
-      --green: #a4e5b8;
+      --bg:#09070f; --panel:#15111f; --panel2:#21182e;
+      --line:#3a2b4c; --text:#f7f1ff; --muted:#b8abc9;
+      --gold:#e5c27b; --purple:#a984e8; --red:#ff9aa6;
+      --green:#a4e5b8;
     }
-    * { box-sizing: border-box; }
+    * { box-sizing:border-box; }
     body {
-      margin: 0; min-height: 100vh; color: var(--text);
-      background: radial-gradient(ellipse at top, #25163a 0%, var(--bg) 57%);
-      font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+      margin:0; min-height:100vh; color:var(--text);
+      background:radial-gradient(ellipse at top,#25163a 0%,var(--bg) 57%);
+      font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
     }
-    button, input, select { font: inherit; }
-    button { cursor: pointer; }
-    button:disabled { cursor: not-allowed; opacity: .55; }
-    .shell { max-width: 1180px; margin: auto; padding: 25px 16px 55px; }
-    header { display:flex; justify-content:space-between; align-items:center; gap:16px; flex-wrap:wrap; padding-bottom:20px; border-bottom:1px solid var(--line); margin-bottom:24px; }
+    button,input,select { font:inherit; }
+    button { cursor:pointer; }
+    button:disabled { cursor:not-allowed; opacity:.55; }
+    .shell { max-width:1180px; margin:auto; padding:25px 16px 55px; }
+    header {
+      display:flex; justify-content:space-between; align-items:center;
+      gap:16px; flex-wrap:wrap; padding-bottom:20px;
+      border-bottom:1px solid var(--line); margin-bottom:24px;
+    }
     .brand { display:flex; align-items:center; gap:13px; }
-    .mark { width:47px; height:47px; border:1px solid var(--gold); border-radius:50%; display:grid; place-items:center; color:var(--gold); font:24px Georgia,serif; }
-    .eyebrow { font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:var(--gold); }
+    .mark {
+      width:47px; height:47px; border:1px solid var(--gold);
+      border-radius:50%; display:grid; place-items:center;
+      color:var(--gold); font:24px Georgia,serif;
+    }
+    .eyebrow {
+      font-size:11px; letter-spacing:.2em;
+      text-transform:uppercase; color:var(--gold);
+    }
     h1 { font-size:clamp(20px,4vw,29px); letter-spacing:.08em; margin:5px 0 0; }
-    h2 { margin:0 0 10px; font-size:25px; } h3 { margin:0 0 10px; }
+    h2 { margin:0 0 10px; font-size:25px; }
+    h3 { margin:0 0 10px; }
     p { color:var(--muted); line-height:1.6; }
     .muted { color:var(--muted); }
-    .pill { border:1px solid var(--line); border-radius:999px; padding:8px 12px; color:var(--muted); font-size:12px; }
+    .pill {
+      border:1px solid var(--line); border-radius:999px;
+      padding:8px 12px; color:var(--muted); font-size:12px;
+    }
     .tabs { display:flex; gap:9px; flex-wrap:wrap; margin:20px 0; }
-    .tab, .btn { border-radius:10px; padding:11px 15px; border:1px solid var(--line); font-weight:650; }
+    .tab,.btn { border-radius:10px; padding:11px 15px; border:1px solid var(--line); font-weight:650; }
     .tab { background:#171121; color:var(--muted); }
-    .tab.active, .tab:hover { border-color:var(--gold); color:var(--text); background:#2a2038; }
+    .tab.active,.tab:hover { border-color:var(--gold); color:var(--text); background:#2a2038; }
     .btn { background:var(--gold); color:#17101e; border-color:var(--gold); }
     .btn.secondary { background:transparent; color:var(--text); border-color:var(--line); }
     .btn.danger { background:#5b202b; color:#fff; border-color:#a34a5b; }
-    .card, .panel { background:linear-gradient(145deg,rgba(29,22,42,.97),rgba(16,12,24,.98)); border:1px solid var(--line); border-radius:17px; padding:23px; box-shadow:0 15px 45px #0002; }
+    .card,.panel {
+      background:linear-gradient(145deg,rgba(29,22,42,.97),rgba(16,12,24,.98));
+      border:1px solid var(--line); border-radius:17px; padding:23px;
+      box-shadow:0 15px 45px #0002;
+    }
     .narrow { max-width:740px; margin:0 auto; }
     .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:15px; }
     .field { display:flex; flex-direction:column; gap:7px; min-width:0; }
     .field.full { grid-column:1/-1; }
     label { font-size:13px; color:#e9def7; }
-    input, select { width:100%; min-width:0; background:#0d0a14; color:var(--text); border:1px solid #49375e; border-radius:9px; padding:12px; outline:none; }
-    input:focus, select:focus { border-color:var(--gold); }
+    input,select {
+      width:100%; min-width:0; background:#0d0a14; color:var(--text);
+      border:1px solid #49375e; border-radius:9px; padding:12px; outline:none;
+    }
+    input:focus,select:focus { border-color:var(--gold); }
     input[type="checkbox"] { width:auto; margin-top:4px; }
-    .hint, .small { font-size:12px; } .hint { color:var(--muted); }
-    .status { border:1px solid var(--line); background:#0e0a16; border-radius:10px; padding:12px 14px; color:var(--muted); margin:15px 0; line-height:1.5; overflow-wrap:anywhere; }
+    .hint,.small { font-size:12px; }
+    .hint { color:var(--muted); }
+    .status {
+      border:1px solid var(--line); background:#0e0a16;
+      border-radius:10px; padding:12px 14px; color:var(--muted);
+      margin:15px 0; line-height:1.5; overflow-wrap:anywhere;
+    }
     .status.error { color:var(--red); border-color:#6a3543; }
     .status.success { color:var(--green); border-color:#315c42; }
-    .hidden { display:none !important; }
-    .staff-top { display:flex; justify-content:space-between; align-items:flex-start; gap:16px; flex-wrap:wrap; }
+    .hidden { display:none!important; }
+    .staff-top {
+      display:flex; justify-content:space-between; align-items:flex-start;
+      gap:16px; flex-wrap:wrap;
+    }
     .stats { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; margin:18px 0; }
     .stat { border:1px solid var(--line); border-radius:12px; background:#120e1b; padding:16px; }
     .stat strong { display:block; color:var(--gold); font-size:24px; }
     .stat span { font-size:12px; color:var(--muted); }
     .table-wrap { overflow-x:auto; margin-top:16px; }
     table { width:100%; border-collapse:collapse; min-width:760px; }
-    th, td { text-align:left; padding:12px 10px; border-bottom:1px solid var(--line); font-size:13px; vertical-align:top; }
-    th { color:var(--gold); font-weight:650; } td { color:#e8dff2; }
-    .badge { display:inline-block; border:1px solid var(--line); border-radius:999px; padding:4px 8px; font-size:11px; color:var(--muted); white-space:nowrap; }
-    .note { background:#21192b; border-left:3px solid var(--gold); padding:12px 14px; border-radius:0 8px 8px 0; color:var(--muted); font-size:13px; line-height:1.6; }
+    th,td {
+      text-align:left; padding:12px 10px; border-bottom:1px solid var(--line);
+      font-size:13px; vertical-align:top;
+    }
+    th { color:var(--gold); font-weight:650; }
+    td { color:#e8dff2; }
+    .badge {
+      display:inline-block; border:1px solid var(--line); border-radius:999px;
+      padding:4px 8px; font-size:11px; color:var(--muted); white-space:nowrap;
+    }
+    .note {
+      background:#21192b; border-left:3px solid var(--gold);
+      padding:12px 14px; border-radius:0 8px 8px 0;
+      color:var(--muted); font-size:13px; line-height:1.6;
+    }
     .inline-actions { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
-
-    .filters-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; margin:14px 0 8px; }
-    .filter-actions { display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-top:12px; }
+    .filters-grid {
+      display:grid; grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:12px; margin:14px 0 8px;
+    }
+    .filter-actions {
+      display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-top:12px;
+    }
     .filter-count { color:var(--muted); font-size:12px; margin-top:8px; }
-    @media(max-width:650px) { .filters-grid { grid-template-columns:1fr; } }
-
     footer { text-align:center; color:#857994; font-size:12px; margin-top:32px; }
+
     @media(max-width:650px) {
-      .form-grid { grid-template-columns:1fr; } .field.full { grid-column:auto; }
-      .card, .panel { padding:18px; } .stats { grid-template-columns:1fr 1fr; }
+      .form-grid { grid-template-columns:1fr; }
+      .field.full { grid-column:auto; }
+      .card,.panel { padding:18px; }
+      .stats { grid-template-columns:1fr 1fr; }
+      .filters-grid { grid-template-columns:1fr; }
     }
   </style>
 </head>
+
 <body>
 <div class="shell">
   <header>
     <div class="brand">
       <div class="mark" aria-hidden="true">P</div>
-      <div><div class="eyebrow">Saribekyan Medical University Armenia</div><h1>PRAYAANA <span style="color:var(--gold)">2K26</span></h1></div>
+      <div>
+        <div class="eyebrow">Saribekyan Medical University Armenia</div>
+        <h1>PRAYAANA <span style="color:var(--gold)">2K26</span></h1>
+      </div>
     </div>
     <div class="pill">EVENT REGISTRATION & STAFF PORTAL</div>
   </header>
@@ -100,18 +152,52 @@
       <h2 style="margin-top:8px">Student Registration</h2>
       <p>Register your details for PRAYAANA 2K26. Your registration will be reviewed by the event team. Submitting this form does not confirm payment or guarantee entry.</p>
       <div class="note">Enter your details accurately. Please avoid duplicate submissions. A registration is not a ticket; eligibility and payment must be verified separately.</div>
+
       <form id="registrationForm" style="margin-top:20px">
         <div class="form-grid">
-          <div class="field"><label for="fullName">Full name *</label><input id="fullName" name="fullName" autocomplete="name" maxlength="100" required></div>
-          <div class="field"><label for="course">Course *</label><input id="course" name="course" maxlength="100" placeholder="e.g. General Medicine" required></div>
-          <div class="field"><label for="year">Year of study *</label><select id="year" name="year" required><option value="">Choose year</option><option>1st year</option><option>2nd year</option><option>3rd year</option><option>4th year</option><option>5th year</option><option>6th year</option><option>Other</option></select></div>
-          <div class="field"><label for="phone">Phone number *</label><input id="phone" name="phone" type="tel" autocomplete="tel" maxlength="30" required></div>
-          <div class="field"><label for="email">Email address *</label><input id="email" name="email" type="email" autocomplete="email" maxlength="150" required></div>
-          <div class="field"><label for="delivery">Preferred ticket delivery *</label><select id="delivery" name="delivery" required><option value="">Choose a method</option><option value="WhatsApp">WhatsApp</option><option value="Email">Email</option></select><div class="hint">The team may contact you to verify student details and payment.</div></div>
+          <div class="field">
+            <label for="fullName">Full name *</label>
+            <input id="fullName" name="fullName" autocomplete="name" maxlength="100" required>
+          </div>
+          <div class="field">
+            <label for="course">Course *</label>
+            <input id="course" name="course" maxlength="100" placeholder="e.g. General Medicine" required>
+          </div>
+          <div class="field">
+            <label for="year">Year of study *</label>
+            <select id="year" name="year" required>
+              <option value="">Choose year</option>
+              <option>1st year</option><option>2nd year</option>
+              <option>3rd year</option><option>4th year</option>
+              <option>5th year</option><option>6th year</option><option>Other</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="phone">Phone number *</label>
+            <input id="phone" name="phone" type="tel" autocomplete="tel" maxlength="30" required>
+          </div>
+          <div class="field">
+            <label for="email">Email address *</label>
+            <input id="email" name="email" type="email" autocomplete="email" maxlength="150" required>
+          </div>
+          <div class="field">
+            <label for="delivery">Preferred ticket delivery *</label>
+            <select id="delivery" name="delivery" required>
+              <option value="">Choose a method</option>
+              <option value="WhatsApp">WhatsApp</option>
+              <option value="Email">Email</option>
+            </select>
+            <div class="hint">The team may contact you to verify student details and payment.</div>
+          </div>
         </div>
+
         <div class="field" style="margin-top:17px;display:block">
-          <label style="display:flex;gap:10px;align-items:flex-start"><input id="consent" type="checkbox" required><span>I confirm these details are accurate and agree that the event team may use them to verify my eligibility and manage my registration.</span></label>
+          <label style="display:flex;gap:10px;align-items:flex-start">
+            <input id="consent" type="checkbox" required>
+            <span>I confirm these details are accurate and agree that the event team may use them to verify my eligibility and manage my registration.</span>
+          </label>
         </div>
+
         <button class="btn" id="submitRegistration" type="submit" style="margin-top:18px">Submit registration</button>
         <div id="registrationStatus" class="status" role="status" aria-live="polite">Checking registration service…</div>
       </form>
@@ -119,41 +205,63 @@
 
     <section id="staffPage" class="hidden">
       <div id="loginCard" class="card narrow">
-        <div class="eyebrow">Restricted access</div><h2 style="margin-top:8px">Staff sign-in</h2>
+        <div class="eyebrow">Restricted access</div>
+        <h2 style="margin-top:8px">Staff sign-in</h2>
         <p>Sign in with the Google account authorized by a Head Admin.</p>
         <button class="btn" id="signInButton" type="button">Continue with Google</button>
         <div id="staffStatus" class="status" role="status" aria-live="polite">Checking Firebase setup…</div>
       </div>
+
       <div id="staffDashboard" class="hidden">
         <div class="staff-top">
-          <div><div class="eyebrow">Access verified</div><h2 id="welcomeHeading">Event Control Center</h2><p id="accountDetails"></p></div>
-          <div class="inline-actions"><button class="btn secondary" id="refreshButton" type="button">Refresh registrations</button><button class="btn secondary" id="signOutButton" type="button">Sign out</button></div>
+          <div>
+            <div class="eyebrow">Access verified</div>
+            <h2 id="welcomeHeading">Event Control Center</h2>
+            <p id="accountDetails"></p>
+          </div>
+          <div class="inline-actions">
+            <button class="btn secondary" id="refreshButton" type="button">Refresh registrations</button>
+            <button class="btn secondary" id="signOutButton" type="button">Sign out</button>
+          </div>
         </div>
+
         <div class="stats">
-          <div class="stat"><strong id="totalCount">—</strong><span>Loaded registrations</span></div>
-          <div class="stat"><strong id="pendingCount">—</strong><span>Pending review</span></div>
-          <div class="stat"><strong id="paidCount">—</strong><span>Marked paid (loaded records)</span></div>
+          <div class="stat"><strong id="totalCount">0</strong><span>Loaded registrations</span></div>
+          <div class="stat"><strong id="pendingCount">0</strong><span>Pending review (loaded)</span></div>
+          <div class="stat"><strong id="paidCount">0</strong><span>Marked paid (loaded)</span></div>
         </div>
+
         <div class="panel" id="scannerPanel">
           <h3>Entry scanning</h3>
           <p>Entry Scanner or Head Admin: scan a student's ticket QR code. Each valid ticket can be used only once.</p>
-          <div class="inline-actions"><button class="btn secondary" id="startScannerButton" type="button">Start camera scanner</button><button class="btn secondary" id="stopScannerButton" type="button" disabled>Stop scanner</button></div>
+          <div class="inline-actions">
+            <button class="btn secondary" id="startScannerButton" type="button">Start camera scanner</button>
+            <button class="btn secondary" id="stopScannerButton" type="button" disabled>Stop scanner</button>
+          </div>
           <div id="qrReader" style="max-width:460px;margin-top:12px"></div>
-          <div class="field" style="margin-top:12px"><label for="manualTicketToken">Manual ticket token (fallback)</label><input id="manualTicketToken" autocomplete="off" placeholder="Paste token only if camera scanning is unavailable"></div>
+          <div class="field" style="margin-top:12px">
+            <label for="manualTicketToken">Manual ticket token (fallback)</label>
+            <input id="manualTicketToken" autocomplete="off" placeholder="Paste token only if camera scanning is unavailable">
+          </div>
           <button class="btn" id="validateManualTicketButton" type="button" style="margin-top:10px">Validate ticket</button>
           <div id="scanStatus" class="status" role="status" aria-live="polite">Scanner ready.</div>
         </div>
+
         <div class="panel" style="margin-top:16px">
           <h3>Student registrations</h3>
           <p>Compare each student with the official university list. Only the Head Admin can record eligibility. Fee Collectors can record manually verified payments. Tickets can be issued only after eligibility and payment are confirmed.</p>
+
           <div class="field" style="margin:14px 0 10px;max-width:520px">
             <label for="studentSearch">Search registered students</label>
-            <input id="studentSearch" type="search" autocomplete="off" placeholder="Search by student name, email, phone or registration ID…" aria-describedby="searchHelp">
-            <span id="searchHelp" class="hint">Searches the registrations currently loaded in the table (up to the latest 500).</span>
+            <input id="studentSearch" type="search" autocomplete="off"
+              placeholder="Name prefix, email, phone or registration ID…"
+              aria-describedby="searchHelp">
+            <span id="searchHelp" class="hint">Enter a search and press Enter to search Firestore. Name search matches names beginning with the text entered.</span>
           </div>
+
           <div class="panel" id="registrationFilters" style="margin:14px 0;padding:16px">
             <h3>Filter Settings</h3>
-            <p class="small">Combine filters to show only registrations matching every selected condition.</p>
+            <p class="small">Combine filters to show only registrations matching every selected condition in the currently loaded results.</p>
             <div class="filters-grid">
               <div class="field">
                 <label for="eligibilityFilter">Eligibility</label>
@@ -186,16 +294,31 @@
               <button class="btn" id="applyFiltersButton" type="button">Apply filters</button>
               <button class="btn secondary" id="clearFiltersButton" type="button">Clear filters</button>
             </div>
-            <div id="filterResultCount" class="filter-count" aria-live="polite">Showing all loaded registrations.</div>
+            <div id="filterResultCount" class="filter-count" aria-live="polite">No registrations loaded.</div>
           </div>
-          <div id="listStatus" class="status" role="status" aria-live="polite">Loading registrations…</div>
+
+          <div id="listStatus" class="status" role="status" aria-live="polite">Search for a student or load the latest registrations.</div>
+
+          <div class="filter-actions">
+            <button class="btn secondary" id="loadLatestButton" type="button">Load latest 50</button>
+            <button class="btn secondary" id="loadMoreButton" type="button" disabled>Load next 50</button>
+          </div>
+
           <div class="table-wrap">
             <table>
-              <thead><tr><th>Student</th><th>Course / year</th><th>Contact</th><th>Delivery</th><th>Eligibility</th><th>Payment</th><th>Ticket</th><th>Action</th></tr></thead>
-              <tbody id="registrationRows"><tr><td colspan="8">No data loaded.</td></tr></tbody>
+              <thead>
+                <tr>
+                  <th>Student</th><th>Course / year</th><th>Contact</th><th>Delivery</th>
+                  <th>Eligibility</th><th>Payment</th><th>Ticket</th><th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="registrationRows">
+                <tr><td colspan="8">Search for a student or load the latest registrations.</td></tr>
+              </tbody>
             </table>
           </div>
         </div>
+
         <div id="ticketPanel" class="panel hidden" style="margin-top:16px">
           <h3>Issued ticket QR</h3>
           <p class="small">Share this ticket privately with the student. WhatsApp and email open a prepared message; for the actual QR image, download it and attach it to the message.</p>
@@ -213,6 +336,7 @@
       </div>
     </section>
   </main>
+
   <footer>PRAYAANA 2K26 · Keep student information confidential · Event date and venue to be announced</footer>
 </div>
 
@@ -221,8 +345,13 @@
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+
 <script>
 "use strict";
+
+/* -------------------------------------------------------
+   FIREBASE CONFIGURATION
+   ------------------------------------------------------- */
 
 const firebaseConfig = {
   apiKey: "AIzaSyA8Tt3Ttz3ASauROEwfGHtC23z0edjXLOg",
@@ -231,10 +360,11 @@ const firebaseConfig = {
   appId: "1:495679287568:web:99e90b86d65cb6beaa7595"
 };
 
-const $ = (id) => document.getElementById(id);
+const $ = id => document.getElementById(id);
 const registrationForm = $("registrationForm");
 const registrationStatus = $("registrationStatus");
 const staffStatus = $("staffStatus");
+
 let auth = null;
 let db = null;
 let currentStaffRole = "";
@@ -242,11 +372,39 @@ let authStateVersion = 0;
 let qrScanner = null;
 let currentTicketShare = null;
 
+/* -------------------------------------------------------
+   READ-REDUCTION SETTINGS
+   ------------------------------------------------------- */
+
+const PAGE_SIZE = 50;
+
+let lastVisibleRegistration = null;
+let hasMoreRegistrations = false;
+let loadedRegistrationData = new Map();
+let registrationRequestVersion = 0;
+
+/* -------------------------------------------------------
+   GENERAL HELPERS
+   ------------------------------------------------------- */
+
 function setStatus(el, message, type = "") {
   if (!el) return;
   el.textContent = message;
   el.className = "status" + (type ? " " + type : "");
 }
+
+function clean(value) {
+  return String(value ?? "").trim();
+}
+
+function normalizeEmail(value) {
+  return clean(value).toLowerCase();
+}
+
+function validPhone(value) {
+  return /^[+0-9() .-]{6,30}$/.test(value);
+}
+
 function switchPage(page) {
   const isStaff = page === "staff";
   $("registrationPage").classList.toggle("hidden", isStaff);
@@ -254,21 +412,24 @@ function switchPage(page) {
   $("publicTab").classList.toggle("active", !isStaff);
   $("staffTab").classList.toggle("active", isStaff);
 }
+
 $("publicTab").addEventListener("click", () => switchPage("public"));
 $("staffTab").addEventListener("click", () => switchPage("staff"));
 
-function clean(value) { return String(value ?? "").trim(); }
-function normalizeEmail(value) { return clean(value).toLowerCase(); }
-function validPhone(value) { return /^[+0-9() .-]{6,30}$/.test(value); }
+/* -------------------------------------------------------
+   STUDENT REGISTRATION
+   ------------------------------------------------------- */
 
-registrationForm.addEventListener("submit", async (event) => {
+registrationForm.addEventListener("submit", async event => {
   event.preventDefault();
+
   if (!db) {
     setStatus(registrationStatus, "Registration service is not connected. Please try again later.", "error");
     return;
   }
 
   const submit = $("submitRegistration");
+
   const data = {
     fullName: clean($("fullName").value).replace(/\s+/g, " "),
     course: clean($("course").value).replace(/\s+/g, " "),
@@ -278,36 +439,55 @@ registrationForm.addEventListener("submit", async (event) => {
     delivery: clean($("delivery").value)
   };
 
-  if (!data.fullName || !data.course || !data.year || !data.phone || !data.email || !data.delivery || !$("consent").checked) {
+  if (
+    !data.fullName || !data.course || !data.year ||
+    !data.phone || !data.email || !data.delivery ||
+    !$("consent").checked
+  ) {
     setStatus(registrationStatus, "Please complete all fields and confirm the consent checkbox.", "error");
     return;
   }
-  if (data.fullName.length > 100 || data.course.length > 100 || data.phone.length > 30 || data.email.length > 150) {
+
+  if (
+    data.fullName.length > 100 ||
+    data.course.length > 100 ||
+    data.phone.length > 30 ||
+    data.email.length > 150
+  ) {
     setStatus(registrationStatus, "One or more fields exceed the permitted length.", "error");
     return;
   }
+
   if (!validPhone(data.phone)) {
     setStatus(registrationStatus, "Please enter a valid phone number using digits and common phone symbols.", "error");
     return;
   }
+
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
     setStatus(registrationStatus, "Please enter a valid email address.", "error");
     return;
   }
-  if (!["1st year", "2nd year", "3rd year", "4th year", "5th year", "6th year", "Other"].includes(data.year)) {
+
+  if (!["1st year","2nd year","3rd year","4th year","5th year","6th year","Other"].includes(data.year)) {
     setStatus(registrationStatus, "Please choose a valid year of study.", "error");
     return;
   }
-  if (!["WhatsApp", "Email"].includes(data.delivery)) {
+
+  if (!["WhatsApp","Email"].includes(data.delivery)) {
     setStatus(registrationStatus, "Please choose a valid ticket delivery method.", "error");
     return;
   }
 
   submit.disabled = true;
   setStatus(registrationStatus, "Submitting your registration securely…");
+
   try {
     const phoneDigits = data.phone;
-    if (phoneDigits.length < 6 || phoneDigits.length > 20) throw new Error("Enter a phone number with 6–20 digits.");
+
+    if (phoneDigits.length < 6 || phoneDigits.length > 20) {
+      throw new Error("Enter a phone number with 6–20 digits.");
+    }
+
     data.phoneDigits = phoneDigits;
     data.email = normalizeEmail(data.email);
     data.eligibilityStatus = "not_checked";
@@ -316,235 +496,147 @@ registrationForm.addEventListener("submit", async (event) => {
     data.ticketStatus = "not_issued";
     data.ticketId = "";
     data.createdAt = firebase.firestore.FieldValue.serverTimestamp();
+
     const regRef = db.collection("REGISTRATIONS").doc();
     const emailIndex = db.collection("REGISTRATION_INDEX").doc("email_" + data.email);
     const phoneIndex = db.collection("REGISTRATION_INDEX").doc("phone_" + phoneDigits);
+
     const batch = db.batch();
     batch.set(regRef, data);
-    batch.set(emailIndex, { registrationId: regRef.id, type: "email", value: data.email });
-    batch.set(phoneIndex, { registrationId: regRef.id, type: "phone", value: phoneDigits });
+    batch.set(emailIndex, {
+      registrationId: regRef.id,
+      type: "email",
+      value: data.email
+    });
+    batch.set(phoneIndex, {
+      registrationId: regRef.id,
+      type: "phone",
+      value: phoneDigits
+    });
+
     await batch.commit();
+
     registrationForm.reset();
-    setStatus(registrationStatus, "Registration submitted. Reference: " + regRef.id + ". Keep this reference. This is not an entry ticket. Duplicate email and phone numbers are blocked.", "success");
+
+    setStatus(
+      registrationStatus,
+      "Registration submitted. Reference: " + regRef.id +
+      ". Keep this reference. This is not an entry ticket. Duplicate email and phone numbers are blocked.",
+      "success"
+    );
+
   } catch (error) {
     console.error("Registration submit failed:", error);
-    const duplicate = error.code === "permission-denied" || error.code === "already-exists";
-    const message = duplicate ? "This email address or phone number may already be registered. If you believe this is a mistake, contact the event team." : "Could not submit registration (" + (error.code || error.message || "error") + "). Please try again later.";
+
+    const duplicate =
+      error.code === "permission-denied" ||
+      error.code === "already-exists";
+
+    const message = duplicate
+      ? "This email address or phone number may already be registered. If you believe this is a mistake, contact the event team."
+      : "Could not submit registration (" + (error.code || error.message || "error") + "). Please try again later.";
+
     setStatus(registrationStatus, message, "error");
+
   } finally {
     submit.disabled = false;
   }
 });
 
+/* -------------------------------------------------------
+   STAFF AUTHENTICATION
+   ------------------------------------------------------- */
+
 function normalizeStaff(data) {
   if (!data) return null;
-  // Values must match the Firestore rules: active is Boolean true and role is lowercase.
+
   return {
     active: data.active === true,
     role: String(data.role || "").toLowerCase()
   };
 }
+
 function showStaffLogin(message, type = "") {
   $("loginCard").classList.remove("hidden");
   $("staffDashboard").classList.add("hidden");
   setStatus(staffStatus, message, type);
 }
+
 async function verifyStaff(user, version) {
   if (!db || !auth || !user) return;
+
   try {
     const snap = await db.collection("STAFF").doc(user.uid).get();
-    if (version !== authStateVersion || !auth.currentUser || auth.currentUser.uid !== user.uid) return;
+
+    if (
+      version !== authStateVersion ||
+      !auth.currentUser ||
+      auth.currentUser.uid !== user.uid
+    ) return;
+
     const staff = snap.exists ? normalizeStaff(snap.data()) : null;
-    const roles = ["head_admin", "fee_collector", "entry_scanner"];
+    const roles = ["head_admin","fee_collector","entry_scanner"];
+
     if (!staff || !staff.active || !roles.includes(staff.role)) {
       await auth.signOut();
-      showStaffLogin("Access denied. Your account must have an active STAFF record with an approved lowercase role.", "error");
+      showStaffLogin(
+        "Access denied. Your account must have an active STAFF record with an approved lowercase role.",
+        "error"
+      );
       return;
     }
+
     currentStaffRole = staff.role;
-    $("scannerPanel").classList.toggle("hidden", !["entry_scanner", "head_admin"].includes(staff.role));
+
+    $("scannerPanel").classList.toggle(
+      "hidden",
+      !["entry_scanner","head_admin"].includes(staff.role)
+    );
+
     $("loginCard").classList.add("hidden");
     $("staffDashboard").classList.remove("hidden");
-    $("welcomeHeading").textContent = "Welcome, " + (user.displayName || "Staff member");
-    $("accountDetails").textContent = (user.email || "") + " · Role: " + staff.role;
-    await loadRegistrations();
+
+    $("welcomeHeading").textContent =
+      "Welcome, " + (user.displayName || "Staff member");
+
+    $("accountDetails").textContent =
+      (user.email || "") + " · Role: " + staff.role;
+
+    /*
+      IMPORTANT:
+      Do not automatically download registrations when staff sign in.
+      This saves reads. Staff can search or load the latest 50 manually.
+    */
+
+    loadedRegistrationData.clear();
+    lastVisibleRegistration = null;
+    hasMoreRegistrations = false;
+
+    $("totalCount").textContent = "0";
+    $("pendingCount").textContent = "0";
+    $("paidCount").textContent = "0";
+
+    showNoRegistrations("Search for a student or select Load latest 50.");
+
+    setStatus(
+      $("listStatus"),
+      "Staff portal ready. Search for a student or load the latest 50 registrations."
+    );
+
   } catch (error) {
     console.error("Staff verification error:", error);
-    showStaffLogin("Could not verify staff access (" + (error.code || "error") + "). Check the staff record and published Firestore rules.", "error");
-  }
-}
-async function deleteIneligibleRegistration(registrationId, studentName) {
-  if (currentStaffRole !== "head_admin" || !auth || !auth.currentUser) {
-    setStatus($("listStatus"), "Only a signed-in Head Admin can delete registrations.", "error");
-    return;
-  }
-  const confirmed = window.confirm(
-    "PERMANENTLY DELETE this registration for " + studentName + "?\n\n" +
-    "This action cannot be undone. Only registrations already marked NOT ELIGIBLE can be deleted."
-  );
-  if (!confirmed) return;
 
-  try {
-    const ref = db.collection("REGISTRATIONS").doc(registrationId);
-    const snap = await ref.get();
-    if (!snap.exists || snap.data().eligibilityStatus !== "ineligible") throw new Error("Only an ineligible registration can be deleted.");
-    const r = snap.data();
-    const batch = db.batch();
-    batch.delete(db.collection("REGISTRATION_INDEX").doc("email_" + normalizeEmail(r.email)));
-    batch.delete(db.collection("REGISTRATION_INDEX").doc("phone_" + String(r.phoneDigits || r.phone.replace(/\D/g, ""))));
-    batch.delete(ref);
-    await batch.commit();
-    setStatus($("listStatus"), "The ineligible registration was permanently deleted.", "success");
-    await loadRegistrations();
-  } catch (error) {
-    console.error("Delete registration failed:", error);
-    setStatus($("listStatus"), "Could not delete registration (" + (error.code || "error") + "). Confirm it is marked not eligible and that the updated Firestore rules are published.", "error");
+    showStaffLogin(
+      "Could not verify staff access (" + (error.code || "error") +
+      "). Check the staff record and published Firestore rules.",
+      "error"
+    );
   }
 }
 
-async function setEligibility(registrationId, decision) {
-  if (currentStaffRole !== "head_admin" || !auth || !auth.currentUser) {
-    setStatus($("listStatus"), "Only a signed-in Head Admin can change eligibility.", "error");
-    return;
-  }
-  if (!["eligible", "ineligible"].includes(decision)) return;
-  const confirmText = decision === "eligible"
-    ? "Confirm you checked this student against the official university list and want to mark them ELIGIBLE?"
-    : "Confirm you checked the official university list and want to mark this student NOT ELIGIBLE?";
-  if (!window.confirm(confirmText)) return;
-
-  try {
-    await db.collection("REGISTRATIONS").doc(registrationId).update({ eligibilityStatus: decision, eligibilityUpdatedAt: firebase.firestore.FieldValue.serverTimestamp(), eligibilityUpdatedBy: auth.currentUser.uid });
-    setStatus($("listStatus"), "Eligibility updated successfully.", "success");
-    await loadRegistrations();
-  } catch (error) {
-    console.error("Eligibility update failed:", error);
-    setStatus($("listStatus"), "Could not save eligibility (" + (error.code || "error") + "). Confirm that the updated Firestore rules are published.", "error");
-  }
-}
-
-async function recordManualPayment(registrationId) {
-  if (!["head_admin", "fee_collector"].includes(currentStaffRole)) return;
-  const paymentReference = window.prompt("Enter the verified receipt number or payment reference. Do not mark payment received until you have checked it.");
-  if (!paymentReference || !paymentReference.trim()) return;
-  try {
-    await db.collection("REGISTRATIONS").doc(registrationId).update({ paymentStatus: "paid", paymentReference: paymentReference.trim().slice(0, 100), paymentRecordedAt: firebase.firestore.FieldValue.serverTimestamp(), paymentRecordedBy: auth.currentUser.uid });
-    setStatus($("listStatus"), "Manually verified payment recorded.", "success"); await loadRegistrations();
-  } catch (error) { setStatus($("listStatus"), "Payment was not recorded (" + (error.code || "error") + "): " + (error.message || "Check the registration and role."), "error"); }
-}
-async function issueTicket(registrationId) {
-  if (currentStaffRole !== "head_admin") return;
-  if (!window.confirm("Issue a one-time QR entry ticket? Confirm that eligibility and manual payment have both been verified.")) return;
-  try {
-    const regRef = db.collection("REGISTRATIONS").doc(registrationId);
-    const token = Array.from(crypto.getRandomValues(new Uint8Array(24)), b => b.toString(16).padStart(2, "0")).join("");
-    const ticketRef = db.collection("TICKETS").doc(token);
-    await db.runTransaction(async tx => {
-      const reg = await tx.get(regRef);
-      if (!reg.exists) throw new Error("Registration not found.");
-      const r = reg.data();
-      if (r.eligibilityStatus !== "eligible" || r.paymentStatus !== "paid" || r.ticketStatus === "issued" || r.ticketStatus === "used") throw new Error("Eligibility and payment must be confirmed, and no active ticket may exist.");
-      tx.set(ticketRef, { registrationId, used: false, issuedAt: firebase.firestore.FieldValue.serverTimestamp(), issuedBy: auth.currentUser.uid });
-      tx.update(regRef, { ticketStatus: "issued", ticketId: token, ticketIssuedAt: firebase.firestore.FieldValue.serverTimestamp() });
-    });
-    const issuedRegistration = await regRef.get();
-    const student = issuedRegistration.exists ? issuedRegistration.data() : {};
-    currentTicketShare = { token, registrationId, name: student.fullName || "Student", email: student.email || "" };
-    $("ticketQr").replaceChildren(); new QRCode($("ticketQr"), { text: token, width: 220, height: 220, correctLevel: QRCode.CorrectLevel.M });
-    $("ticketDetails").textContent = "Student: " + currentTicketShare.name + " · Registration reference: " + registrationId;
-    $("ticketPanel").classList.remove("hidden"); setStatus($("listStatus"), "Ticket issued. You can share the QR image using the system share sheet, or download it.", "success"); await loadRegistrations();
-  } catch (error) { setStatus($("listStatus"), "Ticket could not be issued (" + (error.code || "error") + "): " + (error.message || "Check eligibility and payment."), "error"); }
-}
-async function validateTicketToken(token) {
-  if (!["entry_scanner", "head_admin"].includes(currentStaffRole)) { setStatus($("scanStatus"), "Only Entry Scanners and Head Admins can validate tickets.", "error"); return; }
-  const cleanToken = String(token || "").trim();
-  if (!/^[a-f0-9]{48}$/.test(cleanToken)) { setStatus($("scanStatus"), "ENTRY NOT APPROVED — invalid QR token.", "error"); return; }
-  try {
-    let studentName = "", registrationId = "";
-    await db.runTransaction(async tx => {
-      const ticketRef = db.collection("TICKETS").doc(cleanToken);
-      const ticket = await tx.get(ticketRef);
-      if (!ticket.exists || ticket.data().used === true) throw new Error("Ticket is invalid or has already been used.");
-      registrationId = ticket.data().registrationId;
-      const regRef = db.collection("REGISTRATIONS").doc(registrationId);
-      const reg = await tx.get(regRef);
-      if (!reg.exists || reg.data().ticketStatus !== "issued" || reg.data().ticketId !== cleanToken || reg.data().eligibilityStatus !== "eligible" || reg.data().paymentStatus !== "paid") throw new Error("Ticket is not eligible for entry.");
-      studentName = reg.data().fullName || "Student";
-      tx.update(ticketRef, { used: true, usedAt: firebase.firestore.FieldValue.serverTimestamp(), usedBy: auth.currentUser.uid });
-      tx.update(regRef, { ticketStatus: "used", ticketUsedAt: firebase.firestore.FieldValue.serverTimestamp() });
-    });
-    setStatus($("scanStatus"), "ENTRY APPROVED — " + studentName + " · Reference: " + registrationId, "success"); $("manualTicketToken").value = ""; await loadRegistrations();
-  } catch (error) { setStatus($("scanStatus"), "ENTRY NOT APPROVED — " + (error.message || error.code || "Invalid ticket"), "error"); }
-}
-async function startCameraScanner() {
-  if (!["entry_scanner", "head_admin"].includes(currentStaffRole)) { setStatus($("scanStatus"), "Only Entry Scanners and Head Admins can scan tickets.", "error"); return; }
-  if (!window.Html5Qrcode) { setStatus($("scanStatus"), "Camera scanner library failed to load. Use the manual token field.", "error"); return; }
-  try { if (!qrScanner) qrScanner = new Html5Qrcode("qrReader"); await qrScanner.start({ facingMode: "environment" }, { fps: 10, qrbox: { width: 230, height: 230 } }, async (decodedText) => { await stopCameraScanner(); await validateTicketToken(decodedText); }, () => {}); $("startScannerButton").disabled = true; $("stopScannerButton").disabled = false; setStatus($("scanStatus"), "Camera active. Point it at a PRAYAANA ticket QR."); }
-  catch (error) { setStatus($("scanStatus"), "Could not start camera. Allow camera access and use HTTPS, or paste the token manually. " + (error.message || ""), "error"); }
-}
-async function stopCameraScanner() { if (qrScanner && qrScanner.isScanning) { try { await qrScanner.stop(); } catch (_) {} } $("startScannerButton").disabled = false; $("stopScannerButton").disabled = true; }
-$("startScannerButton").addEventListener("click", startCameraScanner);
-$("stopScannerButton").addEventListener("click", stopCameraScanner);
-$("validateManualTicketButton").addEventListener("click", () => validateTicketToken($("manualTicketToken").value));
-$("manualTicketToken").addEventListener("keydown", (e) => { if (e.key === "Enter") validateTicketToken($("manualTicketToken").value); });
-function ticketShareMessage() {
-  if (!currentTicketShare) return "";
-  return "PRAYAANA 2K26 entry ticket\nStudent: " + currentTicketShare.name +
-    "\nRegistration reference: " + currentTicketShare.registrationId +
-    "\nTicket token: " + currentTicketShare.token +
-    "\nKeep this ticket private. It can be used for entry only once.";
-}
-function getTicketQrDataUrl() {
-  const canvas = $("ticketQr").querySelector("canvas");
-  if (canvas) return canvas.toDataURL("image/png");
-  const img = $("ticketQr").querySelector("img");
-  return img && img.src ? img.src : null;
-}
-function downloadTicketQr() {
-  const dataUrl = getTicketQrDataUrl();
-  if (!dataUrl || !currentTicketShare) { alert("The QR image is not ready yet. Please try again."); return; }
-  const link = document.createElement("a");
-  link.href = dataUrl; link.download = "PRAYAANA-2K26-ticket-" + currentTicketShare.registrationId + ".png";
-  document.body.appendChild(link); link.click(); link.remove();
-}
-async function shareTicketQrFile() {
-  if (!currentTicketShare) return;
-  const dataUrl = getTicketQrDataUrl();
-  if (!dataUrl) { alert("The QR image is not ready yet. Please try again."); return; }
-  try {
-    const response = await fetch(dataUrl);
-    const blob = await response.blob();
-    const file = new File([blob], "PRAYAANA-2K26-ticket-" + currentTicketShare.registrationId + ".png", { type: "image/png" });
-    const shareData = { title: "PRAYAANA 2K26 entry ticket", text: ticketShareMessage(), files: [file] };
-    if (navigator.share && (!navigator.canShare || navigator.canShare({ files: [file] }))) {
-      await navigator.share(shareData);
-    } else {
-      downloadTicketQr();
-      alert("Direct image sharing is not supported in this browser. The QR PNG has been downloaded; attach it in WhatsApp or Email.");
-    }
-  } catch (error) {
-    if (error && error.name === "AbortError") return;
-    console.error("QR sharing failed:", error);
-    downloadTicketQr();
-    alert("Could not open direct sharing. The QR PNG has been downloaded so you can attach it manually.");
-  }
-}
-$("shareTicketFileButton").addEventListener("click", shareTicketQrFile);
-
-$("shareTicketWhatsAppButton").addEventListener("click", () => {
-  if (!currentTicketShare) return;
-  const url = "https://wa.me/?text=" + encodeURIComponent(ticketShareMessage() + "\n\nThe QR image can be attached from the downloaded PNG.");
-  window.open(url, "_blank", "noopener,noreferrer");
-});
-$("shareTicketEmailButton").addEventListener("click", () => {
-  if (!currentTicketShare) return;
-  const subject = "PRAYAANA 2K26 entry ticket - " + currentTicketShare.registrationId;
-  const body = ticketShareMessage() + "\n\nPlease attach the downloaded PRAYAANA ticket QR PNG to this email before sending.";
-  const recipient = currentTicketShare.email || "";
-  window.location.href = "mailto:" + encodeURIComponent(recipient) + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
-});
-$("downloadTicketQrButton").addEventListener("click", downloadTicketQr);
-$("closeTicketButton").addEventListener("click", () => { $("ticketPanel").classList.add("hidden"); $("ticketQr").replaceChildren(); });
+/* -------------------------------------------------------
+   REGISTRATION TABLE DISPLAY
+   ------------------------------------------------------- */
 
 function addBadgeCell(row, value) {
   const td = document.createElement("td");
@@ -554,42 +646,1062 @@ function addBadgeCell(row, value) {
   td.appendChild(badge);
   row.appendChild(td);
 }
+
 function addTextCell(row, value) {
   const td = document.createElement("td");
   td.textContent = value;
   row.appendChild(td);
 }
+
+function showNoRegistrations(message) {
+  $("registrationRows").replaceChildren();
+
+  const tr = document.createElement("tr");
+  const td = document.createElement("td");
+
+  td.colSpan = 8;
+  td.textContent = message;
+
+  tr.appendChild(td);
+  $("registrationRows").appendChild(tr);
+}
+
+function updateRegistrationStats() {
+  const records = Array.from(loadedRegistrationData.values());
+
+  $("totalCount").textContent = String(records.length);
+
+  $("pendingCount").textContent = String(
+    records.filter(r => (r.status || "pending") === "pending").length
+  );
+
+  $("paidCount").textContent = String(
+    records.filter(r => (r.paymentStatus || "unpaid") === "paid").length
+  );
+}
+
+function renderRegistrationRow(registrationId, r) {
+  const tr = document.createElement("tr");
+
+  tr.dataset.registrationId = registrationId;
+  tr.dataset.eligibility = r.eligibilityStatus || "not_checked";
+  tr.dataset.payment = r.paymentStatus || "unpaid";
+  tr.dataset.ticket = r.ticketStatus || "not_issued";
+
+  addTextCell(tr, r.fullName || "—");
+  addTextCell(tr, [r.course,r.year].filter(Boolean).join(" / ") || "—");
+  addTextCell(tr, [r.phone,r.email].filter(Boolean).join("\n") || "—");
+  addTextCell(tr, r.delivery || "—");
+
+  addBadgeCell(tr, r.eligibilityStatus || "not_checked");
+  addBadgeCell(tr, r.paymentStatus || "unpaid");
+  addBadgeCell(tr, r.ticketStatus || "not_issued");
+
+  const action = document.createElement("td");
+
+  if (["head_admin","fee_collector"].includes(currentStaffRole)) {
+    const actions = document.createElement("div");
+    actions.className = "inline-actions";
+
+    if (currentStaffRole === "head_admin") {
+      const eligibleButton = document.createElement("button");
+
+      eligibleButton.type = "button";
+      eligibleButton.className = "btn";
+      eligibleButton.textContent = "Mark eligible";
+      eligibleButton.disabled = r.eligibilityStatus === "eligible";
+
+      eligibleButton.addEventListener("click", () => {
+        setEligibility(registrationId, "eligible");
+      });
+
+      const notEligibleButton = document.createElement("button");
+
+      notEligibleButton.type = "button";
+      notEligibleButton.className = "btn secondary";
+      notEligibleButton.textContent = "Not eligible";
+      notEligibleButton.disabled = r.eligibilityStatus === "ineligible";
+
+      notEligibleButton.addEventListener("click", () => {
+        setEligibility(registrationId, "ineligible");
+      });
+
+      actions.append(eligibleButton,notEligibleButton);
+    }
+
+    if (
+      r.eligibilityStatus === "eligible" &&
+      r.paymentStatus !== "paid"
+    ) {
+      const payButton = document.createElement("button");
+
+      payButton.type = "button";
+      payButton.className = "btn secondary";
+      payButton.textContent = "Record manual payment";
+
+      payButton.addEventListener("click", () => {
+        recordManualPayment(registrationId);
+      });
+
+      actions.appendChild(payButton);
+    }
+
+    if (
+      currentStaffRole === "head_admin" &&
+      r.eligibilityStatus === "eligible" &&
+      r.paymentStatus === "paid" &&
+      r.ticketStatus !== "issued" &&
+      r.ticketStatus !== "used"
+    ) {
+      const ticketButton = document.createElement("button");
+
+      ticketButton.type = "button";
+      ticketButton.className = "btn";
+      ticketButton.textContent = "Issue ticket QR";
+
+      ticketButton.addEventListener("click", () => {
+        issueTicket(registrationId);
+      });
+
+      actions.appendChild(ticketButton);
+    }
+
+    if (
+      currentStaffRole === "head_admin" &&
+      r.eligibilityStatus === "ineligible"
+    ) {
+      const deleteButton = document.createElement("button");
+
+      deleteButton.type = "button";
+      deleteButton.className = "btn danger";
+      deleteButton.textContent = "Delete registration";
+
+      deleteButton.addEventListener("click", () => {
+        deleteIneligibleRegistration(
+          registrationId,
+          r.fullName || "this student"
+        );
+      });
+
+      actions.appendChild(deleteButton);
+    }
+
+    action.appendChild(actions);
+
+  } else {
+    action.textContent =
+      currentStaffRole === "entry_scanner"
+        ? "Use the scanner above"
+        : "Staff only";
+
+    action.className = "muted small";
+  }
+
+  tr.appendChild(action);
+  return tr;
+}
+
+/*
+  Update only the changed registration in local memory and in the table.
+  No full Firestore reload is performed.
+*/
+
+function updateLoadedRegistration(registrationId, changes) {
+  const oldData = loadedRegistrationData.get(registrationId);
+
+  if (!oldData) return;
+
+  const updated = { ...oldData, ...changes };
+
+  loadedRegistrationData.set(registrationId,updated);
+
+  const oldRow = Array.from(
+    $("registrationRows").querySelectorAll("tr")
+  ).find(row => row.dataset.registrationId === registrationId);
+
+  if (oldRow) {
+    oldRow.replaceWith(renderRegistrationRow(registrationId,updated));
+  }
+
+  updateRegistrationStats();
+  filterStudentRows();
+}
+
+/* -------------------------------------------------------
+   PAGINATED REGISTRATION LOADING
+   ------------------------------------------------------- */
+
+async function loadRegistrations(reset = true) {
+  if (!db || !auth || !auth.currentUser) return;
+
+  const requestVersion = ++registrationRequestVersion;
+
+  if (reset) {
+    lastVisibleRegistration = null;
+    hasMoreRegistrations = false;
+    loadedRegistrationData.clear();
+    $("registrationRows").replaceChildren();
+  }
+
+  setStatus($("listStatus"),"Loading up to 50 registrations…");
+
+  $("refreshButton").disabled = true;
+  $("loadLatestButton").disabled = true;
+  $("loadMoreButton").disabled = true;
+
+  try {
+    let query = db.collection("REGISTRATIONS")
+      .orderBy("createdAt","desc")
+      .limit(PAGE_SIZE);
+
+    if (!reset && lastVisibleRegistration) {
+      query = query.startAfter(lastVisibleRegistration);
+    }
+
+    const snap = await query.get();
+
+    if (requestVersion !== registrationRequestVersion) return;
+
+    if (snap.docs.length > 0) {
+      lastVisibleRegistration = snap.docs[snap.docs.length - 1];
+      hasMoreRegistrations = snap.docs.length === PAGE_SIZE;
+
+      snap.forEach(doc => {
+        const data = doc.data();
+
+        loadedRegistrationData.set(doc.id,data);
+
+        $("registrationRows").appendChild(
+          renderRegistrationRow(doc.id,data)
+        );
+      });
+
+    } else if (reset) {
+      showNoRegistrations("No registrations have been submitted yet.");
+    }
+
+    updateRegistrationStats();
+    filterStudentRows();
+
+    $("loadMoreButton").disabled = !hasMoreRegistrations;
+
+    setStatus(
+      $("listStatus"),
+      "Loaded " + loadedRegistrationData.size +
+      " registration(s). Each request fetches a maximum of 50 records.",
+      "success"
+    );
+
+  } catch (error) {
+    console.error("Load registrations failed:",error);
+
+    setStatus(
+      $("listStatus"),
+      "Could not load registrations (" + (error.code || "error") +
+      "). Check Firestore rules and the REGISTRATIONS collection.",
+      "error"
+    );
+
+  } finally {
+    if (requestVersion === registrationRequestVersion) {
+      $("refreshButton").disabled = false;
+      $("loadLatestButton").disabled = false;
+      $("loadMoreButton").disabled = !hasMoreRegistrations;
+    }
+  }
+}
+
+/* -------------------------------------------------------
+   DIRECT FIRESTORE SEARCH
+   ------------------------------------------------------- */
+
+async function searchRegistrations() {
+  if (!db || !auth || !auth.currentUser) return;
+
+  const search = clean($("studentSearch").value);
+
+  if (!search) {
+    await loadRegistrations(true);
+    return;
+  }
+
+  const requestVersion = ++registrationRequestVersion;
+
+  $("registrationRows").replaceChildren();
+  loadedRegistrationData.clear();
+
+  lastVisibleRegistration = null;
+  hasMoreRegistrations = false;
+
+  $("loadMoreButton").disabled = true;
+  $("loadLatestButton").disabled = true;
+
+  setStatus($("listStatus"),"Searching registrations…");
+
+  try {
+    const digits = search.replace(/\D/g,"");
+    let snap;
+
+    if (search.includes("@")) {
+      // Exact email search.
+      snap = await db.collection("REGISTRATIONS")
+        .where("email","==",normalizeEmail(search))
+        .limit(PAGE_SIZE)
+        .get();
+
+    } else if (/^[A-Za-z0-9_-]{20}$/.test(search)) {
+      // Direct document lookup by registration reference.
+      const doc = await db.collection("REGISTRATIONS")
+        .doc(search)
+        .get();
+
+      snap = {
+        docs:doc.exists ? [doc] : [],
+        empty:!doc.exists,
+        size:doc.exists ? 1 : 0
+      };
+
+    } else if (
+      /^[+0-9() .-]+$/.test(search) &&
+      digits.length >= 6
+    ) {
+      // Exact phone-number search.
+      snap = await db.collection("REGISTRATIONS")
+        .where("phoneDigits","==",digits)
+        .limit(PAGE_SIZE)
+        .get();
+
+    } else {
+      // Name-prefix search. Firestore range matching is case-sensitive.
+      const prefix = search.replace(/\s+/g," ");
+
+      snap = await db.collection("REGISTRATIONS")
+        .orderBy("fullName")
+        .startAt(prefix)
+        .endAt(prefix + "\uf8ff")
+        .limit(PAGE_SIZE)
+        .get();
+    }
+
+    if (requestVersion !== registrationRequestVersion) return;
+
+    if (!snap.docs.length) {
+      showNoRegistrations("No matching student found.");
+
+    } else {
+      snap.docs.forEach(doc => {
+        const data = doc.data();
+
+        loadedRegistrationData.set(doc.id,data);
+
+        $("registrationRows").appendChild(
+          renderRegistrationRow(doc.id,data)
+        );
+      });
+    }
+
+    updateRegistrationStats();
+    filterStudentRows();
+
+    $("filterResultCount").textContent =
+      "Search results: " + snap.docs.length +
+      " matching registration(s).";
+
+    setStatus(
+      $("listStatus"),
+      "Search completed. Only matching registration documents were fetched.",
+      "success"
+    );
+
+  } catch (error) {
+    console.error("Registration search failed:",error);
+
+    setStatus(
+      $("listStatus"),
+      "Search failed (" + (error.code || "error") +
+      "). Check Firestore rules and try again.",
+      "error"
+    );
+
+    showNoRegistrations("Search could not be completed.");
+
+  } finally {
+    if (requestVersion === registrationRequestVersion) {
+      $("loadLatestButton").disabled = false;
+    }
+  }
+}
+
+$("loadLatestButton").addEventListener("click",() => {
+  loadRegistrations(true);
+});
+
+$("loadMoreButton").addEventListener("click",() => {
+  loadRegistrations(false);
+});
+
+$("refreshButton").addEventListener("click",() => {
+  loadRegistrations(true);
+});
+
+$("studentSearch").addEventListener("keydown",event => {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    searchRegistrations();
+  }
+});
+
+/* -------------------------------------------------------
+   ELIGIBILITY
+   ------------------------------------------------------- */
+
+async function setEligibility(registrationId,decision) {
+  if (
+    currentStaffRole !== "head_admin" ||
+    !auth ||
+    !auth.currentUser
+  ) {
+    setStatus(
+      $("listStatus"),
+      "Only a signed-in Head Admin can change eligibility.",
+      "error"
+    );
+    return;
+  }
+
+  if (!["eligible","ineligible"].includes(decision)) return;
+
+  const confirmText = decision === "eligible"
+    ? "Confirm you checked this student against the official university list and want to mark them ELIGIBLE?"
+    : "Confirm you checked the official university list and want to mark this student NOT ELIGIBLE?";
+
+  if (!window.confirm(confirmText)) return;
+
+  try {
+    await db.collection("REGISTRATIONS")
+      .doc(registrationId)
+      .update({
+        eligibilityStatus:decision,
+        eligibilityUpdatedAt:firebase.firestore.FieldValue.serverTimestamp(),
+        eligibilityUpdatedBy:auth.currentUser.uid
+      });
+
+    updateLoadedRegistration(registrationId,{
+      eligibilityStatus:decision
+    });
+
+    setStatus(
+      $("listStatus"),
+      "Eligibility updated successfully.",
+      "success"
+    );
+
+  } catch (error) {
+    console.error("Eligibility update failed:",error);
+
+    setStatus(
+      $("listStatus"),
+      "Could not save eligibility (" + (error.code || "error") +
+      "). Confirm that the updated Firestore rules are published.",
+      "error"
+    );
+  }
+}
+
+/* -------------------------------------------------------
+   MANUAL PAYMENT RECORDING
+   ------------------------------------------------------- */
+
+async function recordManualPayment(registrationId) {
+  if (!["head_admin","fee_collector"].includes(currentStaffRole)) return;
+
+  const paymentReference = window.prompt(
+    "Enter the verified receipt number or payment reference. Do not mark payment received until you have checked it."
+  );
+
+  if (!paymentReference || !paymentReference.trim()) return;
+
+  const reference = paymentReference.trim().slice(0,100);
+
+  try {
+    await db.collection("REGISTRATIONS")
+      .doc(registrationId)
+      .update({
+        paymentStatus:"paid",
+        paymentReference:reference,
+        paymentRecordedAt:firebase.firestore.FieldValue.serverTimestamp(),
+        paymentRecordedBy:auth.currentUser.uid
+      });
+
+    updateLoadedRegistration(registrationId,{
+      paymentStatus:"paid",
+      paymentReference:reference
+    });
+
+    setStatus(
+      $("listStatus"),
+      "Manually verified payment recorded.",
+      "success"
+    );
+
+  } catch (error) {
+    console.error("Payment recording failed:",error);
+
+    setStatus(
+      $("listStatus"),
+      "Payment was not recorded (" + (error.code || "error") +
+      "): " + (error.message || "Check the registration and role."),
+      "error"
+    );
+  }
+}
+
+/* -------------------------------------------------------
+   TICKET ISSUING
+   ------------------------------------------------------- */
+
+async function issueTicket(registrationId) {
+  if (currentStaffRole !== "head_admin") return;
+
+  if (!window.confirm(
+    "Issue a one-time QR entry ticket? Confirm that eligibility and manual payment have both been verified."
+  )) return;
+
+  try {
+    const regRef = db.collection("REGISTRATIONS").doc(registrationId);
+
+    const token = Array.from(
+      crypto.getRandomValues(new Uint8Array(24)),
+      b => b.toString(16).padStart(2,"0")
+    ).join("");
+
+    const ticketRef = db.collection("TICKETS").doc(token);
+
+    let studentName = "Student";
+    let studentEmail = "";
+
+    await db.runTransaction(async tx => {
+      const reg = await tx.get(regRef);
+
+      if (!reg.exists) {
+        throw new Error("Registration not found.");
+      }
+
+      const r = reg.data();
+
+      if (
+        r.eligibilityStatus !== "eligible" ||
+        r.paymentStatus !== "paid" ||
+        r.ticketStatus === "issued" ||
+        r.ticketStatus === "used"
+      ) {
+        throw new Error(
+          "Eligibility and payment must be confirmed, and no active ticket may exist."
+        );
+      }
+
+      // Reuse data from the transaction read; no second registration read.
+      studentName = r.fullName || "Student";
+      studentEmail = r.email || "";
+
+      tx.set(ticketRef,{
+        registrationId,
+        used:false,
+        issuedAt:firebase.firestore.FieldValue.serverTimestamp(),
+        issuedBy:auth.currentUser.uid
+      });
+
+      tx.update(regRef,{
+        ticketStatus:"issued",
+        ticketId:token,
+        ticketIssuedAt:firebase.firestore.FieldValue.serverTimestamp()
+      });
+    });
+
+    currentTicketShare = {
+      token,
+      registrationId,
+      name:studentName,
+      email:studentEmail
+    };
+
+    $("ticketQr").replaceChildren();
+
+    new QRCode($("ticketQr"),{
+      text:token,
+      width:220,
+      height:220,
+      correctLevel:QRCode.CorrectLevel.M
+    });
+
+    $("ticketDetails").textContent =
+      "Student: " + studentName +
+      " · Registration reference: " + registrationId;
+
+    $("ticketPanel").classList.remove("hidden");
+
+    updateLoadedRegistration(registrationId,{
+      ticketStatus:"issued",
+      ticketId:token
+    });
+
+    setStatus(
+      $("listStatus"),
+      "Ticket issued successfully. The existing registration was updated without reloading the list.",
+      "success"
+    );
+
+  } catch (error) {
+    console.error("Ticket issue failed:",error);
+
+    setStatus(
+      $("listStatus"),
+      "Ticket could not be issued (" + (error.code || "error") +
+      "): " + (error.message || "Check eligibility and payment."),
+      "error"
+    );
+  }
+}
+
+/* -------------------------------------------------------
+   ONE-TIME QR VALIDATION
+   ------------------------------------------------------- */
+
+async function validateTicketToken(token) {
+  if (!["entry_scanner","head_admin"].includes(currentStaffRole)) {
+    setStatus(
+      $("scanStatus"),
+      "Only Entry Scanners and Head Admins can validate tickets.",
+      "error"
+    );
+    return;
+  }
+
+  const cleanToken = String(token || "").trim();
+
+  if (!/^[a-f0-9]{48}$/.test(cleanToken)) {
+    setStatus($("scanStatus"),"ENTRY NOT APPROVED — invalid QR token.","error");
+    return;
+  }
+
+  try {
+    let studentName = "";
+    let registrationId = "";
+
+    await db.runTransaction(async tx => {
+      const ticketRef = db.collection("TICKETS").doc(cleanToken);
+      const ticket = await tx.get(ticketRef);
+
+      if (!ticket.exists || ticket.data().used === true) {
+        throw new Error("Ticket is invalid or has already been used.");
+      }
+
+      registrationId = ticket.data().registrationId;
+
+      const regRef = db.collection("REGISTRATIONS").doc(registrationId);
+      const reg = await tx.get(regRef);
+
+      if (
+        !reg.exists ||
+        reg.data().ticketStatus !== "issued" ||
+        reg.data().ticketId !== cleanToken ||
+        reg.data().eligibilityStatus !== "eligible" ||
+        reg.data().paymentStatus !== "paid"
+      ) {
+        throw new Error("Ticket is not eligible for entry.");
+      }
+
+      studentName = reg.data().fullName || "Student";
+
+      tx.update(ticketRef,{
+        used:true,
+        usedAt:firebase.firestore.FieldValue.serverTimestamp(),
+        usedBy:auth.currentUser.uid
+      });
+
+      tx.update(regRef,{
+        ticketStatus:"used",
+        ticketUsedAt:firebase.firestore.FieldValue.serverTimestamp()
+      });
+    });
+
+    setStatus(
+      $("scanStatus"),
+      "ENTRY APPROVED — " + studentName +
+      " · Reference: " + registrationId,
+      "success"
+    );
+
+    $("manualTicketToken").value = "";
+
+    // Update locally instead of reloading all registrations.
+    updateLoadedRegistration(registrationId,{
+      ticketStatus:"used"
+    });
+
+  } catch (error) {
+    console.error("Ticket validation failed:",error);
+
+    setStatus(
+      $("scanStatus"),
+      "ENTRY NOT APPROVED — " +
+      (error.message || error.code || "Invalid ticket"),
+      "error"
+    );
+  }
+}
+
+/* -------------------------------------------------------
+   CAMERA SCANNER
+   ------------------------------------------------------- */
+
+async function startCameraScanner() {
+  if (!["entry_scanner","head_admin"].includes(currentStaffRole)) {
+    setStatus($("scanStatus"),"Only Entry Scanners and Head Admins can scan tickets.","error");
+    return;
+  }
+
+  if (!window.Html5Qrcode) {
+    setStatus($("scanStatus"),"Camera scanner library failed to load. Use the manual token field.","error");
+    return;
+  }
+
+  try {
+    if (!qrScanner) {
+      qrScanner = new Html5Qrcode("qrReader");
+    }
+
+    await qrScanner.start(
+      { facingMode:"environment" },
+      { fps:10, qrbox:{ width:230,height:230 } },
+      async decodedText => {
+        await stopCameraScanner();
+        await validateTicketToken(decodedText);
+      },
+      () => {}
+    );
+
+    $("startScannerButton").disabled = true;
+    $("stopScannerButton").disabled = false;
+
+    setStatus(
+      $("scanStatus"),
+      "Camera active. Point it at a PRAYAANA ticket QR."
+    );
+
+  } catch (error) {
+    setStatus(
+      $("scanStatus"),
+      "Could not start camera. Allow camera access and use HTTPS, or paste the token manually. " +
+      (error.message || ""),
+      "error"
+    );
+  }
+}
+
+async function stopCameraScanner() {
+  if (qrScanner && qrScanner.isScanning) {
+    try {
+      await qrScanner.stop();
+    } catch (_) {}
+  }
+
+  $("startScannerButton").disabled = false;
+  $("stopScannerButton").disabled = true;
+}
+
+$("startScannerButton").addEventListener("click",startCameraScanner);
+$("stopScannerButton").addEventListener("click",stopCameraScanner);
+
+$("validateManualTicketButton").addEventListener("click",() => {
+  validateTicketToken($("manualTicketToken").value);
+});
+
+$("manualTicketToken").addEventListener("keydown",event => {
+  if (event.key === "Enter") {
+    validateTicketToken($("manualTicketToken").value);
+  }
+});
+
+/* -------------------------------------------------------
+   DELETE INELIGIBLE REGISTRATION
+   ------------------------------------------------------- */
+
+async function deleteIneligibleRegistration(registrationId,studentName) {
+  if (currentStaffRole !== "head_admin" || !auth || !auth.currentUser) {
+    setStatus($("listStatus"),"Only a signed-in Head Admin can delete registrations.","error");
+    return;
+  }
+
+  const confirmed = window.confirm(
+    "PERMANENTLY DELETE this registration for " + studentName + "?\n\n" +
+    "This action cannot be undone. Only registrations already marked NOT ELIGIBLE can be deleted."
+  );
+
+  if (!confirmed) return;
+
+  try {
+    const ref = db.collection("REGISTRATIONS").doc(registrationId);
+    const snap = await ref.get();
+
+    if (!snap.exists || snap.data().eligibilityStatus !== "ineligible") {
+      throw new Error("Only an ineligible registration can be deleted.");
+    }
+
+    const r = snap.data();
+
+    const batch = db.batch();
+
+    batch.delete(
+      db.collection("REGISTRATION_INDEX")
+        .doc("email_" + normalizeEmail(r.email))
+    );
+
+    batch.delete(
+      db.collection("REGISTRATION_INDEX")
+        .doc("phone_" + String(r.phoneDigits || r.phone.replace(/\D/g,"")))
+    );
+
+    batch.delete(ref);
+
+    await batch.commit();
+
+    // Remove the deleted record locally; do not reload the whole collection.
+    loadedRegistrationData.delete(registrationId);
+
+    const row = Array.from(
+      $("registrationRows").querySelectorAll("tr")
+    ).find(row => row.dataset.registrationId === registrationId);
+
+    if (row) row.remove();
+
+    updateRegistrationStats();
+    filterStudentRows();
+
+    setStatus(
+      $("listStatus"),
+      "The ineligible registration was permanently deleted.",
+      "success"
+    );
+
+  } catch (error) {
+    console.error("Delete registration failed:",error);
+
+    setStatus(
+      $("listStatus"),
+      "Could not delete registration (" + (error.code || "error") +
+      "). Confirm it is marked not eligible and that the updated Firestore rules are published.",
+      "error"
+    );
+  }
+}
+
+/* -------------------------------------------------------
+   TICKET SHARING AND DOWNLOAD
+   ------------------------------------------------------- */
+
+function ticketShareMessage() {
+  if (!currentTicketShare) return "";
+
+  return "PRAYAANA 2K26 entry ticket\nStudent: " +
+    currentTicketShare.name +
+    "\nRegistration reference: " + currentTicketShare.registrationId +
+    "\nTicket token: " + currentTicketShare.token +
+    "\nKeep this ticket private. It can be used for entry only once.";
+}
+
+function getTicketQrDataUrl() {
+  const canvas = $("ticketQr").querySelector("canvas");
+
+  if (canvas) return canvas.toDataURL("image/png");
+
+  const img = $("ticketQr").querySelector("img");
+
+  return img && img.src ? img.src : null;
+}
+
+function downloadTicketQr() {
+  const dataUrl = getTicketQrDataUrl();
+
+  if (!dataUrl || !currentTicketShare) {
+    alert("The QR image is not ready yet. Please try again.");
+    return;
+  }
+
+  const link = document.createElement("a");
+
+  link.href = dataUrl;
+  link.download =
+    "PRAYAANA-2K26-ticket-" +
+    currentTicketShare.registrationId + ".png";
+
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+}
+
+async function shareTicketQrFile() {
+  if (!currentTicketShare) return;
+
+  const dataUrl = getTicketQrDataUrl();
+
+  if (!dataUrl) {
+    alert("The QR image is not ready yet. Please try again.");
+    return;
+  }
+
+  try {
+    const response = await fetch(dataUrl);
+    const blob = await response.blob();
+
+    const file = new File(
+      [blob],
+      "PRAYAANA-2K26-ticket-" +
+      currentTicketShare.registrationId + ".png",
+      { type:"image/png" }
+    );
+
+    const shareData = {
+      title:"PRAYAANA 2K26 entry ticket",
+      text:ticketShareMessage(),
+      files:[file]
+    };
+
+    if (
+      navigator.share &&
+      (!navigator.canShare || navigator.canShare({ files:[file] }))
+    ) {
+      await navigator.share(shareData);
+
+    } else {
+      downloadTicketQr();
+
+      alert(
+        "Direct image sharing is not supported in this browser. " +
+        "The QR PNG has been downloaded; attach it in WhatsApp or Email."
+      );
+    }
+
+  } catch (error) {
+    if (error && error.name === "AbortError") return;
+
+    console.error("QR sharing failed:",error);
+
+    downloadTicketQr();
+
+    alert(
+      "Could not open direct sharing. The QR PNG has been downloaded so you can attach it manually."
+    );
+  }
+}
+
+$("shareTicketFileButton").addEventListener("click",shareTicketQrFile);
+
+$("shareTicketWhatsAppButton").addEventListener("click",() => {
+  if (!currentTicketShare) return;
+
+  const url =
+    "https://wa.me/?text=" +
+    encodeURIComponent(
+      ticketShareMessage() +
+      "\n\nThe QR image can be attached from the downloaded PNG."
+    );
+
+  window.open(url,"_blank","noopener,noreferrer");
+});
+
+$("shareTicketEmailButton").addEventListener("click",() => {
+  if (!currentTicketShare) return;
+
+  const subject =
+    "PRAYAANA 2K26 entry ticket - " +
+    currentTicketShare.registrationId;
+
+  const body =
+    ticketShareMessage() +
+    "\n\nPlease attach the downloaded PRAYAANA ticket QR PNG to this email before sending.";
+
+  const recipient = currentTicketShare.email || "";
+
+  window.location.href =
+    "mailto:" + encodeURIComponent(recipient) +
+    "?subject=" + encodeURIComponent(subject) +
+    "&body=" + encodeURIComponent(body);
+});
+
+$("downloadTicketQrButton").addEventListener("click",downloadTicketQr);
+
+$("closeTicketButton").addEventListener("click",() => {
+  $("ticketPanel").classList.add("hidden");
+  $("ticketQr").replaceChildren();
+});
+
+/* -------------------------------------------------------
+   LOCAL FILTERS
+   These only filter records already loaded in the browser.
+   ------------------------------------------------------- */
+
 function filterStudentRows() {
-  const query = String($("studentSearch")?.value || "").trim().toLocaleLowerCase();
+  const query = String($("studentSearch")?.value || "")
+    .trim()
+    .toLocaleLowerCase();
+
   const eligibility = $("eligibilityFilter")?.value || "all";
   const payment = $("paymentFilter")?.value || "all";
   const ticket = $("ticketFilter")?.value || "all";
-  const rows = Array.from($("registrationRows").querySelectorAll("tr"));
+
+  const rows = Array.from(
+    $("registrationRows").querySelectorAll("tr")
+  );
+
   let visible = 0;
   let dataRows = 0;
 
   for (const row of rows) {
-    // Keep the table's empty/error-state message visible.
-    if (row.querySelectorAll("td").length === 1 && row.querySelectorAll("td")[0].colSpan > 1) continue;
+    // Preserve empty/error messages.
+    const cells = row.querySelectorAll("td");
+
+    if (cells.length === 1 && cells[0].colSpan > 1) {
+      continue;
+    }
+
     dataRows++;
-    const searchableText = (row.textContent + " " + (row.dataset.registrationId || "")).toLocaleLowerCase();
+
+    const searchableText =
+      (row.textContent + " " + (row.dataset.registrationId || ""))
+      .toLocaleLowerCase();
+
     const searchMatch = !query || searchableText.includes(query);
-    const eligibilityMatch = eligibility === "all" || row.dataset.eligibility === eligibility;
-    const paymentMatch = payment === "all" || row.dataset.payment === payment;
-    const ticketMatch = ticket === "all" || row.dataset.ticket === ticket;
-    const match = searchMatch && eligibilityMatch && paymentMatch && ticketMatch;
-    row.classList.toggle("hidden", !match);
+    const eligibilityMatch =
+      eligibility === "all" || row.dataset.eligibility === eligibility;
+
+    const paymentMatch =
+      payment === "all" || row.dataset.payment === payment;
+
+    const ticketMatch =
+      ticket === "all" || row.dataset.ticket === ticket;
+
+    const match =
+      searchMatch && eligibilityMatch && paymentMatch && ticketMatch;
+
+    row.classList.toggle("hidden",!match);
+
     if (match) visible++;
   }
 
   const count = $("filterResultCount");
-  if (count) count.textContent = dataRows
-    ? ("Showing " + visible + " of " + dataRows + " loaded registration(s).")
-    : "No registrations loaded.";
+
+  if (count) {
+    count.textContent = dataRows
+      ? "Showing " + visible + " of " + dataRows + " loaded registration(s)."
+      : "No registrations loaded.";
+  }
 }
-$("studentSearch").addEventListener("input", filterStudentRows);
-$("applyFiltersButton").addEventListener("click", filterStudentRows);
-$("clearFiltersButton").addEventListener("click", () => {
+
+$("studentSearch").addEventListener("input",filterStudentRows);
+$("applyFiltersButton").addEventListener("click",filterStudentRows);
+
+$("clearFiltersButton").addEventListener("click",() => {
   $("eligibilityFilter").value = "all";
   $("paymentFilter").value = "all";
   $("ticketFilter").value = "all";
@@ -597,153 +1709,116 @@ $("clearFiltersButton").addEventListener("click", () => {
   filterStudentRows();
 });
 
+/* -------------------------------------------------------
+   SIGN-IN AND SIGN-OUT
+   ------------------------------------------------------- */
 
-async function loadRegistrations() {
-  if (!db || !auth || !auth.currentUser) return;
-  setStatus($("listStatus"), "Loading registrations…");
-  $("registrationRows").replaceChildren();
-  $("refreshButton").disabled = true;
-  try {
-    // Limit is explicit; these counts describe the most recent 500 records only.
-    const snap = await db.collection("REGISTRATIONS").orderBy("createdAt", "desc").limit(500).get();
-    let pending = 0;
-    let paid = 0;
-    if (snap.empty) {
-      const tr = document.createElement("tr");
-      const td = document.createElement("td");
-      td.colSpan = 8;
-      td.textContent = "No registrations have been submitted yet.";
-      tr.appendChild(td);
-      $("registrationRows").appendChild(tr);
-    } else {
-      snap.forEach((doc) => {
-        const r = doc.data();
-        if ((r.status || "pending") === "pending") pending++;
-        if ((r.paymentStatus || "unpaid") === "paid") paid++;
-
-        const tr = document.createElement("tr");
-        tr.dataset.registrationId = doc.id;
-        tr.dataset.eligibility = r.eligibilityStatus || "not_checked";
-        tr.dataset.payment = r.paymentStatus || "unpaid";
-        tr.dataset.ticket = r.ticketStatus || "not_issued";
-        addTextCell(tr, r.fullName || "—");
-        addTextCell(tr, [r.course, r.year].filter(Boolean).join(" / ") || "—");
-        addTextCell(tr, [r.phone, r.email].filter(Boolean).join("\n") || "—");
-        addTextCell(tr, r.delivery || "—");
-        addBadgeCell(tr, r.eligibilityStatus || "not_checked");
-        addBadgeCell(tr, r.paymentStatus || "unpaid");
-        addBadgeCell(tr, r.ticketStatus || "not_issued");
-
-        const action = document.createElement("td");
-        if (["head_admin", "fee_collector"].includes(currentStaffRole)) {
-          const actions = document.createElement("div");
-          actions.className = "inline-actions";
-          if (currentStaffRole === "head_admin") {
-            const eligibleButton = document.createElement("button");
-            eligibleButton.type = "button";
-            eligibleButton.className = "btn";
-            eligibleButton.textContent = "Mark eligible";
-            eligibleButton.disabled = r.eligibilityStatus === "eligible";
-            eligibleButton.addEventListener("click", () => setEligibility(doc.id, "eligible"));
-
-            const notEligibleButton = document.createElement("button");
-            notEligibleButton.type = "button";
-            notEligibleButton.className = "btn secondary";
-            notEligibleButton.textContent = "Not eligible";
-            notEligibleButton.disabled = r.eligibilityStatus === "ineligible";
-            notEligibleButton.addEventListener("click", () => setEligibility(doc.id, "ineligible"));
-            actions.append(eligibleButton, notEligibleButton);
-          }
-          if (r.eligibilityStatus === "eligible" && r.paymentStatus !== "paid") {
-            const payButton = document.createElement("button");
-            payButton.type = "button"; payButton.className = "btn secondary"; payButton.textContent = "Record manual payment";
-            payButton.addEventListener("click", () => recordManualPayment(doc.id)); actions.appendChild(payButton);
-          }
-          if (currentStaffRole === "head_admin" && r.eligibilityStatus === "eligible" && r.paymentStatus === "paid" && r.ticketStatus !== "issued" && r.ticketStatus !== "used") {
-            const ticketButton = document.createElement("button");
-            ticketButton.type = "button"; ticketButton.className = "btn"; ticketButton.textContent = "Issue ticket QR";
-            ticketButton.addEventListener("click", () => issueTicket(doc.id)); actions.appendChild(ticketButton);
-          }
-          if (currentStaffRole === "head_admin" && r.eligibilityStatus === "ineligible") {
-            const deleteButton = document.createElement("button");
-            deleteButton.type = "button"; deleteButton.className = "btn danger"; deleteButton.textContent = "Delete registration";
-            deleteButton.addEventListener("click", () => deleteIneligibleRegistration(doc.id, r.fullName || "this student"));
-            actions.appendChild(deleteButton);
-          }
-          action.appendChild(actions);
-        } else {
-          action.textContent = currentStaffRole === "entry_scanner" ? "Use the scanner above" : "Staff only";
-          action.className = "muted small";
-        }
-        tr.appendChild(action);
-        $("registrationRows").appendChild(tr);
-      });
-    }
-    filterStudentRows();
-    $("totalCount").textContent = String(snap.size);
-    $("pendingCount").textContent = String(pending);
-    $("paidCount").textContent = String(paid);
-    setStatus($("listStatus"), "Loaded " + snap.size + " registration(s) from the most recent 500. Confirm each student's details against the official university list before recording eligibility.", "success");
-  } catch (error) {
-    console.error("Load registrations failed:", error);
-    setStatus($("listStatus"), "Could not load registrations (" + (error.code || "error") + "). Check Firestore rules and the REGISTRATIONS collection.", "error");
-    const tr = document.createElement("tr");
-    const td = document.createElement("td");
-    td.colSpan = 8;
-    td.textContent = "Registration list unavailable.";
-    tr.appendChild(td);
-    $("registrationRows").appendChild(tr);
-  } finally {
-    $("refreshButton").disabled = false;
-  }
-}
-$("signInButton").addEventListener("click", async () => {
+$("signInButton").addEventListener("click",async () => {
   if (!auth) {
-    setStatus(staffStatus, "Firebase is not ready. Reload the page and try again.", "error");
+    setStatus(staffStatus,"Firebase is not ready. Reload the page and try again.","error");
     return;
   }
+
   $("signInButton").disabled = true;
-  setStatus(staffStatus, "Opening Google sign-in…");
+  setStatus(staffStatus,"Opening Google sign-in…");
+
   try {
-    await auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+    await auth.signInWithPopup(
+      new firebase.auth.GoogleAuthProvider()
+    );
+
   } catch (error) {
-    setStatus(staffStatus, "Sign-in failed (" + (error.code || "error") + "). Check Google provider settings and authorized domains in Firebase.", "error");
+    setStatus(
+      staffStatus,
+      "Sign-in failed (" + (error.code || "error") +
+      "). Check Google provider settings and authorized domains in Firebase.",
+      "error"
+    );
+
   } finally {
     $("signInButton").disabled = false;
   }
 });
-$("signOutButton").addEventListener("click", async () => {
+
+$("signOutButton").addEventListener("click",async () => {
   try {
+    await stopCameraScanner();
     await auth.signOut();
+
     currentStaffRole = "";
+    loadedRegistrationData.clear();
+
+    lastVisibleRegistration = null;
+    hasMoreRegistrations = false;
+
     showStaffLogin("You have signed out.");
+
   } catch (error) {
-    setStatus($("listStatus"), "Sign-out failed: " + (error.message || "Unknown error"), "error");
+    setStatus(
+      $("listStatus"),
+      "Sign-out failed: " + (error.message || "Unknown error"),
+      "error"
+    );
   }
 });
-$("refreshButton").addEventListener("click", loadRegistrations);
+
+/* -------------------------------------------------------
+   FIREBASE INITIALIZATION
+   ------------------------------------------------------- */
 
 try {
-  if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+  }
+
   auth = firebase.auth();
   db = firebase.firestore();
-  setStatus(registrationStatus, "Registration service connected. Duplicate checks are enforced by Firestore rules.");
-  setStatus(staffStatus, "Sign in with your authorized staff Google account.");
-  auth.onAuthStateChanged((user) => {
+
+  setStatus(
+    registrationStatus,
+    "Registration service connected. Duplicate checks are enforced by Firestore rules."
+  );
+
+  setStatus(
+    staffStatus,
+    "Sign in with your authorized staff Google account."
+  );
+
+  auth.onAuthStateChanged(user => {
     authStateVersion++;
+
     const version = authStateVersion;
+
     if (!user) {
       currentStaffRole = "";
+
+      loadedRegistrationData.clear();
+      lastVisibleRegistration = null;
+      hasMoreRegistrations = false;
+
       $("loginCard").classList.remove("hidden");
       $("staffDashboard").classList.add("hidden");
+
       return;
     }
-    verifyStaff(user, version);
+
+    verifyStaff(user,version);
   });
+
 } catch (error) {
-  console.error("Firebase initialization failed:", error);
-  setStatus(registrationStatus, "Firebase setup error. Please contact the event team.", "error");
-  setStatus(staffStatus, "Firebase setup error. Please contact the event team.", "error");
+  console.error("Firebase initialization failed:",error);
+
+  setStatus(
+    registrationStatus,
+    "Firebase setup error. Please contact the event team.",
+    "error"
+  );
+
+  setStatus(
+    staffStatus,
+    "Firebase setup error. Please contact the event team.",
+    "error"
+  );
 }
 </script>
 </body>
